@@ -1,6 +1,5 @@
-{
-  "name": "ross-tax-prep-template",
-  "description": "IRS e\u2011file approved ERO tax software; bank product compatible; ETIN, EFIN and PTIN tracking with a secure client portal.",
+  "name": "ross-tax-prep-frontend-template",
+  "description": "IRS e-file approved ERO tax software; bank product compatible; ETIN, EFIN and PTIN tracking with a secure client portal.",
   "cloudflare": {
     "bindings": {
       "MCP_SERVER_URL": {
@@ -10,4 +9,3 @@
     "label": "Ross Tax Prep Template",
     "products": ["Workers"]
   }
-}
