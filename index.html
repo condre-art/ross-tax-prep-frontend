@@ -1,12 +1,243 @@
+<<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ross Tax & Bookkeeping</title>
+
+  <style>
+    :root {
+  --navy: #0F2A44;
+  --gold: #C9A24D;
+  --off-white: #F4F6F8;
+  --text-dark: #1B1B1B;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+}
+
+header,
+footer {
+  background: var(--navy);
+  color: white;
+}
+
+.cta-btn {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.cta-btn:hover {
+  background: #b8913f; /* darker gold */
+}
+
+h1, h2, h3 {
+  color: var(--navy);
+}
+body {
+      margin: 0;
+      font-family: "Georgia", "Times New Roman", serif;
+      background: #f4f6f8;
+      color: #1b1b1b;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #0f2a44;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header img {
+      max-width: 260px;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: #ffffff;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-size: 1.1rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: #c9a24d;
+      color: #0f2a44;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .services {
+      padding: 50px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .services h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .service {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    footer {
+      background: #0f2a44;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="/assets/logo.webp" alt="Ross Tax & Bookkeeping logo">
+</header>
+
+<section class="hero">
+  <h1>Professional Tax & Bookkeeping Services</h1>
+  <p>
+    Ross Tax & Bookkeeping provides reliable, confidential, and accurate tax
+    preparation and bookkeeping services for individuals and small businesses.
+  </p>
+
+  <a class="cta-btn" href="/intake.html">
+    Start Your Tax Filing
+  </a>
+</section>
+
+<section class="services">
+  <h2>Our Services</h2>
+
+  <div class="service-list">
+    <div class="service">
+      <h3>Individual Tax Preparation</h3>
+      <p>Personal returns prepared accurately and on time.</p>
+    </div>
+
+    <div class="service">
+      <h3>Business Tax Services</h3>
+      <p>Support for small businesses, self-employed, and contractors.</p>
+    </div>
+
+    <div class="service">
+      <h3>Bookkeeping</h3>
+      <p>Monthly and quarterly bookkeeping to keep your finances organized.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Ross Tax & Bookkeeping. All rights reserved.
+</footer>
+
+</body>
+</html>
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ross Tax Prep</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Intake | Ross Tax & Bookkeeping</title>
+
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: #f4f6f8;
+      padding: 40px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 6px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background: #0f2a44;
+      color: #ffffff;
+      border: none;
+      font-size: 1rem;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Ross Tax Prep</h1>
-  <p>Welcome — this is the frontend placeholder.</p>
+
+<form>
+  <h1>Client Intake Form</h1>
+
+  <label>Full Name</label>
+  <input type="text" required>
+
+  <label>Email Address</label>
+  <input type="email" required>
+
+  <label>Phone Number</label>
+  <input type="tel">
+
+  <label>Service Needed</label>
+  <select>
+    <option>Individual Tax Preparation</option>
+    <option>Business Tax Services</option>
+    <option>Bookkeeping</option>
+  </select>
+
+  <button type="submit">
+    Submit Intake Request
+  </button>
+</form>
+
 </body>
 </html>
