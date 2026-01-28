@@ -16,7 +16,7 @@ export default function Home() {
               Upload tax documents, check status, and manage your refund options.
             </p>
             <Link
-              href="/app/bank-products"
+              href="/bank-products"
               className="inline-block px-6 py-3 bg-gold text-navy font-semibold rounded hover:bg-opacity-90 transition"
             >
               Choose Refund Delivery

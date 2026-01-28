@@ -75,10 +75,10 @@ export default function BankProductsPage() {
 
     // If Refund Advance selected, go to advance decision page
     if (selectedProduct === 'REFUND_ADVANCE_RT') {
-      router.push('/app/bank-products/advance')
+      router.push('/bank-products/advance')
     } else {
       // Otherwise, go to refund allocation
-      router.push('/app/refund-allocation')
+      router.push('/refund-allocation')
     }
   }
 

@@ -48,7 +48,7 @@ export default function AdvancePage() {
   }
 
   const handleContinueWithRT = () => {
-    router.push('/app/refund-allocation')
+    router.push('/refund-allocation')
   }
 
   const handleCheckStatus = () => {
