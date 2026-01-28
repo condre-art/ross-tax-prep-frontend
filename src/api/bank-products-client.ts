@@ -26,6 +26,10 @@ export interface ApiClientConfig {
 
 /**
  * Consent submission payload
+ * Note: This interface is intentionally separate from ConsentRecord.
+ * ConsentSubmission represents the client-provided data being sent to the API,
+ * while ConsentRecord represents the stored server response with potential
+ * additional server-side fields (e.g., database IDs, computed values).
  */
 export interface ConsentSubmission {
   clientId: string;
@@ -62,6 +66,31 @@ export class BankProductsApiClient {
   }
 
   /**
+   * Helper method to handle API errors with detailed information
+   */
+  private async handleApiError(response: Response, context: string): Promise<never> {
+    let errorDetails = '';
+    try {
+      const errorBody = await response.json();
+      errorDetails = errorBody.message || errorBody.error || JSON.stringify(errorBody);
+    } catch {
+      errorDetails = response.statusText;
+    }
+    throw new Error(
+      `${context} failed: ${response.status} ${response.statusText}. ${errorDetails}`
+    );
+  }
+
+  /**
+   * Validate that a required parameter is not empty
+   */
+  private validateNotEmpty(value: string, paramName: string): void {
+    if (!value || value.trim() === '') {
+      throw new Error(`${paramName} is required and cannot be empty`);
+    }
+  }
+
+  /**
    * GET /api/providers
    * Get list of enabled providers with supported products
    */
@@ -72,7 +101,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch providers: ${response.statusText}`);
+      await this.handleApiError(response, 'Get providers');
     }
 
     return response.json();
@@ -89,7 +118,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch config: ${response.statusText}`);
+      await this.handleApiError(response, 'Get config');
     }
 
     return response.json();
@@ -100,6 +129,8 @@ export class BankProductsApiClient {
    * Get refund advance offers and eligibility for a client
    */
   async getOffers(clientId: string): Promise<RefundAdvanceOffer[]> {
+    this.validateNotEmpty(clientId, 'clientId');
+
     const url = new URL(`${this.baseUrl}/api/bank-products/offers`);
     url.searchParams.append('clientId', clientId);
 
@@ -109,7 +140,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch offers: ${response.statusText}`);
+      await this.handleApiError(response, 'Get offers');
     }
 
     return response.json();
@@ -133,7 +164,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch disclosures: ${response.statusText}`);
+      await this.handleApiError(response, 'Get disclosures');
     }
 
     return response.json();
@@ -145,6 +176,9 @@ export class BankProductsApiClient {
    * Critical for compliance
    */
   async saveConsent(consent: ConsentSubmission): Promise<ConsentRecord> {
+    this.validateNotEmpty(consent.clientId, 'consent.clientId');
+    this.validateNotEmpty(consent.disclosureId, 'consent.disclosureId');
+
     const response = await fetch(`${this.baseUrl}/api/bank-products/consents`, {
       method: 'POST',
       headers: this.headers,
@@ -152,7 +186,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to save consent: ${response.statusText}`);
+      await this.handleApiError(response, 'Save consent');
     }
 
     return response.json();
@@ -165,6 +199,8 @@ export class BankProductsApiClient {
   async submitApplication(
     application: ApplicationSubmission
   ): Promise<BankProductApplication> {
+    this.validateNotEmpty(application.clientId, 'application.clientId');
+
     const response = await fetch(`${this.baseUrl}/api/bank-products/applications`, {
       method: 'POST',
       headers: this.headers,
@@ -172,7 +208,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to submit application: ${response.statusText}`);
+      await this.handleApiError(response, 'Submit application');
     }
 
     return response.json();
@@ -183,6 +219,8 @@ export class BankProductsApiClient {
    * Poll application status (approved/pending/denied)
    */
   async getApplicationStatus(applicationId: string): Promise<BankProductApplication> {
+    this.validateNotEmpty(applicationId, 'applicationId');
+
     const response = await fetch(
       `${this.baseUrl}/api/bank-products/applications/${applicationId}`,
       {
@@ -192,7 +230,7 @@ export class BankProductsApiClient {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch application status: ${response.statusText}`);
+      await this.handleApiError(response, 'Get application status');
     }
 
     return response.json();
@@ -203,6 +241,8 @@ export class BankProductsApiClient {
    * Save client's bank product selection (provider, product, payout method)
    */
   async saveSelection(selection: BankProductSelection): Promise<BankProductSelection> {
+    this.validateNotEmpty(selection.clientId, 'selection.clientId');
+
     const response = await fetch(`${this.baseUrl}/api/bank-products/selection`, {
       method: 'POST',
       headers: this.headers,
@@ -210,7 +250,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to save selection: ${response.statusText}`);
+      await this.handleApiError(response, 'Save selection');
     }
 
     return response.json();
@@ -221,6 +261,8 @@ export class BankProductsApiClient {
    * Save refund allocation (bonds, splits)
    */
   async saveRefundAllocation(allocation: RefundAllocation): Promise<RefundAllocation> {
+    this.validateNotEmpty(allocation.clientId, 'allocation.clientId');
+
     const response = await fetch(`${this.baseUrl}/api/refund-allocation`, {
       method: 'POST',
       headers: this.headers,
@@ -228,7 +270,7 @@ export class BankProductsApiClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to save refund allocation: ${response.statusText}`);
+      await this.handleApiError(response, 'Save refund allocation');
     }
 
     return response.json();
@@ -239,13 +281,15 @@ export class BankProductsApiClient {
    * Load refund allocation for editing/continuing
    */
   async getRefundAllocation(clientId: string): Promise<RefundAllocation> {
+    this.validateNotEmpty(clientId, 'clientId');
+
     const response = await fetch(`${this.baseUrl}/api/refund-allocation/${clientId}`, {
       method: 'GET',
       headers: this.headers,
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch refund allocation: ${response.statusText}`);
+      await this.handleApiError(response, 'Get refund allocation');
     }
 
     return response.json();
