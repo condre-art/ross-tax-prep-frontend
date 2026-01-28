@@ -1,11 +1,33 @@
-  "name": "ross-tax-prep-frontend-template",
-  "description": "IRS e-file approved ERO tax software; bank product compatible; ETIN, EFIN and PTIN tracking with a secure client portal.",
-  "cloudflare": {
-    "bindings": {
-      "MCP_SERVER_URL": {
-        "description": "Base URL of your deployed MCP server endpoint."
-      }
-    },
-    "label": "Ross Tax Prep Template",
-    "products": ["Workers"]
+{
+  "name": "ross-tax-prep-frontend",
+  "version": "1.0.0",
+  "description": "Ross CloudBase Pro Web - Client portal frontend for Ross Tax and Bookkeeping",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "@tanstack/react-query": "^5.28.0",
+    "react-hook-form": "^7.51.0",
+    "zod": "^3.22.0",
+    "@hookform/resolvers": "^3.3.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.4.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0"
   }
+}

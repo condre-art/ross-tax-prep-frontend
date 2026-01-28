@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0F2A44;
+  --gold: #C9A24D;
+  --off-white: #F4F6F8;
+  --text-dark: #1B1B1B;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-block px-7 py-3.5 bg-gold text-navy font-bold rounded hover:bg-opacity-90 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-block px-7 py-3.5 bg-navy text-white font-bold rounded hover:bg-opacity-90 transition-colors;
+  }
+
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-sm;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-navy;
+  }
+
+  .label {
+    @apply block text-sm font-semibold mb-2 text-text-dark;
+  }
+}

@@ -1,215 +1,171 @@
-# Ross Tax Prep — Frontend
+# Ross CloudBase Pro Web — Frontend
 
-**Frontend web app for Ross Tax Prep**, built to support:
+Client portal frontend for Ross Tax and Bookkeeping:
+- Bank products: Off-Bank, Refund Transfer (RT), Refund Advance (+ RT)
+- Provider selection visible: SBTPG, EPS Financial, Refund Advantage
+- Advance decision reasons visible (Approved/Pending/Denied + reasons)
+- Payout methods: Direct Deposit + Check + Prepaid Card
+- Refund allocation: Savings Bonds + deposit splits
 
-- ✅ Client Portal — where clients can register, upload documents, and track progress.
-- ✅ Staff Dashboard — where staff can manage clients, files, and workflow.
+## Stack
+- Next.js (App Router) + TypeScript
+- TailwindCSS
+- React Hook Form + Zod validation
+- TanStack Query (API caching)
 
----
+## Setup
+1. Install deps
+   ```bash
+   npm i
+   ```
+2. Create env file
+   ```bash
+   cp .env.example .env.local
+   ```
+3. Run dev server
+   ```bash
+   npm run dev
+   ```
 
-## 📁 Tech Stack
+## Environment variables
+See `.env.example`.
 
-- **HTML5 / CSS3 / JavaScript**
-- Designed for static hosting (Cloudflare Pages)
-- Future-ready for React / Next.js (modular folder structure encouraged)
+Required variables:
+- `NEXT_PUBLIC_API_BASE_URL` - Backend API base URL (default: http://localhost:3001)
+- `NODE_ENV` - Environment (development, staging, production)
 
----
+## Routes
 
-## 📂 Project Structure
+### Public:
+- `/` - Marketing homepage
+- `/portal/login` - Client portal login
 
----
+### Authenticated:
+- `/app/dashboard` - Main client dashboard
+- `/app/bank-products` - Bank product selection (Off-Bank, RT, RA)
+- `/app/bank-products/advance` - Refund advance details & decision reasons
+- `/app/refund-allocation` - Savings bonds & deposit splits
+- `/app/esign` - Electronic signature for tax documents
+- `/app/status` - Tax return and refund status tracking
 
-## 🚀 Deployment
+## Features
 
-This app is designed to be deployed on **Cloudflare Pages**.
+### Bank Products
+- **Off-Bank**: Traditional refund without bank product fees
+- **Refund Transfer (RT)**: Refund processing with multiple payout options
+- **Refund Advance (RA)**: Early refund with instant approval/denial/pending decisions
 
-### ✅ Default settings:
-- **Framework preset**: None
-- **Build command**: _(leave blank)_
-- **Output directory**: `./`
+### Provider Selection
+- SBTPG (Santa Barbara Tax Products Group)
+- EPS Financial (Electronic Payment Services)
+- Refund Advantage
 
-Once deployed, your site will be publicly accessible at:
+### Payout Methods
+- Direct Deposit (with routing/account numbers)
+- Paper Check (mailed to address)
+- Prepaid Card
 
+### Refund Allocation
+- Purchase U.S. Savings Bonds (Series I or EE)
+- Split refund across up to 3 bank accounts
+- Configure amounts and account types
 
----
+### Compliance
+All consents are tracked with:
+- `disclosureId` - Unique disclosure identifier
+- `version` - Disclosure version (if provided)
+- `acceptedAt` - ISO timestamp of acceptance
+- `clientId` - Client identifier
+- `userAgent` - Browser user agent string
+- `ipAddress` - IP address (derived server-side)
 
-## 📌 Roadmap
+## API Contract (frontend calls backend only)
 
-Planned future improvements:
+### Providers
+- `GET /api/providers` - Get list of available providers
 
-- [ ] Convert to React or Next.js
-- [ ] Add secure login for clients/staff
-- [ ] Build admin analytics dashboard
-- [ ] Mobile-first responsive design
+### Bank Products
+- `GET /api/bank-products/config` - Get bank product configurations
+- `GET /api/bank-products/offers?clientId=...` - Get offers for client
+- `GET /api/bank-products/disclosures?provider=...&product=...` - Get disclosures
+- `POST /api/bank-products/consents` - Submit consent (with compliance tracking)
+- `POST /api/bank-products/applications` - Submit bank product application
+- `GET /api/bank-products/applications/:id` - Get application status
+- `POST /api/bank-products/selection` - Submit final product selection
 
----
+### Refund Allocation
+- `POST /api/refund-allocation` - Submit refund allocation (bonds/splits)
+- `GET /api/refund-allocation/:clientId` - Get saved allocation
 
-## 👥 Contributors
+## Project Structure
 
-- **condre-art** — Lead Developer
-
----
-
-## 📃 License
-
-MIT — free to use, modify, and share.
+```
 ross-tax-prep-frontend/
-├── index.html
-├── styles/
-│   └── main.css
-├── scripts/
-│   └── main.js
-├── README.md
-└── package.json (optional for future use)
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ross Tax Prep Portal</title>
-    <link rel="stylesheet" href="styles/main.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Ross Tax Prep</h1>
-      <p>Client Portal & Staff Dashboard</p>
-    </header>
+├── app/                          # Next.js App Router
+│   ├── page.tsx                 # Marketing homepage (/)
+│   ├── layout.tsx               # Root layout
+│   ├── globals.css              # Global styles
+│   ├── portal/
+│   │   └── login/
+│   │       └── page.tsx         # Login page
+│   └── app/                     # Authenticated routes
+│       ├── dashboard/           # Main dashboard
+│       ├── bank-products/       # Bank product selection
+│       │   └── advance/         # Refund advance details
+│       ├── refund-allocation/   # Savings bonds & splits
+│       ├── esign/               # Electronic signatures
+│       └── status/              # Status tracking
+├── components/
+│   └── AppLayout.tsx            # Authenticated app layout with nav
+├── lib/
+│   ├── api-client.ts            # Axios client with interceptors
+│   └── api.ts                   # API function wrappers
+├── types/
+│   └── index.ts                 # TypeScript type definitions
+├── public/                      # Static assets
+├── .env.example                 # Environment variables template
+├── next.config.js               # Next.js configuration
+├── tailwind.config.js           # TailwindCSS configuration
+├── tsconfig.json                # TypeScript configuration
+└── package.json                 # Dependencies & scripts
+```
 
-    <main>
-      <section id="client-portal">
-        <h2>Client Portal</h2>
-        <p>Upload tax documents, check status, and more.</p>
-      </section>
+## Development
 
-      <section id="staff-dashboard">
-        <h2>Staff Dashboard</h2>
-        <p>Manage clients and workflow.</p>
-      </section>
-    </main>
+### Running the dev server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000)
 
-    <script src="scripts/main.js"></script>
-  </body>
-</html>
-/* Basic styling */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 2rem;
-  background-color: #f6f6f6;
-  color: #222;
-}
+### Building for production
+```bash
+npm run build
+npm start
+```
 
-header {
-  background-color: #004080;
-  color: white;
-  padding: 1rem;
-  border-radius: 8px;
-}
+### Linting
+```bash
+npm run lint
+```
 
-main section {
-  background: white;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-// Placeholder JS file
-console.log("Ross Tax Prep frontend loaded.");
+## Design System
 
-// Future: Add login logic, form handlers, etc.
-{
-  "name": "ross-tax-prep-frontend",
-  "version": "1.0.0",
-  "description": "Frontend portal for Ross Tax Prep clients and staff",
-  "scripts": {},
-  "author": "condre-art",
-  "license": "MIT"
-}
-{
-"name": "ross-tax-prep-frontend",
-"version": "1.0.0",
-"private": true,
-"scripts": {
-"dev": "next dev",
-"build": "next build",
-"start": "next start"
-},
-"dependencies": {
-"next": "latest",
-"react": "latest",
-"react-dom": "latest"
-}
-}
+### Colors
+- Navy: `#0F2A44` - Primary brand color
+- Gold: `#C9A24D` - Accent color
+- Off-white: `#F4F6F8` - Background
+- Text Dark: `#1B1B1B` - Text color
 
+### Components
+- `btn-primary` - Gold button for primary actions
+- `btn-secondary` - Navy button for secondary actions
+- `card` - White card with padding and shadow
+- `input-field` - Styled form input
+- `label` - Form label
 
-// --- File: pages/index.js ---
-export default function Home() {
-return (
-<div className="p-6">
-<h1 className="text-2xl font-bold">Ross Tax Prep</h1>
-<p>Choose your dashboard:</p>
-<ul className="list-disc ml-6">
-<li><a href="/client/dashboard" className="text-blue-500 underline">Client Portal</a></li>
-<li><a href="/staff/dashboard" className="text-blue-500 underline">Staff Dashboard</a></li>
-</ul>
-</div>
-);
-}
+## License
+MIT — free to use, modify, and share.
 
-
-// --- File: pages/client/dashboard.js ---
-export default function ClientDashboard() {
-return (
-<div className="p-6">
-<h2 className="text-xl font-semibold">Client Dashboard</h2>
-<p>Upload your tax docs and track your return.</p>
-</div>
-);
-}
-
-
-// --- File: pages/staff/dashboard.js ---
-export default function StaffDashboard() {
-return (
-<div className="p-6">
-<h2 className="text-xl font-semibold">Staff Dashboard</h2>
-<p>Manage client workflows and documentation.</p>
-</div>
-);
-}
-
-
-// --- File: pages/api/clients.js ---
-export default function handler(req, res) {
-if (req.method === 'GET') {
-return res.status(200).json([
-{ id: 1, name: 'John Doe', status: 'Submitted' },
-{ id: 2, name: 'Jane Smith', status: 'In Progress' },
-]);
-}
-res.status(405).json({ message: 'Method Not Allowed' });
-}
-
-
-// --- File: components/Navbar.js ---
-export default function Navbar({ user }) {
-return (
-<nav className="bg-blue-800 text-white px-4 py-2 flex justify-between">
-<div>Ross Tax Prep</div>
-<div>{user?.email || 'Guest'}</div>
-</nav>
-);
-}
-
-
-// --- File: components/Layout.js ---
-import Navbar from './Navbar';
-export default function Layout({ children, user }) {
-return (
-<div>
-<Navbar user={user} />
-<main className="p-4">{children}</main>
-</div>
-);
-}
-
+## Contributors
+- **condre-art** — Lead Developer
