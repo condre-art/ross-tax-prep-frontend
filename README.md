@@ -9,38 +9,99 @@
 
 ## 📁 Tech Stack
 
-- **HTML5 / CSS3 / JavaScript**
-- Designed for static hosting (Cloudflare Pages)
-- Future-ready for React / Next.js (modular folder structure encouraged)
+- **Next.js 15** with App Router
+- **TypeScript**
+- **React 19**
+- Designed for modern deployment (Vercel, Cloudflare Pages, etc.)
 
 ---
 
 ## 📂 Project Structure
 
+```
+ross-tax-prep-frontend/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Home page
+│   ├── globals.css        # Global styles
+│   ├── portal/
+│   │   └── login/page.tsx # Client login
+│   └── app/               # Staff dashboard
+│       ├── layout.tsx
+│       ├── dashboard/page.tsx
+│       ├── intake/page.tsx
+│       ├── documents/page.tsx
+│       ├── bank-products/page.tsx
+│       ├── refund-allocation/page.tsx
+│       ├── esign/page.tsx
+│       ├── status/page.tsx
+│       └── support/page.tsx
+├── components/            # Reusable React components
+│   ├── shared/
+│   ├── bank-products/
+│   └── allocation/
+├── lib/                   # Utilities and business logic
+│   ├── api/
+│   ├── validators/
+│   └── constants/
+├── types/                 # TypeScript type definitions
+└── public/                # Static assets
+```
+
+---
+
+## 🚀 Getting Started
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the app.
+
+### Build
+
+```bash
+npm run build
+npm start
+```
+
 ---
 
 ## 🚀 Deployment
 
-This app is designed to be deployed on **Cloudflare Pages**.
+This app is designed to be deployed on **Vercel**, **Cloudflare Pages**, or any platform that supports Next.js.
 
-### ✅ Default settings:
-- **Framework preset**: None
-- **Build command**: _(leave blank)_
-- **Output directory**: `./`
+### Vercel (Recommended)
+1. Push your code to GitHub
+2. Import your repository in Vercel
+3. Deploy with zero configuration
 
-Once deployed, your site will be publicly accessible at:
-
+### Cloudflare Pages
+1. Set framework preset to **Next.js**
+2. Build command: `npm run build`
+3. Output directory: `.next`
 
 ---
 
-## 📌 Roadmap
+## 📌 Features
 
-Planned future improvements:
-
-- [ ] Convert to React or Next.js
-- [ ] Add secure login for clients/staff
-- [ ] Build admin analytics dashboard
-- [ ] Mobile-first responsive design
+- ✅ Client Portal with login
+- ✅ Staff Dashboard with navigation
+- ✅ Tax intake forms
+- ✅ Document management
+- ✅ Bank products and refund advances
+- ✅ Refund allocation builder
+- ✅ E-signature management
+- ✅ Client status tracking
+- ✅ Support resources
 
 ---
 

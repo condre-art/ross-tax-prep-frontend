@@ -1,0 +1,40 @@
+:root {
+  --navy: #0f2a44;
+  --gold: #c9a24d;
+  --off-white: #f4f6f8;
+  --text-dark: #1b1b1b;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--navy);
+}
+
+button {
+  cursor: pointer;
+}
