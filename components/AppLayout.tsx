@@ -13,6 +13,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const router = useRouter();
 
   const handleLogout = () => {
+    // TODO: In production, call API to invalidate server-side session
+    // await authApi.logout();
     localStorage.removeItem('token');
     localStorage.removeItem('clientId');
     router.push('/portal/login');

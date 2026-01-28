@@ -31,9 +31,12 @@ export default function ESignPage() {
 
   const handleSign = (e: React.FormEvent) => {
     e.preventDefault();
-    if (signature.trim()) {
+    if (signature.trim() && signature.length >= 3) {
       setSigned(true);
+      // TODO: Replace alert with proper toast notification
       alert('Document signed successfully!');
+    } else {
+      alert('Please enter your full legal name (at least 3 characters)');
     }
   };
 
@@ -91,6 +94,9 @@ export default function ESignPage() {
                   onChange={(e) => setSignature(e.target.value)}
                   className="input-field text-2xl font-serif"
                   placeholder="John Doe"
+                  minLength={3}
+                  pattern="[A-Za-z\s\-']+"
+                  title="Please enter your full legal name (letters, spaces, hyphens, and apostrophes only)"
                   required
                 />
                 <p className="text-xs text-gray-600 mt-1">

@@ -14,6 +14,8 @@ export const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // Add token if available (from session/cookie)
+    // TODO: In production, use httpOnly cookies instead of localStorage to prevent XSS attacks
+    // Tokens should be set by the server and automatically sent with requests
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

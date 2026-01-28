@@ -75,7 +75,15 @@ export default function BankProductsPage() {
       userAgent: navigator.userAgent,
     };
 
-    console.log('Submitting consent:', consent);
+    // TODO: Replace with actual API call
+    // await bankProductsApi.submitConsent(consent);
+    // await bankProductsApi.submitApplication({ ... });
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Submitting consent:', consent);
+    }
+    
+    // TODO: Replace alert with proper toast notification
     alert('Bank product selection submitted successfully!');
   };
 
@@ -188,11 +196,11 @@ export default function BankProductsPage() {
                 <div className="mt-4 space-y-3">
                   <div>
                     <label className="label">Routing Number</label>
-                    <input type="text" className="input-field" placeholder="123456789" />
+                    <input type="text" className="input-field" placeholder="123456789" pattern="[0-9]{9}" title="Routing number must be exactly 9 digits" maxLength={9} />
                   </div>
                   <div>
                     <label className="label">Account Number</label>
-                    <input type="text" className="input-field" placeholder="987654321" />
+                    <input type="text" className="input-field" placeholder="987654321" pattern="[0-9]{4,17}" title="Account number must be 4-17 digits" minLength={4} maxLength={17} />
                   </div>
                   <div>
                     <label className="label">Account Type</label>

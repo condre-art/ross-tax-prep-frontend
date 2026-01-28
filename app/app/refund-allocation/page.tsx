@@ -32,9 +32,46 @@ export default function RefundAllocationPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate savings bonds amount
+    if (useSavingsBonds) {
+      const amount = parseFloat(savingsBondsAmount);
+      if (isNaN(amount) || amount < 50) {
+        alert('Savings bonds amount must be at least $50');
+        return;
+      }
+      if (amount > 5000) {
+        alert('Savings bonds amount cannot exceed $5,000');
+        return;
+      }
+    }
+
+    // Validate deposit splits
+    if (useDepositSplits) {
+      const validateAccount = (account: any, name: string) => {
+        if (account.routingNumber || account.accountNumber || account.amount) {
+          if (!account.routingNumber || !account.accountNumber || !account.amount) {
+            alert(`${name}: All fields (routing, account, amount) must be provided`);
+            return false;
+          }
+          const amount = parseFloat(account.amount);
+          if (isNaN(amount) || amount < 0) {
+            alert(`${name}: Amount must be a positive number`);
+            return false;
+          }
+        }
+        return true;
+      };
+
+      if (!validateAccount(account1, 'Account 1') || 
+          !validateAccount(account2, 'Account 2') || 
+          !validateAccount(account3, 'Account 3')) {
+        return;
+      }
+    }
+
     const allocation = {
       clientId: localStorage.getItem('clientId') || 'demo-client-123',
-      savingsBonds: useSavingsBonds
+      savingsBonds: useSavingsBonds && savingsBondsAmount
         ? {
             amount: parseFloat(savingsBondsAmount),
             bondType,
@@ -42,14 +79,21 @@ export default function RefundAllocationPage() {
         : undefined,
       depositSplits: useDepositSplits
         ? {
-            account1: account1.routingNumber ? account1 : undefined,
-            account2: account2.routingNumber ? account2 : undefined,
-            account3: account3.routingNumber ? account3 : undefined,
+            account1: account1.routingNumber && account1.accountNumber ? account1 : undefined,
+            account2: account2.routingNumber && account2.accountNumber ? account2 : undefined,
+            account3: account3.routingNumber && account3.accountNumber ? account3 : undefined,
           }
         : undefined,
     };
 
-    console.log('Submitting refund allocation:', allocation);
+    // TODO: Replace with actual API call
+    // await refundAllocationApi.submit(allocation);
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Submitting refund allocation:', allocation);
+    }
+    
+    // TODO: Replace alert with proper toast notification
     alert('Refund allocation saved successfully!');
   };
 
@@ -106,7 +150,8 @@ export default function RefundAllocationPage() {
                       onChange={(e) => setSavingsBondsAmount(e.target.value)}
                       className="input-field"
                       placeholder="0.00"
-                      min="0"
+                      min="50"
+                      max="5000"
                       step="0.01"
                       required={useSavingsBonds}
                     />
@@ -155,6 +200,9 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount1({ ...account1, routingNumber: e.target.value })}
                         className="input-field"
                         placeholder="123456789"
+                        pattern="[0-9]{9}"
+                        title="Routing number must be exactly 9 digits"
+                        maxLength={9}
                       />
                     </div>
                     <div>
@@ -165,6 +213,10 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount1({ ...account1, accountNumber: e.target.value })}
                         className="input-field"
                         placeholder="987654321"
+                        pattern="[0-9]{4,17}"
+                        title="Account number must be 4-17 digits"
+                        minLength={4}
+                        maxLength={17}
                       />
                     </div>
                     <div>
@@ -207,6 +259,9 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount2({ ...account2, routingNumber: e.target.value })}
                         className="input-field"
                         placeholder="123456789"
+                        pattern="[0-9]{9}"
+                        title="Routing number must be exactly 9 digits"
+                        maxLength={9}
                       />
                     </div>
                     <div>
@@ -217,6 +272,10 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount2({ ...account2, accountNumber: e.target.value })}
                         className="input-field"
                         placeholder="987654321"
+                        pattern="[0-9]{4,17}"
+                        title="Account number must be 4-17 digits"
+                        minLength={4}
+                        maxLength={17}
                       />
                     </div>
                     <div>
@@ -259,6 +318,9 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount3({ ...account3, routingNumber: e.target.value })}
                         className="input-field"
                         placeholder="123456789"
+                        pattern="[0-9]{9}"
+                        title="Routing number must be exactly 9 digits"
+                        maxLength={9}
                       />
                     </div>
                     <div>
@@ -269,6 +331,10 @@ export default function RefundAllocationPage() {
                         onChange={(e) => setAccount3({ ...account3, accountNumber: e.target.value })}
                         className="input-field"
                         placeholder="987654321"
+                        pattern="[0-9]{4,17}"
+                        title="Account number must be 4-17 digits"
+                        minLength={4}
+                        maxLength={17}
                       />
                     </div>
                     <div>

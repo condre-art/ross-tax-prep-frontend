@@ -17,10 +17,12 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Mock authentication - replace with actual API call
+      // TODO: Replace with actual API authentication call
       // For demo purposes, accept any email/password
+      // In production, this should call: await authApi.login(email, password)
+      // and use httpOnly cookies instead of localStorage for token storage
       if (email && password) {
-        // Store mock token
+        // Store mock token (use httpOnly cookies in production)
         localStorage.setItem('token', 'mock-jwt-token');
         localStorage.setItem('clientId', 'demo-client-123');
         
@@ -29,8 +31,9 @@ export default function LoginPage() {
       } else {
         setError('Please enter email and password');
       }
-    } catch (err) {
-      setError('Login failed. Please try again.');
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || 'Login failed. Please check your credentials and try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
