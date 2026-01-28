@@ -1,5 +1,15 @@
+{
   "name": "ross-tax-prep-frontend-template",
+  "version": "1.0.0",
   "description": "IRS e-file approved ERO tax software; bank product compatible; ETIN, EFIN and PTIN tracking with a secure client portal.",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
   "cloudflare": {
     "bindings": {
       "MCP_SERVER_URL": {
@@ -9,3 +19,4 @@
     "label": "Ross Tax Prep Template",
     "products": ["Workers"]
   }
+}
