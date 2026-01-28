@@ -27,6 +27,7 @@ The `bankProduct.ts` file contains type definitions for the bank product system,
 ### Consent & Allocation Types
 - **ConsentRecord**: Interface for tracking client consent to disclosures
 - **SavingsBondPurchase**: Interface for savings bond purchase details
+- **DepositAllocation**: Interface extending DirectDepositDetails with an amount field
 - **RefundAllocation**: Interface for refund allocation across bonds and deposits
 
 ## Usage
