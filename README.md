@@ -33,8 +33,8 @@ This project uses environment variables for configuration. To get started:
    - `NEXT_PUBLIC_SUPPORT_EMAIL` - Support contact email
    - `NEXT_PUBLIC_BASE_URL` - Your application's base URL
    - `NEXT_PUBLIC_API_BASE_URL` - Your API base URL
-   - `NEXT_PUBLIC_FEATURE_BANK_PRODUCTS` - Enable/disable bank products feature
-   - `NEXT_PUBLIC_FEATURE_SAVINGS_BONDS` - Enable/disable savings bonds feature
+   - `NEXT_PUBLIC_FEATURE_BANK_PRODUCTS` - Enable/disable bank products feature (true/false)
+   - `NEXT_PUBLIC_FEATURE_SAVINGS_BONDS` - Enable/disable savings bonds feature (true/false)
    - `NEXT_PUBLIC_DEFAULT_PROVIDER` - Default payment provider (e.g., "SBTPG")
 
 > **Note**: `.env.local` is excluded from version control for security. Never commit sensitive credentials.
