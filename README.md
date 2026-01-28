@@ -20,6 +20,7 @@
 ```
 ross-tax-prep-frontend/
 ├── index.html
+├── config.js
 ├── .env.example
 ├── .env.local
 ├── .gitignore
@@ -51,7 +52,7 @@ This application uses environment variables for configuration. To get started:
 | `NEXT_PUBLIC_FEATURE_SAVINGS_BONDS` | Enable/disable savings bonds feature | `true` or `false` |
 | `NEXT_PUBLIC_DEFAULT_PROVIDER` | Default tax service provider | `"SBTPG"` |
 
-**Note:** All variables prefixed with `NEXT_PUBLIC_` are exposed to the browser and can be accessed in client-side code.
+**Note:** All variables prefixed with `NEXT_PUBLIC_` are exposed to the browser and embedded in the client-side bundle at build time. **Do not use this prefix for sensitive information** like API keys, secrets, or private credentials.
 
 ---
 
