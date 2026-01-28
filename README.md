@@ -19,6 +19,28 @@
 
 ---
 
+## ⚙️ Environment Configuration
+
+This project uses environment variables for configuration. To get started:
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Update the values in `.env.local` with your specific configuration:
+   - `NEXT_PUBLIC_APP_NAME` - Your application name
+   - `NEXT_PUBLIC_SUPPORT_EMAIL` - Support contact email
+   - `NEXT_PUBLIC_BASE_URL` - Your application's base URL
+   - `NEXT_PUBLIC_API_BASE_URL` - Your API base URL
+   - `NEXT_PUBLIC_FEATURE_BANK_PRODUCTS` - Enable/disable bank products feature
+   - `NEXT_PUBLIC_FEATURE_SAVINGS_BONDS` - Enable/disable savings bonds feature
+   - `NEXT_PUBLIC_DEFAULT_PROVIDER` - Default payment provider (e.g., "SBTPG")
+
+> **Note**: `.env.local` is excluded from version control for security. Never commit sensitive credentials.
+
+---
+
 ## 🚀 Deployment
 
 This app is designed to be deployed on **Cloudflare Pages**.
