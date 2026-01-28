@@ -24,12 +24,12 @@
 This app is designed to be deployed on **Cloudflare Pages**.
 
 ### ✅ Default settings:
+
 - **Framework preset**: None
 - **Build command**: _(leave blank)_
 - **Output directory**: `./`
 
 Once deployed, your site will be publicly accessible at:
-
 
 ---
 
@@ -56,11 +56,12 @@ MIT — free to use, modify, and share.
 ross-tax-prep-frontend/
 ├── index.html
 ├── styles/
-│   └── main.css
+│ └── main.css
 ├── scripts/
-│   └── main.js
+│ └── main.js
 ├── README.md
 └── package.json (optional for future use)
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -88,6 +89,7 @@ ross-tax-prep-frontend/
     </main>
 
     <script src="scripts/main.js"></script>
+
   </body>
 </html>
 /* Basic styling */
@@ -100,30 +102,30 @@ body {
 }
 
 header {
-  background-color: #004080;
-  color: white;
-  padding: 1rem;
-  border-radius: 8px;
+background-color: #004080;
+color: white;
+padding: 1rem;
+border-radius: 8px;
 }
 
 main section {
-  background: white;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+background: white;
+padding: 1rem;
+margin: 1rem 0;
+border-radius: 6px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 // Placeholder JS file
 console.log("Ross Tax Prep frontend loaded.");
 
 // Future: Add login logic, form handlers, etc.
 {
-  "name": "ross-tax-prep-frontend",
-  "version": "1.0.0",
-  "description": "Frontend portal for Ross Tax Prep clients and staff",
-  "scripts": {},
-  "author": "condre-art",
-  "license": "MIT"
+"name": "ross-tax-prep-frontend",
+"version": "1.0.0",
+"description": "Frontend portal for Ross Tax Prep clients and staff",
+"scripts": {},
+"author": "condre-art",
+"license": "MIT"
 }
 {
 "name": "ross-tax-prep-frontend",
@@ -141,10 +143,10 @@ console.log("Ross Tax Prep frontend loaded.");
 }
 }
 
-
 // --- File: pages/index.js ---
 export default function Home() {
 return (
+
 <div className="p-6">
 <h1 className="text-2xl font-bold">Ross Tax Prep</h1>
 <p>Choose your dashboard:</p>
@@ -156,10 +158,10 @@ return (
 );
 }
 
-
 // --- File: pages/client/dashboard.js ---
 export default function ClientDashboard() {
 return (
+
 <div className="p-6">
 <h2 className="text-xl font-semibold">Client Dashboard</h2>
 <p>Upload your tax docs and track your return.</p>
@@ -167,17 +169,16 @@ return (
 );
 }
 
-
 // --- File: pages/staff/dashboard.js ---
 export default function StaffDashboard() {
 return (
+
 <div className="p-6">
 <h2 className="text-xl font-semibold">Staff Dashboard</h2>
 <p>Manage client workflows and documentation.</p>
 </div>
 );
 }
-
 
 // --- File: pages/api/clients.js ---
 export default function handler(req, res) {
@@ -190,10 +191,10 @@ return res.status(200).json([
 res.status(405).json({ message: 'Method Not Allowed' });
 }
 
-
 // --- File: components/Navbar.js ---
 export default function Navbar({ user }) {
 return (
+
 <nav className="bg-blue-800 text-white px-4 py-2 flex justify-between">
 <div>Ross Tax Prep</div>
 <div>{user?.email || 'Guest'}</div>
@@ -201,15 +202,14 @@ return (
 );
 }
 
-
 // --- File: components/Layout.js ---
 import Navbar from './Navbar';
 export default function Layout({ children, user }) {
 return (
+
 <div>
 <Navbar user={user} />
 <main className="p-4">{children}</main>
 </div>
 );
 }
-
