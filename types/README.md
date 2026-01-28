@@ -36,6 +36,7 @@ This directory contains TypeScript type definitions for the Ross Tax Prep applic
 - **DirectDepositDetails**: Bank account information for direct deposits
 - **BankProductSelection**: Client's bank product selection
 - **SavingsBondPurchase**: Savings bond purchase details
+- **RefundAllocationDeposit**: Direct deposit details with amount for refund allocation
 - **RefundAllocation**: How refunds are allocated across bonds and deposits
 
 ## Usage

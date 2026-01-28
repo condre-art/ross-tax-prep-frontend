@@ -60,13 +60,12 @@ export interface SavingsBondPurchase {
   recipientName?: string;
 }
 
+export interface RefundAllocationDeposit extends DirectDepositDetails {
+  amountCents: number;
+}
+
 export interface RefundAllocation {
   clientId: string;
   bonds: SavingsBondPurchase[];
-  deposits: Array<{
-    amountCents: number;
-    routingNumber: string;
-    accountNumber: string;
-    accountType: "CHECKING" | "SAVINGS";
-  }>;
+  deposits: RefundAllocationDeposit[];
 }
