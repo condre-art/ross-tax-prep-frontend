@@ -2,6 +2,7 @@
   "name": "ross-cloudbase-proweb-frontend",
   "private": true,
   "version": "0.1.0",
+  "description": "IRS e-file approved ERO tax software; bank product compatible; ETIN, EFIN and PTIN tracking with a secure client portal.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
