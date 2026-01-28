@@ -1,46 +1,151 @@
 # Ross Tax Prep — Frontend
 
-**Frontend web app for Ross Tax Prep**, built to support:
+**Client portal frontend for tax + bookkeeping workflow with bank products**
 
-- ✅ Client Portal — where clients can register, upload documents, and track progress.
-- ✅ Staff Dashboard — where staff can manage clients, files, and workflow.
+## ✅ Features
+
+- **Client Portal** — Secure dashboard for clients to manage their tax preparation
+- **Bank Products** — Full refund transfer and advance application system
+  - ✅ Provider selection (SBTPG / EPS / Refund Advantage)
+  - ✅ Advance decisions with reasons (approved/pending/denied + reason codes/messages)
+  - ✅ Payout methods (Direct Deposit / Check / Card)
+- **Refund Allocation** — Split refunds between accounts and purchase U.S. Savings Bonds
+- **Modern UI** — Built with Next.js 14 App Router + TailwindCSS
 
 ---
 
 ## 📁 Tech Stack
 
-- **HTML5 / CSS3 / JavaScript**
-- Designed for static hosting (Cloudflare Pages)
-- Future-ready for React / Next.js (modular folder structure encouraged)
+- **Next.js 14** (App Router) + TypeScript
+- **TailwindCSS** — Utility-first CSS framework
+- **React Hook Form** + **Zod** — Form handling and validation
+- **TanStack Query** — API state management (ready for integration)
 
 ---
 
 ## 📂 Project Structure
 
+```
+ross-tax-prep-frontend/
+├── app/
+│   ├── app/                      # Authenticated portal routes
+│   │   ├── dashboard/           # Client dashboard
+│   │   ├── bank-products/       # Bank products selection
+│   │   │   └── advance/         # Refund advance application
+│   │   └── refund-allocation/   # Refund splitting & savings bonds
+│   ├── layout.tsx               # Root layout
+│   ├── page.tsx                 # Landing page
+│   └── globals.css              # Global styles
+├── components/
+│   ├── bank-products/           # Bank product components
+│   │   ├── ProviderSelection.tsx
+│   │   ├── PayoutMethodSelector.tsx
+│   │   └── AdvanceDecisionDisplay.tsx
+│   ├── allocation/              # Allocation components
+│   │   └── AllocationForm.tsx
+│   └── shared/                  # Shared components
+├── types/
+│   └── bank-products.ts         # TypeScript definitions
+└── lib/
+    ├── api/                     # API client utilities
+    ├── validators/              # Zod schemas
+    └── formatters/              # Data formatters
+```
+
 ---
 
-## 🚀 Deployment
+## 🚀 Getting Started
 
-This app is designed to be deployed on **Cloudflare Pages**.
+### Installation
 
-### ✅ Default settings:
-- **Framework preset**: None
-- **Build command**: _(leave blank)_
-- **Output directory**: `./`
+```bash
+npm install
+```
 
-Once deployed, your site will be publicly accessible at:
+### Development
 
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Build
+
+```bash
+npm run build
+npm start
+```
 
 ---
 
-## 📌 Roadmap
+## 📋 Available Routes
 
-Planned future improvements:
+### Public Routes
+- `/` — Landing page
+- `/app/dashboard` — Client dashboard (to be auth-protected)
 
-- [ ] Convert to React or Next.js
-- [ ] Add secure login for clients/staff
-- [ ] Build admin analytics dashboard
-- [ ] Mobile-first responsive design
+### Bank Products Routes
+- `/app/bank-products` — Select provider and payout method
+- `/app/bank-products/advance` — Apply for refund advance
+
+### Refund Management
+- `/app/refund-allocation` — Split refund and purchase savings bonds
+
+---
+
+## 🏦 Bank Products Features
+
+### Provider Selection
+Clients can choose from three IRS-approved providers:
+- **SBTPG** (Santa Barbara Tax Products Group)
+- **EPS Financial**
+- **Refund Advantage**
+
+Each provider displays:
+- Description
+- Key features
+- Selection interface
+
+### Refund Advance
+- Apply for advance amounts ($500 - $3,500)
+- View decision status (approved/pending/denied)
+- Display reason codes and messages
+- Show approval amounts and terms
+
+### Payout Methods
+Three options for receiving refunds:
+- **Direct Deposit** — Bank account transfer
+- **Paper Check** — Mailed to address
+- **Prepaid Card** — Loaded onto card
+
+### Refund Allocation
+- Split refunds between multiple destinations
+- Purchase U.S. Savings Bonds (Series I or EE)
+- Track allocated vs. remaining amounts
+- Support for up to 3 allocations
+
+---
+
+## 🔧 Configuration
+
+### Theme Colors
+Defined in `tailwind.config.js`:
+- Navy: `#0F2A44`
+- Gold: `#C9A24D`
+- Off-white: `#F4F6F8`
+
+---
+
+## 📌 Future Enhancements
+
+- [ ] Add authentication (NextAuth)
+- [ ] Integrate with backend API
+- [ ] Add form validation with Zod schemas
+- [ ] Implement TanStack Query for API calls
+- [ ] Add consent/audit tracking
+- [ ] Mobile-responsive improvements
+- [ ] Add admin dashboard routes
 
 ---
 
