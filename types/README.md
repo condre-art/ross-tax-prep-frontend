@@ -31,7 +31,7 @@ The `bankProduct.ts` file contains type definitions for the bank product system,
 
 ## Usage
 
-Import types from the barrel export:
+Import types from the barrel export using the configured path alias:
 
 ```typescript
 import {
@@ -40,13 +40,19 @@ import {
   BankProductType,
   RefundAdvanceOffer,
   BankProductSelection
-} from './types';
+} from '@/types';
 ```
 
 Or import directly from the module:
 
 ```typescript
-import { ProviderId, Provider } from './types/bankProduct';
+import { ProviderId, Provider } from '@/types/bankProduct';
+```
+
+Alternatively, use relative imports from your source files:
+
+```typescript
+import { ProviderId, Provider } from '../types';
 ```
 
 ## Future Additions

@@ -95,7 +95,8 @@ export interface BankProductSelection {
 export interface ConsentRecord {
   clientId: string;
   disclosureId: string;
-  acceptedAtISO: string;
+  /** ISO 8601 formatted timestamp of when the disclosure was accepted */
+  acceptedAt: string;
   ipAddress?: string;
   userAgent?: string;
 }
@@ -109,15 +110,19 @@ export interface SavingsBondPurchase {
 }
 
 /**
+ * Deposit allocation details
+ */
+export interface DepositAllocation extends DirectDepositDetails {
+  amountCents: number;
+}
+
+/**
  * Allocation of refund across bonds and deposit accounts
  */
 export interface RefundAllocation {
   clientId: string;
+  /** Savings bond purchases from the refund */
   bonds: SavingsBondPurchase[];
-  deposits: Array<{
-    amountCents: number;
-    routingNumber: string;
-    accountNumber: string;
-    accountType: "CHECKING" | "SAVINGS";
-  }>;
+  /** Direct deposit allocations to one or more bank accounts */
+  deposits: DepositAllocation[];
 }
