@@ -1,46 +1,170 @@
 # Ross Tax Prep — Frontend
 
-**Frontend web app for Ross Tax Prep**, built to support:
+**Professional tax preparation frontend** built with Next.js 14, supporting:
 
-- ✅ Client Portal — where clients can register, upload documents, and track progress.
-- ✅ Staff Dashboard — where staff can manage clients, files, and workflow.
+- ✅ **Client Portal** — Client intake, document upload, return tracking, e-signature
+- ✅ **Bank Products** — Refund Transfer, Refund Advance, Savings Bonds allocation
+- ✅ **Staff Dashboard** — Client management, application tracking, provider settings
+- ✅ **IRS Compliance** — Form 8879 e-signature, Form 8888 refund allocation, ECOA adverse action
 
 ---
 
 ## 📁 Tech Stack
 
-- **HTML5 / CSS3 / JavaScript**
-- Designed for static hosting (Cloudflare Pages)
-- Future-ready for React / Next.js (modular folder structure encouraged)
+- **Framework**: Next.js 14.1.0 (App Router)
+- **Language**: TypeScript 5.3.3
+- **Styling**: CSS-in-JS with CSS variables
+- **Build**: Production-optimized standalone output
+- **Deployment**: Vercel, Cloudflare Pages, or any Node.js platform
 
 ---
 
 ## 📂 Project Structure
 
+```
+ross-tax-prep-frontend/
+├── app/
+│   ├── layout.tsx                    # Root layout
+│   ├── globals.css                   # Global styles
+│   ├── page.tsx                      # Landing page
+│   ├── pricing/                      # Pricing page
+│   ├── services/                     # Service pages
+│   │   ├── tax/
+│   │   └── bookkeeping/
+│   ├── portal/login/                 # Login page
+│   ├── app/                          # Client portal
+│   │   ├── dashboard/
+│   │   ├── intake/
+│   │   ├── documents/
+│   │   ├── bank-products/            # Main bank products flow
+│   │   │   └── advance/              # Refund advance application
+│   │   ├── refund-allocation/        # Form 8888 allocation
+│   │   ├── return-summary/
+│   │   ├── esign/
+│   │   ├── status/
+│   │   └── support/
+│   └── admin/                        # Admin portal
+│       ├── clients/
+│       ├── applications/
+│       └── settings/
+│           ├── providers/
+│           └── fees/
+├── public/                           # Static assets
+├── package.json
+├── tsconfig.json
+├── next.config.js
+└── .eslintrc.json
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm
+
+### Installation
+```bash
+npm install
+```
+
+### Development
+```bash
+npm run dev
+```
+Visit http://localhost:3000
+
+### Production Build
+```bash
+npm run build
+npm start
+```
+
+### Linting
+```bash
+npm run lint
+```
+
+---
+
+## 🎯 Key Features
+
+### Product Taxonomy
+- **Off-Bank Products**: Direct deposit, paper check, prepaid debit card
+- **Refund Transfer (RT)**: Partner bank routing with fee deduction
+- **Refund Advance**: $250-$4,000 pre-season advances with decisioning
+- **Savings Bonds**: Form 8888-style allocation to bonds and multiple accounts
+
+### User Flows
+1. **Payment Method Selection**: Guided product selection with disclosures
+2. **Refund Advance Application**: Complete intake with approved/pending/denied outcomes
+3. **Refund Allocation**: Real-time validation for bonds and multi-account splits
+
+### Admin Features
+- Client management with search and status filtering
+- Bank product application tracking
+- Provider and fee configuration
+- Application status monitoring
+
+### Compliance
+- IRS Form 8879 (e-file signature authorization)
+- IRS Form 8888 (refund allocation)
+- ECOA-compliant adverse action notices
+- Complete fee disclosures
+
+---
+
+## 📸 Screenshots
+
+See the PR description for complete screenshots of all major features.
+
 ---
 
 ## 🚀 Deployment
 
-This app is designed to be deployed on **Cloudflare Pages**.
+### Vercel (Recommended)
+```bash
+vercel deploy
+```
 
-### ✅ Default settings:
-- **Framework preset**: None
-- **Build command**: _(leave blank)_
-- **Output directory**: `./`
+### Cloudflare Pages
+- **Framework preset**: Next.js
+- **Build command**: `npm run build`
+- **Output directory**: `.next`
 
-Once deployed, your site will be publicly accessible at:
+### Docker
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+CMD ["npm", "start"]
+```
 
+---
+
+## 🔒 Security Considerations
+
+- All sensitive data should be transmitted over HTTPS
+- Implement authentication before production deployment
+- Validate all user inputs server-side
+- Follow OWASP security guidelines
+- Regular security audits recommended
 
 ---
 
 ## 📌 Roadmap
 
-Planned future improvements:
-
-- [ ] Convert to React or Next.js
-- [ ] Add secure login for clients/staff
-- [ ] Build admin analytics dashboard
-- [ ] Mobile-first responsive design
+Future enhancements:
+- [ ] Backend API integration
+- [ ] OAuth authentication
+- [ ] Real underwriting system integration
+- [ ] IRS e-file system connection
+- [ ] PDF generation for returns
+- [ ] Document OCR for W-2/1099s
+- [ ] Multi-language support
 
 ---
 
@@ -53,14 +177,6 @@ Planned future improvements:
 ## 📃 License
 
 MIT — free to use, modify, and share.
-ross-tax-prep-frontend/
-├── index.html
-├── styles/
-│   └── main.css
-├── scripts/
-│   └── main.js
-├── README.md
-└── package.json (optional for future use)
 <!doctype html>
 <html lang="en">
   <head>
