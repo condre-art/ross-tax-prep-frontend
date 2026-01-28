@@ -10,14 +10,15 @@ interface AllocationFormProps {
 }
 
 export default function AllocationForm({ totalRefund, allocations, onAllocationsChange }: AllocationFormProps) {
-  const [newAllocationType, setNewAllocationType] = useState<'savings_bond' | 'direct_deposit' | 'check' | 'card'>('direct_deposit')
+  type AllocationType = 'savings_bond' | 'direct_deposit' | 'check' | 'card'
+  const [newAllocationType, setNewAllocationType] = useState<AllocationType>('direct_deposit')
 
   const allocatedAmount = allocations.reduce((sum, item) => sum + item.amount, 0)
   const remainingAmount = totalRefund - allocatedAmount
 
   const addAllocation = () => {
     const newAllocation: AllocationItem = {
-      id: `alloc-${Date.now()}`,
+      id: crypto.randomUUID(),
       type: newAllocationType,
       amount: 0,
       description: ''
@@ -126,7 +127,7 @@ export default function AllocationForm({ totalRefund, allocations, onAllocations
         <div className="flex gap-4">
           <select
             value={newAllocationType}
-            onChange={(e) => setNewAllocationType(e.target.value as any)}
+            onChange={(e) => setNewAllocationType(e.target.value as AllocationType)}
             className="flex-1 px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-gold"
           >
             <option value="direct_deposit">Direct Deposit</option>

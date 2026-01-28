@@ -17,7 +17,8 @@ export default function RefundAllocationPage() {
   ])
 
   const handleSave = () => {
-    console.log('Saving allocations:', allocations)
+    // TODO: Connect to API endpoint to save allocations
+    // API call would include: allocations array
     alert('Refund allocation saved! (This would connect to your API)')
   }
 

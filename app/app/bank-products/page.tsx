@@ -12,11 +12,8 @@ export default function BankProductsPage() {
   const [refundTransmitter, setRefundTransmitter] = useState(true)
 
   const handleSubmit = () => {
-    console.log({
-      provider: selectedProvider,
-      payoutMethod: selectedPayoutMethod,
-      refundTransmitter
-    })
+    // TODO: Connect to API endpoint to save preferences
+    // API call would include: provider, payoutMethod, refundTransmitter
     alert('Bank product preferences saved! (This would connect to your API)')
   }
 
