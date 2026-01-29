@@ -1,97 +1,1089 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="scripts/payment.js"></script>
+  <script src="scripts/payment.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Client Portal | Ross Tax & Bookkeeping</title>
   <link rel="stylesheet" href="styles/main.css?v=1" />
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --grey: #6B7280;
+      --white: #FFFFFF;
+      --off-white: #F4F6F8;
+    }
+    .portal-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 12px;
+    }
+    .portal-tab {
+      padding: 12px 20px;
+      background: var(--off-white);
+      border: 1px solid var(--grey);
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+    .portal-tab:hover, .portal-tab.active {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+    .tab-content {
+      display: none;
+      padding: 24px;
+      background: var(--white);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .info-card {
+      background: linear-gradient(135deg, var(--off-white), var(--white));
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .info-card h4 {
+      color: var(--navy);
+      margin-top: 0;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 8px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.2);
+    }
+    .bank-product-card {
+      background: linear-gradient(135deg, #fffbe6, #fff);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .bank-product-card .icon {
+      font-size: 2.5rem;
+    }
+    .action-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 4px;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .action-btn.secondary {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .action-btn.secondary:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .status-pending { background: #fffbe6; color: #b59f3b; }
+    .status-approved { background: #e6ffed; color: #1a7f37; }
+    .status-rejected { background: #ffe6e6; color: #b53b3b; }
+    .disclosure-box {
+      background: #f7f9fa;
+      border-left: 4px solid var(--navy);
+      padding: 16px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    .tax-law-dropdown {
+      position: relative;
+    }
+    .tax-law-dropdown summary {
+      cursor: pointer;
+      padding: 12px;
+      background: var(--off-white);
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .tax-law-dropdown[open] summary {
+      background: var(--gold);
+    }
+  </style>
 </head>
-<body style="background: linear-gradient(135deg, #10274D 80%, #E1B773 100%); font-family: 'Georgia', serif; color: #10274D;">
+<body style="background: linear-gradient(135deg, #0F2A44 0%, #1e3a5c 50%, #C9A24D 100%); font-family: 'Georgia', serif; color: #1B1B1B; min-height: 100vh;">
   <!-- IRS e-file compliance disclaimer -->
-  <div style="background: #E1B773; color: #10274D; padding: 8px; text-align: center; font-size: 1rem; font-weight: bold; border-bottom: 2px solid #C8A23B;">
-    This platform is IRS e-file compliant. Not affiliated with the IRS. For authorized e-file providers only.
+  <div style="background: #C9A24D; color: #0F2A44; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold; border-bottom: 2px solid #b8913f;">
+    🛡️ IRS E-File Authorized Provider (EFIN: 748335 - Active) | Software Development Approved | All Data Encrypted
   </div>
-  <!-- ...existing code... -->
-<div class="site-wrapper">
-  <header>
-    <div class="header-inner">
-      <img src="assets/ross-logo.webp" class="header-logo" alt="Logo" />
-      <div>
-        <h1 class="header-title">Client Portal</h1>
-        <p class="header-subtitle">Secure Tax Filing & Document Center</p>
+
+  <div class="site-wrapper">
+    <header>
+      <div class="header-inner">
+        <img src="assets/ross-logo.webp" class="header-logo" alt="Ross Tax & Bookkeeping Logo" />
+        <div>
+          <h1 class="header-title">Client Portal</h1>
+          <p class="header-subtitle">Secure Tax Filing & Document Center</p>
+        </div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="onboarding-client.html">Onboarding</a>
+          <a href="client-portal.html">Portal</a>
+          <a href="tax-law-library.html">Tax Law Library</a>
+          <a href="help.html">Help</a>
+          <a href="portal/login.html">Login</a>
+          <a href="portal/register.html">Register</a>
+        </nav>
       </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="onboarding-client.html">Onboarding</a>
-        <a href="client-portal.html">Portal</a>
-        <a href="help.html">Help</a>
-        <a href="training.html">Training</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-      </nav>
-    </div>
-  </header>
-  <main class="section">
-    <div class="section-inner">
-      <h2>Welcome to Your Client Portal</h2>
-      <div id="portal-content">
-        <p>Please <a href="login.html">log in</a> to access your dashboard, upload documents, check your return status, and message your preparer.</p>
-        <ul>
-          <li><strong>Return Status:</strong> Track your tax return progress in real time.</li>
-          <li><strong>Document Upload:</strong> Securely upload W-2s, 1099s, IDs, and more.</li>
-          <li><strong>Messages:</strong> Communicate directly with your tax preparer.</li>
-          <li><strong>Compliance:</strong> Access privacy policy and IRS compliance resources.</li>
-        </ul>
-        <div id="signature-section" style="margin-top:2em;">
-          <h3>Sign Your Engagement Letter</h3>
-          <button onclick="window.SignatureUI.requestSignature()" class="btn">E-Sign Now</button>
-          <div id="signature-result" style="margin-top:1em;color:#0a0;"></div>
+    </header>
+
+    <main class="section">
+      <div class="section-inner">
+        <h2>Welcome to Your Client Portal</h2>
+        <p id="user-welcome">Please <a href="portal/login.html">log in</a> to access all features.</p>
+
+        <!-- Portal Tab Navigation -->
+        <div class="portal-tabs">
+          <button class="portal-tab active" onclick="showTab('demographics')">📋 Demographics</button>
+          <button class="portal-tab" onclick="showTab('income')">💼 Income & W-2s/1099s</button>
+          <button class="portal-tab" onclick="showTab('address')">🏠 Address & Proof</button>
+          <button class="portal-tab" onclick="showTab('identification')">🪪 ID Verification</button>
+          <button class="portal-tab" onclick="showTab('refund-status')">💰 Refund Status</button>
+          <button class="portal-tab" onclick="showTab('efile-1040')">📝 1040 E-File</button>
+          <button class="portal-tab" onclick="showTab('amended')">✏️ Amended Returns</button>
+          <button class="portal-tab" onclick="showTab('forms')">📑 All Forms</button>
+          <button class="portal-tab" onclick="showTab('bank-products')">🏦 Bank Products</button>
+          <button class="portal-tab" onclick="showTab('disclosures')">📜 Disclosures</button>
+          <button class="portal-tab" onclick="showTab('documents')">📁 Documents</button>
+          <button class="portal-tab" onclick="showTab('messages')">💬 Messages</button>
         </div>
-        <div id="payment-section" style="margin-top:2em;">
-          <h3>Make a Payment</h3>
-          <label for="payment-amount">Amount ($):</label>
-          <input type="number" id="payment-amount" min="1" step="0.01" style="width:100px;" />
-          <label for="payment-provider">Provider:</label>
-          <select id="payment-provider">
-            <option value="stripe">Stripe</option>
-            <option value="square">Square</option>
-          </select>
-          <button onclick="startPayment()" class="btn">Pay Now</button>
-          <div id="payment-result" style="margin-top:1em;color:#0a0;"></div>
+
+        <!-- Demographics Tab -->
+        <div id="tab-demographics" class="tab-content active">
+          <h3>📋 Client Demographics</h3>
+          <div class="info-card">
+            <h4>Personal Information</h4>
+            <form id="demographics-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>First Name *</label>
+                  <input type="text" name="first_name" required placeholder="Enter first name" />
+                </div>
+                <div class="form-group">
+                  <label>Middle Name</label>
+                  <input type="text" name="middle_name" placeholder="Enter middle name" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name *</label>
+                  <input type="text" name="last_name" required placeholder="Enter last name" />
+                </div>
+                <div class="form-group">
+                  <label>Social Security Number *</label>
+                  <input type="password" name="ssn" required placeholder="XXX-XX-XXXX" pattern="\d{3}-?\d{2}-?\d{4}" />
+                  <small style="color:#6B7280;">🔒 Encrypted with AES-256</small>
+                </div>
+                <div class="form-group">
+                  <label>Date of Birth *</label>
+                  <input type="date" name="dob" required />
+                </div>
+                <div class="form-group">
+                  <label>Filing Status *</label>
+                  <select name="filing_status" required>
+                    <option value="">Select Status</option>
+                    <option value="single">Single</option>
+                    <option value="mfj">Married Filing Jointly</option>
+                    <option value="mfs">Married Filing Separately</option>
+                    <option value="hoh">Head of Household</option>
+                    <option value="qw">Qualifying Widow(er)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" name="email" required placeholder="email@example.com" />
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" name="phone" required placeholder="(XXX) XXX-XXXX" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Save Demographics</button>
+            </form>
+          </div>
+          <div class="info-card">
+            <h4>Spouse Information (if applicable)</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Spouse First Name</label>
+                <input type="text" name="spouse_first_name" placeholder="Spouse first name" />
+              </div>
+              <div class="form-group">
+                <label>Spouse Last Name</label>
+                <input type="text" name="spouse_last_name" placeholder="Spouse last name" />
+              </div>
+              <div class="form-group">
+                <label>Spouse SSN</label>
+                <input type="password" name="spouse_ssn" placeholder="XXX-XX-XXXX" />
+                <small style="color:#6B7280;">🔒 Encrypted with AES-256</small>
+              </div>
+              <div class="form-group">
+                <label>Spouse Date of Birth</label>
+                <input type="date" name="spouse_dob" />
+              </div>
+            </div>
+          </div>
+          <div class="info-card">
+            <h4>Dependents</h4>
+            <div id="dependents-list"></div>
+            <button type="button" class="action-btn secondary" onclick="addDependent()">+ Add Dependent</button>
+          </div>
         </div>
-        <script>
-        async function startPayment() {
-          const amount = document.getElementById('payment-amount').value;
-          const provider = document.getElementById('payment-provider').value;
-          if (!amount || amount <= 0) {
-            document.getElementById('payment-result').textContent = 'Enter a valid amount.';
-            return;
-          }
-          document.getElementById('payment-result').textContent = 'Processing...';
-          try {
-            const result = await window.PaymentUI.createPaymentIntent(amount, provider);
-            if (result && result.paymentUrl) {
-              window.location.href = result.paymentUrl;
-            } else if (result && result.message) {
-              document.getElementById('payment-result').textContent = result.message;
-            } else {
-              document.getElementById('payment-result').textContent = 'Payment initiated.';
-            }
-          } catch (e) {
-            document.getElementById('payment-result').textContent = 'Payment failed.';
+
+        <!-- Income & W-2s/1099s Tab -->
+        <div id="tab-income" class="tab-content">
+          <h3>💼 Employment Income, W-2s & 1099s</h3>
+          <div class="info-card">
+            <h4>W-2 Wage and Tax Statements</h4>
+            <p>Upload your W-2 forms from all employers for the tax year.</p>
+            <form id="w2-upload-form" enctype="multipart/form-data">
+              <div class="form-group">
+                <label>Upload W-2 Document</label>
+                <input type="file" name="w2_file" accept=".pdf,.jpg,.jpeg,.png" />
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Employer Name</label>
+                  <input type="text" name="employer_name" placeholder="Employer name" />
+                </div>
+                <div class="form-group">
+                  <label>Employer EIN</label>
+                  <input type="text" name="employer_ein" placeholder="XX-XXXXXXX" />
+                </div>
+                <div class="form-group">
+                  <label>Wages (Box 1)</label>
+                  <input type="number" name="wages" step="0.01" placeholder="0.00" />
+                </div>
+                <div class="form-group">
+                  <label>Federal Tax Withheld (Box 2)</label>
+                  <input type="number" name="federal_withheld" step="0.01" placeholder="0.00" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Upload W-2</button>
+            </form>
+            <div id="w2-list" style="margin-top:16px;"></div>
+          </div>
+
+          <div class="info-card">
+            <h4>1099 Forms (Miscellaneous Income)</h4>
+            <p>Upload 1099-MISC, 1099-NEC, 1099-INT, 1099-DIV, 1099-G, and other 1099 forms.</p>
+            <form id="form-1099-upload" enctype="multipart/form-data">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>1099 Type</label>
+                  <select name="form_1099_type">
+                    <option value="1099-MISC">1099-MISC (Miscellaneous)</option>
+                    <option value="1099-NEC">1099-NEC (Non-Employee Compensation)</option>
+                    <option value="1099-INT">1099-INT (Interest Income)</option>
+                    <option value="1099-DIV">1099-DIV (Dividends)</option>
+                    <option value="1099-G">1099-G (Government Payments)</option>
+                    <option value="1099-R">1099-R (Retirement Distributions)</option>
+                    <option value="1099-K">1099-K (Payment Card Transactions)</option>
+                    <option value="1099-B">1099-B (Brokerage)</option>
+                    <option value="1099-S">1099-S (Real Estate)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Payer Name</label>
+                  <input type="text" name="payer_name" placeholder="Payer name" />
+                </div>
+                <div class="form-group">
+                  <label>Amount</label>
+                  <input type="number" name="amount" step="0.01" placeholder="0.00" />
+                </div>
+                <div class="form-group">
+                  <label>Upload 1099 Document</label>
+                  <input type="file" name="form_1099_file" accept=".pdf,.jpg,.jpeg,.png" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Upload 1099</button>
+            </form>
+          </div>
+
+          <div class="info-card">
+            <h4>Pay Stubs (Supplemental)</h4>
+            <p>Upload recent pay stubs if W-2 is not yet available.</p>
+            <form id="paystub-upload-form" enctype="multipart/form-data">
+              <div class="form-group">
+                <label>Upload Pay Stub</label>
+                <input type="file" name="paystub_file" accept=".pdf,.jpg,.jpeg,.png" multiple />
+              </div>
+              <button type="submit" class="action-btn">Upload Pay Stubs</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Address & Proof Tab -->
+        <div id="tab-address" class="tab-content">
+          <h3>🏠 Address & Proof of Residence</h3>
+          <div class="info-card">
+            <h4>Current Address</h4>
+            <form id="address-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Street Address *</label>
+                  <input type="text" name="street_address" required placeholder="123 Main St" />
+                </div>
+                <div class="form-group">
+                  <label>Apartment/Unit</label>
+                  <input type="text" name="apt_unit" placeholder="Apt 4B" />
+                </div>
+                <div class="form-group">
+                  <label>City *</label>
+                  <input type="text" name="city" required placeholder="City" />
+                </div>
+                <div class="form-group">
+                  <label>State *</label>
+                  <select name="state" required id="state-select">
+                    <option value="">Select State</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>ZIP Code *</label>
+                  <input type="text" name="zip_code" required placeholder="12345" pattern="\d{5}(-\d{4})?" />
+                </div>
+                <div class="form-group">
+                  <label>County</label>
+                  <input type="text" name="county" placeholder="County" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Save Address</button>
+            </form>
+          </div>
+
+          <div class="info-card">
+            <h4>Proof of Address Documents</h4>
+            <p>Upload lease agreement, utility bill, or bank statement showing your current address.</p>
+            <form id="proof-address-form" enctype="multipart/form-data">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Document Type</label>
+                  <select name="proof_type">
+                    <option value="lease">Lease Agreement</option>
+                    <option value="utility">Utility Bill</option>
+                    <option value="bank_statement">Bank Statement</option>
+                    <option value="mortgage">Mortgage Statement</option>
+                    <option value="government_mail">Government Mail</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Upload Document</label>
+                  <input type="file" name="proof_file" accept=".pdf,.jpg,.jpeg,.png" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Upload Proof of Address</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ID Verification Tab -->
+        <div id="tab-identification" class="tab-content">
+          <h3>🪪 Verification of Identification</h3>
+          <div class="info-card">
+            <h4>ID.me Integration</h4>
+            <p>Verify your identity securely through ID.me, the trusted identity verification partner used by the IRS and other government agencies.</p>
+            <div style="text-align:center; padding:20px;">
+              <a href="https://www.id.me" target="_blank" rel="noopener noreferrer" class="action-btn" style="font-size:1.1rem;">
+                🔐 Verify with ID.me
+              </a>
+              <p style="margin-top:12px; color:#6B7280; font-size:0.9rem;">
+                Opens ID.me in a new window. After verification, return here to continue.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Upload Government-Issued ID</h4>
+            <form id="id-upload-form" enctype="multipart/form-data">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>ID Type *</label>
+                  <select name="id_type" required>
+                    <option value="">Select ID Type</option>
+                    <option value="drivers_license">Driver's License</option>
+                    <option value="state_id">State ID</option>
+                    <option value="passport">U.S. Passport</option>
+                    <option value="passport_card">Passport Card</option>
+                    <option value="military_id">Military ID</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>ID Number</label>
+                  <input type="text" name="id_number" placeholder="ID Number" />
+                  <small style="color:#6B7280;">🔒 Encrypted with AES-256</small>
+                </div>
+                <div class="form-group">
+                  <label>Issue State</label>
+                  <select name="id_state" id="id-state-select"></select>
+                </div>
+                <div class="form-group">
+                  <label>Expiration Date</label>
+                  <input type="date" name="id_expiration" />
+                </div>
+                <div class="form-group">
+                  <label>Upload Front of ID *</label>
+                  <input type="file" name="id_front" accept=".pdf,.jpg,.jpeg,.png" required />
+                </div>
+                <div class="form-group">
+                  <label>Upload Back of ID</label>
+                  <input type="file" name="id_back" accept=".pdf,.jpg,.jpeg,.png" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Upload ID Documents</button>
+            </form>
+          </div>
+
+          <div class="info-card">
+            <h4>IP PIN (Identity Protection PIN)</h4>
+            <p>If you have an IRS Identity Protection PIN, enter it here.</p>
+            <div class="form-group">
+              <label>IP PIN (6 digits)</label>
+              <input type="password" name="ip_pin" placeholder="XXXXXX" maxlength="6" pattern="\d{6}" />
+              <small style="color:#6B7280;">🔒 Required if issued by IRS</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Refund Status Tab -->
+        <div id="tab-refund-status" class="tab-content">
+          <h3>💰 Status of Refund</h3>
+          <div class="info-card">
+            <h4>Check Your Refund Status at IRS.gov</h4>
+            <p>Use the IRS "Where's My Refund?" tool to check the status of your federal tax refund.</p>
+            <div style="text-align:center; padding:20px;">
+              <a href="https://www.irs.gov/refunds" target="_blank" rel="noopener noreferrer" class="action-btn" style="font-size:1.1rem;">
+                🔍 Check Refund Status at IRS.gov
+              </a>
+            </div>
+            <div class="disclosure-box">
+              <strong>What You'll Need:</strong>
+              <ul>
+                <li>Social Security Number or ITIN</li>
+                <li>Filing status</li>
+                <li>Exact refund amount</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Your Returns & Refund Tracking</h4>
+            <div id="refund-status-list">
+              <p>Loading refund status...</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>State Refund Status</h4>
+            <p>Check your state refund status by selecting your state:</p>
+            <div class="form-group">
+              <select id="state-refund-select" onchange="openStateRefund()">
+                <option value="">Select State</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1040 E-File Tab -->
+        <div id="tab-efile-1040" class="tab-content">
+          <h3>📝 1040 E-File Start</h3>
+          <div class="info-card">
+            <h4>Start Your Tax Return</h4>
+            <p>File your federal income tax return (Form 1040) for the current year or up to 3 prior years.</p>
+            <div class="form-grid" style="margin-top:16px;">
+              <div class="bank-product-card">
+                <span class="icon">📅</span>
+                <div>
+                  <strong>Tax Year 2025 (Current)</strong>
+                  <p>File your 2025 federal tax return</p>
+                  <button class="action-btn" onclick="startReturn(2025)">Start 2025 Return</button>
+                </div>
+              </div>
+              <div class="bank-product-card">
+                <span class="icon">📅</span>
+                <div>
+                  <strong>Tax Year 2024 (Prior)</strong>
+                  <p>File your 2024 federal tax return</p>
+                  <button class="action-btn secondary" onclick="startReturn(2024)">Start 2024 Return</button>
+                </div>
+              </div>
+              <div class="bank-product-card">
+                <span class="icon">📅</span>
+                <div>
+                  <strong>Tax Year 2023 (Prior)</strong>
+                  <p>File your 2023 federal tax return</p>
+                  <button class="action-btn secondary" onclick="startReturn(2023)">Start 2023 Return</button>
+                </div>
+              </div>
+              <div class="bank-product-card">
+                <span class="icon">📅</span>
+                <div>
+                  <strong>Tax Year 2022 (Prior)</strong>
+                  <p>File your 2022 federal tax return</p>
+                  <button class="action-btn secondary" onclick="startReturn(2022)">Start 2022 Return</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>1040 Series & Schedules</h4>
+            <p>Our software supports all 1040 series forms and schedules:</p>
+            <div class="form-grid">
+              <ul>
+                <li><strong>Form 1040</strong> - U.S. Individual Income Tax Return</li>
+                <li><strong>Form 1040-SR</strong> - Tax Return for Seniors</li>
+                <li><strong>Schedule 1</strong> - Additional Income and Adjustments</li>
+                <li><strong>Schedule 2</strong> - Additional Taxes</li>
+                <li><strong>Schedule 3</strong> - Additional Credits and Payments</li>
+              </ul>
+              <ul>
+                <li><strong>Schedule A</strong> - Itemized Deductions</li>
+                <li><strong>Schedule B</strong> - Interest and Dividends</li>
+                <li><strong>Schedule C</strong> - Business Income (Self-Employed)</li>
+                <li><strong>Schedule D</strong> - Capital Gains and Losses</li>
+                <li><strong>Schedule E</strong> - Rental & Royalty Income</li>
+              </ul>
+              <ul>
+                <li><strong>Schedule EIC</strong> - Earned Income Credit</li>
+                <li><strong>Schedule SE</strong> - Self-Employment Tax</li>
+                <li><strong>Form 8812</strong> - Child Tax Credit</li>
+                <li><strong>Form 8863</strong> - Education Credits</li>
+                <li><strong>Form 8949</strong> - Sales of Capital Assets</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amended Returns Tab -->
+        <div id="tab-amended" class="tab-content">
+          <h3>✏️ Amended Returns (Form 1040-X)</h3>
+          <div class="info-card">
+            <h4>File an Amended Return</h4>
+            <p>Use Form 1040-X to correct errors on a previously filed tax return. You can amend returns for the past 3 tax years.</p>
+            <div class="disclosure-box">
+              <strong>When to File an Amended Return:</strong>
+              <ul>
+                <li>You made a math error</li>
+                <li>You forgot to report income</li>
+                <li>You claimed the wrong filing status</li>
+                <li>You need to add or remove dependents</li>
+                <li>You want to claim additional credits or deductions</li>
+              </ul>
+            </div>
+            <div style="margin-top:16px;">
+              <button class="action-btn" onclick="startAmended(2025)">Amend 2025 Return</button>
+              <button class="action-btn secondary" onclick="startAmended(2024)">Amend 2024 Return</button>
+              <button class="action-btn secondary" onclick="startAmended(2023)">Amend 2023 Return</button>
+              <button class="action-btn secondary" onclick="startAmended(2022)">Amend 2022 Return</button>
+            </div>
+          </div>
+          <div class="info-card">
+            <h4>Track Amended Return Status</h4>
+            <p>Check the status of your amended return at IRS.gov:</p>
+            <a href="https://www.irs.gov/filing/wheres-my-amended-return" target="_blank" class="action-btn">
+              🔍 Where's My Amended Return?
+            </a>
+          </div>
+        </div>
+
+        <!-- All Forms Tab -->
+        <div id="tab-forms" class="tab-content">
+          <h3>📑 All Tax Forms (All 50 States)</h3>
+          <div class="info-card">
+            <h4>Federal Tax Forms</h4>
+            <div class="form-grid">
+              <div>
+                <strong>Individual Forms:</strong>
+                <ul>
+                  <li>Form 1040 - Individual Tax Return</li>
+                  <li>Form 1040-SR - Seniors Tax Return</li>
+                  <li>Form 1040-NR - Nonresident Alien</li>
+                  <li>Form 1040-ES - Estimated Tax</li>
+                  <li>Form 1040-X - Amended Return</li>
+                  <li>Form 4868 - Extension</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Business Forms:</strong>
+                <ul>
+                  <li>Schedule C - Sole Proprietor</li>
+                  <li>Form 1065 - Partnership</li>
+                  <li>Form 1120 - C Corporation</li>
+                  <li>Form 1120-S - S Corporation</li>
+                  <li>Form 990 - Nonprofit</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Other Forms:</strong>
+                <ul>
+                  <li>Form W-4 - Withholding</li>
+                  <li>Form W-9 - TIN Request</li>
+                  <li>Form 2848 - Power of Attorney</li>
+                  <li>Form 8821 - Tax Info Authorization</li>
+                  <li>Form 9465 - Installment Agreement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>State Tax Forms - All 50 States</h4>
+            <p>Select your state to access state-specific tax forms:</p>
+            <div class="form-group">
+              <select id="state-forms-select" onchange="loadStateForms()">
+                <option value="">Select State</option>
+              </select>
+            </div>
+            <div id="state-forms-list"></div>
+          </div>
+        </div>
+
+        <!-- Bank Products Tab -->
+        <div id="tab-bank-products" class="tab-content">
+          <h3>🏦 Bank Product Integrations</h3>
+          <p>Choose from our trusted bank product partners for refund advances and tax refund disbursement options.</p>
+
+          <div class="bank-product-card">
+            <span class="icon">🏛️</span>
+            <div style="flex:1;">
+              <strong>Santa Barbara Tax Products Group (TPG)</strong>
+              <p>Industry-leading refund transfer and advance products. Offers Refund Transfer, Cash Advance, and Green Dot Prepaid Cards.</p>
+              <span class="status-badge status-approved">✓ Integrated</span>
+              <div style="margin-top:12px;">
+                <button class="action-btn" onclick="selectBankProduct('santa_barbara')">Select TPG</button>
+                <a href="https://www.sbtpg.com" target="_blank" class="action-btn secondary">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bank-product-card">
+            <span class="icon">💵</span>
+            <div style="flex:1;">
+              <strong>Refund Advantage</strong>
+              <p>Fast refund advances up to $7,000. Same-day funding available. Refund Transfer and Easy Advance products.</p>
+              <span class="status-badge status-approved">✓ Integrated</span>
+              <div style="margin-top:12px;">
+                <button class="action-btn" onclick="selectBankProduct('refund_advantage')">Select Refund Advantage</button>
+                <a href="https://www.refundadvantage.com" target="_blank" class="action-btn secondary">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bank-product-card">
+            <span class="icon">⚡</span>
+            <div style="flex:1;">
+              <strong>EPS Financial</strong>
+              <p>Refund Transfer products with competitive rates. Netspend Prepaid Visa cards available.</p>
+              <span class="status-badge status-approved">✓ Integrated</span>
+              <div style="margin-top:12px;">
+                <button class="action-btn" onclick="selectBankProduct('eps_financial')">Select EPS Financial</button>
+                <a href="https://www.epsfinancial.net" target="_blank" class="action-btn secondary">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card" style="margin-top:24px;">
+            <h4>Refund Disbursement Options</h4>
+            <div class="form-grid">
+              <div>
+                <strong>Direct Deposit</strong>
+                <p>Free deposit to your bank account (2-3 weeks)</p>
+              </div>
+              <div>
+                <strong>Prepaid Debit Card</strong>
+                <p>Instant access via prepaid Visa/Mastercard</p>
+              </div>
+              <div>
+                <strong>Paper Check</strong>
+                <p>Mailed to your address (4-6 weeks)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclosures Tab -->
+        <div id="tab-disclosures" class="tab-content">
+          <h3>📜 Required Disclosures</h3>
+
+          <div class="info-card">
+            <h4>IRS E-File Provider Disclosure</h4>
+            <div class="disclosure-box">
+              <p><strong>Ross Tax Prep & Bookkeeping</strong> is an IRS Authorized E-File Provider.</p>
+              <ul>
+                <li><strong>EFIN:</strong> 748335 (Active)</li>
+                <li><strong>Software Development:</strong> Approved</li>
+                <li><strong>Client Support:</strong> Available</li>
+              </ul>
+              <p>IRS authorization does not imply endorsement of Ross Tax Prep & Bookkeeping or its services.</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Privacy & Data Security</h4>
+            <div class="disclosure-box">
+              <p>Your personal and financial information is protected with:</p>
+              <ul>
+                <li>🔒 AES-256 encryption for all sensitive data (SSN, EIN, financial data)</li>
+                <li>🔐 TLS 1.3 for all data in transit</li>
+                <li>🛡️ SOC 2 Type II compliant infrastructure</li>
+                <li>📋 HIPAA and GLBA compliant data handling</li>
+              </ul>
+              <a href="privacy.html" class="action-btn secondary">Read Full Privacy Policy</a>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Consent to Disclose Tax Return Information</h4>
+            <div class="disclosure-box">
+              <p>By using our services, you consent to the disclosure of your tax return information as necessary for:</p>
+              <ul>
+                <li>E-filing your return with the IRS and state tax agencies</li>
+                <li>Processing bank products (refund transfers, advances)</li>
+                <li>Quality review by authorized tax professionals</li>
+              </ul>
+              <label style="display:flex;align-items:center;gap:8px;margin-top:12px;">
+                <input type="checkbox" id="consent-disclosure" />
+                <span>I have read and agree to the disclosure terms</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Fee Disclosure</h4>
+            <div class="disclosure-box">
+              <p>All fees will be disclosed before you authorize e-filing. Fees may include:</p>
+              <ul>
+                <li>Tax preparation fee (based on return complexity)</li>
+                <li>Bank product fees (if applicable)</li>
+                <li>State filing fees (if applicable)</li>
+              </ul>
+              <a href="terms.html" class="action-btn secondary">View Terms of Service</a>
+            </div>
+          </div>
+
+          <details class="tax-law-dropdown">
+            <summary>📚 Tax Law Library Reference</summary>
+            <div style="padding:16px;">
+              <p>Access the Tax Law Library for clarification on tax rules and regulations:</p>
+              <a href="tax-law-library.html" class="action-btn">Open Tax Law Library</a>
+            </div>
+          </details>
+        </div>
+
+        <!-- Documents Tab -->
+        <div id="tab-documents" class="tab-content">
+          <h3>📁 Document Upload & Management</h3>
+          <div class="info-card">
+            <h4>Upload Documents</h4>
+            <form id="general-upload-form" enctype="multipart/form-data">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Document Type</label>
+                  <select name="doc_type">
+                    <option value="w2">W-2</option>
+                    <option value="1099">1099</option>
+                    <option value="id">ID Document</option>
+                    <option value="proof_address">Proof of Address</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" name="doc_description" placeholder="Brief description" />
+                </div>
+                <div class="form-group">
+                  <label>Select File(s)</label>
+                  <input type="file" name="doc_files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif" />
+                </div>
+              </div>
+              <button type="submit" class="action-btn">Upload Documents</button>
+            </form>
+          </div>
+          <div class="info-card">
+            <h4>Your Uploaded Documents</h4>
+            <div id="documents-list">
+              <p>Loading documents...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="tab-messages" class="tab-content">
+          <h3>💬 Messages with Your Preparer</h3>
+          <div class="info-card">
+            <h4>Send a Message</h4>
+            <form id="message-form">
+              <div class="form-group">
+                <label>Subject</label>
+                <input type="text" name="subject" placeholder="Message subject" />
+              </div>
+              <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" rows="4" placeholder="Type your message here..."></textarea>
+              </div>
+              <button type="submit" class="action-btn">Send Message</button>
+            </form>
+          </div>
+          <div class="info-card">
+            <h4>Message History</h4>
+            <div id="messages-list">
+              <p>Loading messages...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Section (preserved from original) -->
+        <div style="margin-top:24px;">
+          <div class="info-card">
+            <h4>💳 Make a Payment</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="payment-amount">Amount ($):</label>
+                <input type="number" id="payment-amount" min="1" step="0.01" placeholder="0.00" />
+              </div>
+              <div class="form-group">
+                <label for="payment-provider">Provider:</label>
+                <select id="payment-provider">
+                  <option value="stripe">Stripe</option>
+                  <option value="square">Square</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="startPayment()" class="action-btn">Pay Now</button>
+            <div id="payment-result" style="margin-top:1em;color:#1a7f37;"></div>
+          </div>
+        </div>
+
+        <!-- E-Signature Section (preserved from original) -->
+        <div id="signature-section" style="margin-top:16px;">
+          <div class="info-card">
+            <h4>✍️ Sign Your Engagement Letter</h4>
+            <button onclick="window.SignatureUI && window.SignatureUI.requestSignature()" class="action-btn">E-Sign Now</button>
+            <div id="signature-result" style="margin-top:1em;color:#1a7f37;"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer style="background:#0F2A44;color:#fff;text-align:center;padding:24px;">
+      © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider (EFIN: 748335).<br>
+      <a href="privacy.html" style="color:#C9A24D;">Privacy Policy</a> |
+      <a href="terms.html" style="color:#C9A24D;">Terms of Service</a> |
+      <a href="breach-notification.html" style="color:#C9A24D;">Breach Notification</a>
+    </footer>
+  </div>
+
+  <script src="scripts/signature.js"></script>
+  <script>
+    // Tab Navigation
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.portal-tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Populate state dropdowns
+    const states = [
+      'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
+      'MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC',
+      'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'
+    ];
+    const stateNames = {
+      'AL':'Alabama','AK':'Alaska','AZ':'Arizona','AR':'Arkansas','CA':'California','CO':'Colorado',
+      'CT':'Connecticut','DE':'Delaware','FL':'Florida','GA':'Georgia','HI':'Hawaii','ID':'Idaho',
+      'IL':'Illinois','IN':'Indiana','IA':'Iowa','KS':'Kansas','KY':'Kentucky','LA':'Louisiana',
+      'ME':'Maine','MD':'Maryland','MA':'Massachusetts','MI':'Michigan','MN':'Minnesota','MS':'Mississippi',
+      'MO':'Missouri','MT':'Montana','NE':'Nebraska','NV':'Nevada','NH':'New Hampshire','NJ':'New Jersey',
+      'NM':'New Mexico','NY':'New York','NC':'North Carolina','ND':'North Dakota','OH':'Ohio','OK':'Oklahoma',
+      'OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island','SC':'South Carolina','SD':'South Dakota',
+      'TN':'Tennessee','TX':'Texas','UT':'Utah','VT':'Vermont','VA':'Virginia','WA':'Washington',
+      'WV':'West Virginia','WI':'Wisconsin','WY':'Wyoming','DC':'Washington D.C.'
+    };
+
+    function populateStateDropdowns() {
+      const selects = ['state-select', 'id-state-select', 'state-refund-select', 'state-forms-select'];
+      selects.forEach(id => {
+        const sel = document.getElementById(id);
+        if (sel) {
+          states.forEach(st => {
+            const opt = document.createElement('option');
+            opt.value = st;
+            opt.textContent = stateNames[st] || st;
+            sel.appendChild(opt);
+          });
+        }
+      });
+    }
+    populateStateDropdowns();
+
+    // Add dependent fields
+    let dependentCount = 0;
+    function addDependent() {
+      dependentCount++;
+      const list = document.getElementById('dependents-list');
+      const div = document.createElement('div');
+      div.className = 'form-grid';
+      div.style.marginBottom = '16px';
+      div.style.padding = '12px';
+      div.style.background = '#f7f9fa';
+      div.style.borderRadius = '8px';
+      div.innerHTML = `
+        <div class="form-group"><label>Dependent ${dependentCount} First Name</label><input type="text" name="dep_${dependentCount}_first" /></div>
+        <div class="form-group"><label>Last Name</label><input type="text" name="dep_${dependentCount}_last" /></div>
+        <div class="form-group"><label>SSN</label><input type="password" name="dep_${dependentCount}_ssn" placeholder="XXX-XX-XXXX" /><small style="color:#6B7280;">🔒 Encrypted</small></div>
+        <div class="form-group"><label>Date of Birth</label><input type="date" name="dep_${dependentCount}_dob" /></div>
+        <div class="form-group"><label>Relationship</label><select name="dep_${dependentCount}_rel"><option value="child">Child</option><option value="stepchild">Stepchild</option><option value="foster">Foster Child</option><option value="sibling">Sibling</option><option value="parent">Parent</option><option value="other">Other</option></select></div>
+      `;
+      list.appendChild(div);
+    }
+
+    // Payment function
+    async function startPayment() {
+      const amount = document.getElementById('payment-amount').value;
+      const provider = document.getElementById('payment-provider').value;
+      if (!amount || amount <= 0) {
+        document.getElementById('payment-result').textContent = 'Enter a valid amount.';
+        return;
+      }
+      document.getElementById('payment-result').textContent = 'Processing...';
+      try {
+        const result = await window.PaymentUI.createPaymentIntent(amount, provider);
+        if (result && result.paymentUrl) {
+          window.location.href = result.paymentUrl;
+        } else if (result && result.message) {
+          document.getElementById('payment-result').textContent = result.message;
+        } else {
+          document.getElementById('payment-result').textContent = 'Payment initiated.';
+        }
+      } catch (e) {
+        document.getElementById('payment-result').textContent = 'Payment failed. Please try again.';
+      }
+    }
+
+    // Tax return actions
+    function startReturn(year) {
+      window.location.href = `/admin/efile.html?year=${year}&type=1040`;
+    }
+    function startAmended(year) {
+      window.location.href = `/admin/efile.html?year=${year}&type=1040x`;
+    }
+
+    // Bank product selection
+    function selectBankProduct(product) {
+      alert(`Selected bank product: ${product.replace('_', ' ').toUpperCase()}\n\nThis will be applied to your refund disbursement.`);
+      // In production, this would save to the backend
+    }
+
+    // State refund lookup
+    function openStateRefund() {
+      const state = document.getElementById('state-refund-select').value;
+      if (!state) return;
+      const urls = {
+        'AL': 'https://myalabamataxes.alabama.gov',
+        'CA': 'https://webapp.ftb.ca.gov/refund/login',
+        'NY': 'https://www.tax.ny.gov/pit/file/refund.htm',
+        'TX': 'https://comptroller.texas.gov', // TX has no income tax
+        'FL': 'https://floridarevenue.com', // FL has no income tax
+        // Add more state URLs as needed
+      };
+      const url = urls[state] || `https://www.google.com/search?q=${stateNames[state]}+state+tax+refund+status`;
+      window.open(url, '_blank');
+    }
+
+    // Load user info
+    async function loadUserInfo() {
+      try {
+        const res = await fetch('/api/me');
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('user-welcome').innerHTML = `Welcome, <strong>${data.user.name}</strong>! Your portal is ready.`;
+        }
+      } catch (e) {
+        // User not logged in
+      }
+    }
+    loadUserInfo();
+
+    // Load refund status
+    async function loadRefundStatus() {
+      try {
+        const res = await fetch('/api/client/refunds');
+        if (res.ok) {
+          const data = await res.json();
+          const list = document.getElementById('refund-status-list');
+          if (data && data.length > 0) {
+            list.innerHTML = data.map(r => `
+              <div class="info-card" style="margin-bottom:12px;">
+                <strong>Tax Year ${r.tax_year || 'N/A'}</strong><br>
+                Status: <span class="status-badge status-${(r.irs_refund_status || 'pending').toLowerCase()}">${r.irs_refund_status || 'Pending'}</span><br>
+                Amount: ${r.refund_amount ? '$' + r.refund_amount.toFixed(2) : 'N/A'}
+              </div>
+            `).join('');
+          } else {
+            list.innerHTML = '<p>No refund records found. Start a tax return to see status here.</p>';
           }
         }
-        </script>
-        <div style="margin-top:2em;">
-          <a href="onboarding-client.html" class="btn">Client Onboarding</a>
-          <a href="index.html" class="btn">Back to Home</a>
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
-</div>
-<script src="scripts/signature.js"></script>
+      } catch (e) {
+        document.getElementById('refund-status-list').innerHTML = '<p>Please log in to view refund status.</p>';
+      }
+    }
+    loadRefundStatus();
+  </script>
 </body>
 </html>

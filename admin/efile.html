@@ -1,113 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-File Transmission Portal</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>E-File Transmission Portal | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --grey: #6B7280;
+      --white: #FFFFFF;
+    }
+    .efile-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .efile-section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .efile-section h3 {
+      color: var(--navy);
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.2);
+    }
+    .bank-product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .bank-product-option {
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .bank-product-option:hover {
+      border-color: var(--gold);
+      background: #fffbe6;
+    }
+    .bank-product-option.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #fffbe6, #fff);
+      box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.2);
+    }
+    .bank-product-option h4 {
+      margin: 0 0 8px 0;
+      color: var(--navy);
+    }
+    .bank-product-option p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--grey);
+    }
+    .action-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 4px;
+      font-size: 1rem;
+    }
+    .action-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .action-btn.secondary {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .status-card {
+      background: linear-gradient(135deg, #e6ffed, #fff);
+      border: 2px solid #1a7f37;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+    .status-card.error {
+      background: linear-gradient(135deg, #ffe6e6, #fff);
+      border-color: #b53b3b;
+    }
+    .tax-year-btn {
+      padding: 8px 16px;
+      margin: 4px;
+      border: 2px solid var(--navy);
+      background: var(--white);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tax-year-btn.selected {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .compliance-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fffbe6;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 4px;
+    }
+  </style>
 </head>
-<body>
-  <header>
-    <div class="header-inner">
-      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+<body style="background: linear-gradient(135deg, #f4f6f8, #e9f0ff); min-height: 100vh;">
+  <header style="background: var(--navy); color: white; padding: 16px 24px;">
+    <div class="header-inner" style="display: flex; align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Ross Tax & Bookkeeping Logo" style="width: 80px;" />
       <div>
-        <h1 class="header-title">E-File Transmission</h1>
-        <p class="header-subtitle">Transmit Returns</p>
+        <h1 style="margin: 0; font-size: 1.4rem;">E-File Transmission Portal</h1>
+        <p style="margin: 4px 0 0; opacity: 0.9; font-size: 0.9rem;">IRS Authorized E-File Provider | EFIN: 748335</p>
       </div>
-      <nav>
-        <a href="../index.html">Public Site</a>
-        <a href="index.html">Dashboard</a>
-        <a href="tasks.html">Tasks</a>
-        <a href="clients.html">Clients</a>
-        <a href="returns.html">Returns</a>
-        <a href="efile.html">E-File</a>
-        <a href="register-staff.html">Register Staff</a>
-        <a href="settings.html">Settings</a>
+      <nav style="margin-left: auto; display: flex; gap: 12px;">
+        <a href="../index.html" style="color: white; text-decoration: none;">Public Site</a>
+        <a href="index.html" style="color: white; text-decoration: none;">Dashboard</a>
+        <a href="clients.html" style="color: white; text-decoration: none;">Clients</a>
+        <a href="returns.html" style="color: white; text-decoration: none;">Returns</a>
+        <a href="refunds.html" style="color: white; text-decoration: none;">Refunds</a>
       </nav>
     </div>
   </header>
-  <div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-4">E-File Transmission</h1>
-    <form id="efile-form" class="space-y-4">
-      <div>
-        <label>Return ID <input type="number" name="return_id" required /></label>
-      </div>
-      <div>
-        <label>Client ID <input type="number" name="client_id" required /></label>
-      </div>
-      <div>
-        <label>Preparer ID (optional) <input type="number" name="preparer_id" /></label>
-      </div>
-      <div>
-        <label>Method
-          <select name="method" required>
-            <option value="DIY">DIY (Self-Prepared)</option>
-            <option value="ERO">ERO/PTIN Preparer</option>
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>Bank Product
-          <select name="bank_product_id" id="bank-product-select"></select>
-        </label>
-      </div>
-      <div>
-        <label>Payment Method
-          <select name="payment_method" id="payment-method-select"></select>
-        </label>
-      </div>
-      <button type="submit" class="btn btn-primary">Transmit Return</button>
-    </form>
-    <div id="efile-status" class="mt-6"></div>
-      <div style="margin-top:2em;">
-        <a href="returns.html" class="btn">View Returns</a>
-        <a href="clients.html" class="btn">View Clients</a>
-        <a href="index.html" class="btn">Back to Dashboard</a>
-      </div>
-  </div>
-  <script>
-    async function fetchOptions() {
-      const [bankProducts, paymentMethods] = await Promise.all([
-        fetch('/api/efile/bank-products').then(r => r.json()),
-        fetch('/api/efile/payment-methods').then(r => r.json())
-      ]);
-      const bankSelect = document.getElementById('bank-product-select');
-      bankProducts.forEach(bp => {
-        const opt = document.createElement('option');
-        opt.value = bp.id;
-        opt.textContent = bp.name;
-        bankSelect.appendChild(opt);
-      });
-      const paySelect = document.getElementById('payment-method-select');
-      paymentMethods.forEach(pm => {
-        const opt = document.createElement('option');
-        opt.value = pm;
-        opt.textContent = pm.charAt(0).toUpperCase() + pm.slice(1);
-        paySelect.appendChild(opt);
-      });
-    }
-    fetchOptions();
 
+  <div class="efile-container">
+    <!-- Compliance Badges -->
+    <div style="text-align: center; margin-bottom: 24px;">
+      <span class="compliance-badge">🛡️ IRS E-File Authorized</span>
+      <span class="compliance-badge">🏦 Bank Product Partner</span>
+      <span class="compliance-badge">🔒 AES-256 Encrypted</span>
+      <span class="compliance-badge">📄 EFIN: 748335 (Active)</span>
+    </div>
+
+    <form id="efile-form">
+      <!-- Tax Year Selection -->
+      <div class="efile-section">
+        <h3>📅 Select Tax Year</h3>
+        <p>Choose the tax year for this return (current year + 3 prior years available):</p>
+        <div style="margin-top: 12px;">
+          <button type="button" class="tax-year-btn selected" data-year="2025">2025 (Current)</button>
+          <button type="button" class="tax-year-btn" data-year="2024">2024</button>
+          <button type="button" class="tax-year-btn" data-year="2023">2023</button>
+          <button type="button" class="tax-year-btn" data-year="2022">2022</button>
+        </div>
+        <input type="hidden" name="tax_year" id="tax_year" value="2025" />
+      </div>
+
+      <!-- Return Type Selection -->
+      <div class="efile-section">
+        <h3>📝 Return Type</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Form Type</label>
+            <select name="form_type" required>
+              <optgroup label="Individual Returns">
+                <option value="1040">Form 1040 - Individual Tax Return</option>
+                <option value="1040-SR">Form 1040-SR - Seniors Tax Return</option>
+                <option value="1040-NR">Form 1040-NR - Nonresident Alien</option>
+                <option value="1040-X">Form 1040-X - Amended Return</option>
+              </optgroup>
+              <optgroup label="Business Returns">
+                <option value="1065">Form 1065 - Partnership</option>
+                <option value="1120">Form 1120 - C Corporation</option>
+                <option value="1120-S">Form 1120-S - S Corporation</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Filing Method</label>
+            <select name="method" required>
+              <option value="ERO">ERO/PTIN Preparer</option>
+              <option value="DIY">DIY (Self-Prepared)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client & Return Info -->
+      <div class="efile-section">
+        <h3>👤 Client & Return Information</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Return ID *</label>
+            <input type="number" name="return_id" required placeholder="Enter return ID" />
+          </div>
+          <div class="form-group">
+            <label>Client ID *</label>
+            <input type="number" name="client_id" required placeholder="Enter client ID" />
+          </div>
+          <div class="form-group">
+            <label>Preparer ID (optional)</label>
+            <input type="number" name="preparer_id" placeholder="Preparer ID" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>State Return</label>
+            <select name="state_return" id="state-return-select">
+              <option value="">No State Return</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Product Selection -->
+      <div class="efile-section">
+        <h3>🏦 Bank Product Selection</h3>
+        <p>Select a bank product partner for refund disbursement:</p>
+        <div class="bank-product-grid">
+          <div class="bank-product-option selected" data-product="tpg" onclick="selectBankProduct('tpg')">
+            <h4>🏛️ Santa Barbara TPG</h4>
+            <p>Refund Transfer, Cash Advance, Green Dot Cards</p>
+            <small style="color: #1a7f37;">✓ Recommended</small>
+          </div>
+          <div class="bank-product-option" data-product="refund_advantage" onclick="selectBankProduct('refund_advantage')">
+            <h4>💵 Refund Advantage</h4>
+            <p>Fast advances up to $7,000, Same-day funding</p>
+          </div>
+          <div class="bank-product-option" data-product="eps" onclick="selectBankProduct('eps')">
+            <h4>⚡ EPS Financial</h4>
+            <p>Refund Transfer, Netspend Prepaid Visa</p>
+          </div>
+          <div class="bank-product-option" data-product="none" onclick="selectBankProduct('none')">
+            <h4>❌ No Bank Product</h4>
+            <p>Direct deposit to client's bank account</p>
+          </div>
+        </div>
+        <input type="hidden" name="bank_product_id" id="bank_product_id" value="tpg" />
+      </div>
+
+      <!-- Payment Method -->
+      <div class="efile-section">
+        <h3>💳 Refund Disbursement Method</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Payment Method</label>
+            <select name="payment_method" id="payment-method-select" required>
+              <option value="direct_deposit">Direct Deposit (ACH)</option>
+              <option value="prepaid_card">Prepaid Debit Card</option>
+              <option value="check">Paper Check</option>
+              <option value="split">Split Refund</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="efile-section" style="text-align: center;">
+        <button type="submit" class="action-btn" style="font-size: 1.1rem; padding: 16px 32px;">
+          📤 Transmit Return to IRS
+        </button>
+        <p style="margin-top: 12px; color: #6B7280; font-size: 0.9rem;">
+          By clicking Transmit, you confirm this return is accurate and authorized for e-filing.
+        </p>
+      </div>
+    </form>
+
+    <!-- Status Display -->
+    <div id="efile-status"></div>
+
+    <!-- Navigation -->
+    <div style="margin-top: 24px; text-align: center;">
+      <a href="returns.html" class="action-btn secondary">View Returns</a>
+      <a href="clients.html" class="action-btn secondary">View Clients</a>
+      <a href="refunds.html" class="action-btn secondary">Refund Tracker</a>
+      <a href="index.html" class="action-btn secondary">Back to Dashboard</a>
+    </div>
+  </div>
+
+  <footer style="background: #0F2A44; color: white; text-align: center; padding: 24px; margin-top: 32px;">
+    © 2026 Ross Tax & Bookkeeping. IRS E-File Provider (EFIN: 748335). Internal Use Only.<br>
+    <a href="../privacy.html" style="color: #C9A24D;">Privacy Policy</a> |
+    <a href="../terms.html" style="color: #C9A24D;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color: #C9A24D;">Breach Notification Policy</a>
+  </footer>
+
+  <script>
+    // Populate state dropdown
+    const states = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
+      'MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC',
+      'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
+    const stateNames = {
+      'AL':'Alabama','AK':'Alaska','AZ':'Arizona','AR':'Arkansas','CA':'California','CO':'Colorado',
+      'CT':'Connecticut','DE':'Delaware','FL':'Florida','GA':'Georgia','HI':'Hawaii','ID':'Idaho',
+      'IL':'Illinois','IN':'Indiana','IA':'Iowa','KS':'Kansas','KY':'Kentucky','LA':'Louisiana',
+      'ME':'Maine','MD':'Maryland','MA':'Massachusetts','MI':'Michigan','MN':'Minnesota','MS':'Mississippi',
+      'MO':'Missouri','MT':'Montana','NE':'Nebraska','NV':'Nevada','NH':'New Hampshire','NJ':'New Jersey',
+      'NM':'New Mexico','NY':'New York','NC':'North Carolina','ND':'North Dakota','OH':'Ohio','OK':'Oklahoma',
+      'OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island','SC':'South Carolina','SD':'South Dakota',
+      'TN':'Tennessee','TX':'Texas (No State Income Tax)','UT':'Utah','VT':'Vermont','VA':'Virginia',
+      'WA':'Washington (No State Income Tax)','WV':'West Virginia','WI':'Wisconsin','WY':'Wyoming (No State Income Tax)',
+      'DC':'Washington D.C.'
+    };
+    const stateSelect = document.getElementById('state-return-select');
+    states.forEach(st => {
+      const opt = document.createElement('option');
+      opt.value = st;
+      opt.textContent = stateNames[st] || st;
+      stateSelect.appendChild(opt);
+    });
+
+    // Tax year selection
+    document.querySelectorAll('.tax-year-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tax-year-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('tax_year').value = btn.dataset.year;
+      });
+    });
+
+    // Bank product selection
+    function selectBankProduct(product) {
+      document.querySelectorAll('.bank-product-option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelector(`[data-product="${product}"]`).classList.add('selected');
+      document.getElementById('bank_product_id').value = product;
+    }
+
+    // Check URL params for pre-selection
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('year')) {
+      const year = urlParams.get('year');
+      document.querySelectorAll('.tax-year-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.year === year);
+      });
+      document.getElementById('tax_year').value = year;
+    }
+    if (urlParams.get('type') === '1040x') {
+      document.querySelector('select[name="form_type"]').value = '1040-X';
+    }
+
+    // Form submission
     document.getElementById('efile-form').onsubmit = async (e) => {
       e.preventDefault();
       const form = e.target;
       const data = Object.fromEntries(new FormData(form));
-      // Client-side validation
+
+      // Validation
       if (!data.return_id || !data.client_id || !data.method) {
         alert('Return ID, Client ID, and Method are required.');
         return;
       }
-      if (!data.bank_product_id) {
-        alert('Please select a bank product.');
-        return;
-      }
-      if (!data.payment_method) {
-        alert('Please select a payment method.');
-        return;
-      }
+
+      const statusDiv = document.getElementById('efile-status');
+      statusDiv.innerHTML = '<div class="efile-section" style="text-align:center;">⏳ Transmitting to IRS...</div>';
+
       try {
-        // Step 1: Create transmission
+        // Create transmission
         const txRes = await fetch('/api/efile/transmit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -115,12 +397,17 @@
             return_id: Number(data.return_id),
             client_id: Number(data.client_id),
             preparer_id: data.preparer_id ? Number(data.preparer_id) : undefined,
-            method: data.method
+            method: data.method,
+            tax_year: data.tax_year,
+            form_type: data.form_type,
+            state_return: data.state_return || null
           })
         });
+
         if (!txRes.ok) throw new Error('Failed to create transmission');
         const tx = await txRes.json();
-        // Step 2: Patch with bank product/payment
+
+        // Update with bank product and payment method
         const patchRes = await fetch(`/api/efile/transmit/${tx.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -129,30 +416,37 @@
             payment_method: data.payment_method
           })
         });
-        if (!patchRes.ok) throw new Error('Failed to update transmission');
-        // Step 3: Show status
+
+        if (!patchRes.ok) throw new Error('Failed to update transmission details');
+
+        // Get status
         const statusRes = await fetch(`/api/efile/status/${tx.id}`);
         if (!statusRes.ok) throw new Error('Failed to fetch status');
         const status = await statusRes.json();
-        document.getElementById('efile-status').innerHTML = `
-          <div class="p-4 bg-gray-100 rounded">
-            <h2 class="font-bold">IRS Status: ${status.status}</h2>
-            <div>IRS Submission ID: ${status.irs_submission_id || '-'}</div>
-            <div>Ack Code: ${status.ack_code || '-'}</div>
-            <div>Ack Message: ${status.ack_message || '-'}</div>
+
+        statusDiv.innerHTML = `
+          <div class="status-card">
+            <h3 style="color: #1a7f37; margin-top: 0;">✅ Transmission Successful</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div><strong>IRS Status:</strong> ${status.status || 'Pending'}</div>
+              <div><strong>Submission ID:</strong> ${status.irs_submission_id || 'Pending'}</div>
+              <div><strong>Ack Code:</strong> ${status.ack_code || 'Awaiting'}</div>
+              <div><strong>Bank Product:</strong> ${data.bank_product_id}</div>
+              <div><strong>Payment Method:</strong> ${data.payment_method}</div>
+            </div>
+            <p style="margin-top: 16px;">${status.ack_message || 'Return has been transmitted to the IRS. Check back for acknowledgment.'}</p>
           </div>
         `;
       } catch (err) {
-        document.getElementById('efile-status').innerHTML = `<div class="p-4 bg-red-100 text-red-700 rounded">${err.message}</div>`;
+        statusDiv.innerHTML = `
+          <div class="status-card error">
+            <h3 style="color: #b53b3b; margin-top: 0;">❌ Transmission Failed</h3>
+            <p>${err.message}</p>
+            <p>Please verify all information and try again.</p>
+          </div>
+        `;
       }
     };
   </script>
-</body>
-  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
-    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
-    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
-    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
-  </footer>
-</div>
 </body>
 </html>

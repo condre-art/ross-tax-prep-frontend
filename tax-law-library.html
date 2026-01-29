@@ -3,110 +3,485 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROSS TAX PREP | Tax Law Library & Education</title>
-  <link rel="stylesheet" href="/styles.css" />
-  <link rel="icon" href="/favicon.ico" />
+  <title>Tax Law Library | Ross Tax Prep & Bookkeeping</title>
+  <link rel="stylesheet" href="styles/main.css?v=1" />
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
   <meta name="description" content="Comprehensive IRS Tax Law Library, Education, and Research Portal for Ross Tax Prep & Bookkeeping." />
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fa; margin: 0; }
-    .header { background: #1a237e; color: #fff; padding: 2rem 1rem 1rem 1rem; text-align: center; }
-    .header img { height: 60px; margin-bottom: 1rem; }
-    .nav { background: #283593; color: #fff; display: flex; justify-content: center; gap: 2rem; padding: 0.5rem 0; }
-    .nav a { color: #fff; text-decoration: none; font-weight: 600; letter-spacing: 1px; }
-    .nav a:hover { text-decoration: underline; }
-    .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 2rem; }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    h2 { color: #1a237e; margin-top: 2rem; }
-    .law-list { margin: 1.5rem 0; }
-    .law-list li { margin-bottom: 0.75rem; }
-    .search-bar { margin: 2rem 0; display: flex; gap: 0.5rem; }
-    .search-bar input { flex: 1; padding: 0.75rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
-    .search-bar button { background: #1a237e; color: #fff; border: none; border-radius: 6px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; }
-    .search-bar button:hover { background: #3949ab; }
-    .edu-section { background: #e8eaf6; border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
-    .edu-section h3 { margin-top: 0; }
-    .footer { text-align: center; color: #888; font-size: 0.95rem; margin: 2rem 0 1rem 0; }
-    @media (max-width: 600px) { .container { padding: 1rem; } }
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --grey: #6B7280;
+      --white: #FFFFFF;
+      --off-white: #F4F6F8;
+    }
+    body { 
+      font-family: 'Georgia', serif; 
+      background: linear-gradient(135deg, var(--off-white), #e9f0ff); 
+      margin: 0; 
+      min-height: 100vh;
+    }
+    .lib-header { 
+      background: linear-gradient(135deg, var(--navy), #1e3a5c); 
+      color: var(--white); 
+      padding: 2rem 1rem; 
+      text-align: center; 
+    }
+    .lib-header img { height: 80px; margin-bottom: 1rem; }
+    .lib-header h1 { margin: 0; font-size: 2rem; }
+    .lib-header p { margin: 8px 0 0; opacity: 0.9; }
+    .nav-bar { 
+      background: var(--gold); 
+      display: flex; 
+      justify-content: center; 
+      gap: 1.5rem; 
+      padding: 12px 0; 
+      flex-wrap: wrap;
+    }
+    .nav-bar a { 
+      color: var(--navy); 
+      text-decoration: none; 
+      font-weight: 700; 
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-bar a:hover, .nav-bar a.active { 
+      background: var(--navy);
+      color: var(--white);
+    }
+    .container { 
+      max-width: 1100px; 
+      margin: 2rem auto; 
+      padding: 0 1rem;
+    }
+    .search-section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .search-bar { 
+      display: flex; 
+      gap: 12px; 
+      margin-bottom: 16px;
+    }
+    .search-bar input { 
+      flex: 1; 
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      border: 2px solid #e5e7eb; 
+      font-size: 1rem; 
+    }
+    .search-bar input:focus {
+      border-color: var(--gold);
+      outline: none;
+    }
+    .search-bar button { 
+      background: var(--navy); 
+      color: var(--white); 
+      border: none; 
+      border-radius: 8px; 
+      padding: 12px 24px; 
+      font-size: 1rem; 
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .search-bar button:hover { background: var(--gold); color: var(--navy); }
+    
+    /* Quick Topic Dropdown */
+    .topic-dropdown {
+      margin-bottom: 16px;
+    }
+    .topic-dropdown label {
+      font-weight: 600;
+      color: var(--navy);
+      margin-right: 12px;
+    }
+    .topic-dropdown select {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 2px solid var(--gold);
+      font-size: 1rem;
+      min-width: 300px;
+      cursor: pointer;
+    }
+    
+    .section-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .section-card h2 {
+      color: var(--navy);
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    .section-card h3 {
+      color: var(--navy);
+      margin-top: 0;
+    }
+    
+    /* Accordion/Dropdown Sections */
+    details {
+      background: var(--off-white);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #e5e7eb;
+    }
+    details summary {
+      padding: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--navy);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before {
+      content: '▶';
+      font-size: 0.8rem;
+      transition: transform 0.2s;
+    }
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+    details[open] summary {
+      background: var(--gold);
+      border-radius: 8px 8px 0 0;
+    }
+    details .content {
+      padding: 16px;
+    }
+    
+    .law-list { 
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .law-list li { 
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .law-list li:last-child { border-bottom: none; }
+    .law-list li:hover { background: var(--off-white); }
+    .law-list a { 
+      color: var(--navy); 
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .law-list a:hover { color: var(--gold); }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-pub { background: #e6f0ff; color: #2a4fb3; }
+    .badge-form { background: #e6ffed; color: #1a7f37; }
+    .badge-topic { background: #fffbe6; color: #b59f3b; }
+    
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .quick-link {
+      background: linear-gradient(135deg, #fffbe6, var(--white));
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--navy);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .quick-link:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+    }
+    .quick-link .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    
+    .footer { 
+      background: var(--navy);
+      color: var(--white);
+      text-align: center; 
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .footer a { color: var(--gold); }
+    
+    @media (max-width: 600px) { 
+      .container { padding: 1rem; }
+      .topic-dropdown select { min-width: 100%; }
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <img src="/logo.png" alt="ROSS TAX PREP Logo" />
-    <h1>ROSS TAX PREP<br>Tax Law Library & Education</h1>
-    <p>Your trusted resource for IRS tax law, research, and continuing education.</p>
+  <div class="lib-header">
+    <img src="assets/ross-logo.webp" alt="Ross Tax Prep Logo" />
+    <h1>📚 Tax Law Library & Education</h1>
+    <p>Your trusted resource for IRS tax law, research, and clarification</p>
+    <p style="margin-top:8px;"><span style="background:var(--gold);color:var(--navy);padding:4px 12px;border-radius:20px;font-size:0.9rem;">EFIN: 748335 (Active) | IRS E-File Authorized</span></p>
   </div>
-  <nav class="nav">
-    <a href="/index.html">Home</a>
-    <a href="/client-portal.html">Client Portal</a>
-    <a href="/admin-console.html">Admin Console</a>
-    <a href="/help.html">Help</a>
-    <a href="/training.html">Training</a>
-    <a href="/status.html">Status</a>
-    <a href="/tax-law-library.html" style="text-decoration:underline;">Tax Law Library</a>
+  
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="client-portal.html">Client Portal</a>
+    <a href="admin/index.html">Admin Console</a>
+    <a href="help.html">Help</a>
+    <a href="training.html">Training</a>
+    <a href="tax-law-library.html" class="active">Tax Law Library</a>
   </nav>
+
   <div class="container">
-    <h2>IRS Tax Law Library</h2>
-    <form class="search-bar" onsubmit="return false;">
-      <input type="text" id="searchInput" placeholder="Search IRS code, topic, or keyword..." />
-      <button onclick="searchLaw()">Search</button>
-    </form>
-    <ul class="law-list" id="lawList">
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p17.pdf" target="_blank">Publication 17: Your Federal Income Tax</a></li>
-      <li><a href="https://www.irs.gov/forms-pubs/about-publication-334" target="_blank">Publication 334: Tax Guide for Small Business</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p463.pdf" target="_blank">Publication 463: Travel, Gift, and Car Expenses</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p501.pdf" target="_blank">Publication 501: Dependents, Standard Deduction, and Filing Information</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p502.pdf" target="_blank">Publication 502: Medical and Dental Expenses</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p503.pdf" target="_blank">Publication 503: Child and Dependent Care Expenses</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p505.pdf" target="_blank">Publication 505: Tax Withholding and Estimated Tax</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p529.pdf" target="_blank">Publication 529: Miscellaneous Deductions</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p530.pdf" target="_blank">Publication 530: Tax Information for Homeowners</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p535.pdf" target="_blank">Publication 535: Business Expenses</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p936.pdf" target="_blank">Publication 936: Home Mortgage Interest Deduction</a></li>
-      <li><a href="https://www.irs.gov/pub/irs-pdf/p946.pdf" target="_blank">Publication 946: How to Depreciate Property</a></li>
-      <li><a href="https://www.irs.gov/forms-instructions" target="_blank">All IRS Forms & Instructions</a></li>
-      <li><a href="https://www.irs.gov/tax-professionals/enrolled-agent-information" target="_blank">Enrolled Agent (EA) Information</a></li>
-      <li><a href="https://www.irs.gov/tax-professionals/continuing-education-provider-information" target="_blank">IRS Continuing Education Provider Info</a></li>
-    </ul>
-    <div class="edu-section">
-      <h3>Tax Education & Research</h3>
-      <ul>
-        <li><a href="https://www.irs.gov/taxtopics" target="_blank">IRS Tax Topics Index</a></li>
-        <li><a href="https://www.irs.gov/newsroom" target="_blank">IRS Newsroom & Updates</a></li>
-        <li><a href="https://www.irs.gov/instructions" target="_blank">IRS Instructions Library</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p4012.pdf" target="_blank">Publication 4012: Volunteer Resource Guide</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p4491.pdf" target="_blank">Publication 4491: VITA/TCE Training Guide</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p594.pdf" target="_blank">Publication 594: The IRS Collection Process</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p971.pdf" target="_blank">Publication 971: Innocent Spouse Relief</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p970.pdf" target="_blank">Publication 970: Education Credits</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p590a.pdf" target="_blank">Publication 590-A: Contributions to IRAs</a></li>
-        <li><a href="https://www.irs.gov/pub/irs-pdf/p590b.pdf" target="_blank">Publication 590-B: Distributions from IRAs</a></li>
-      </ul>
-      <p>For advanced research, see the <a href="https://www.law.cornell.edu/uscode/text/26" target="_blank">U.S. Internal Revenue Code (Title 26)</a> and <a href="https://www.irs.gov/pub/irs-pdf/p555.pdf" target="_blank">Publication 555: Community Property</a>.</p>
+    <!-- Search & Quick Topic Selection -->
+    <div class="search-section">
+      <h2 style="margin-top:0;color:var(--navy);">🔍 Search Tax Law Library</h2>
+      <form class="search-bar" onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Search IRS code, publication, topic, or keyword..." />
+        <button onclick="searchLaw()">Search</button>
+      </form>
+      
+      <div class="topic-dropdown">
+        <label for="topicSelect">📋 Quick Topic Dropdown:</label>
+        <select id="topicSelect" onchange="jumpToTopic()">
+          <option value="">-- Select a topic for clarification --</option>
+          <optgroup label="Filing Status">
+            <option value="https://www.irs.gov/help/ita/what-is-my-filing-status">What is My Filing Status?</option>
+            <option value="https://www.irs.gov/taxtopics/tc352">Head of Household</option>
+          </optgroup>
+          <optgroup label="Income & Wages">
+            <option value="https://www.irs.gov/taxtopics/tc401">Wages & Salaries</option>
+            <option value="https://www.irs.gov/taxtopics/tc403">Interest Income</option>
+            <option value="https://www.irs.gov/taxtopics/tc404">Dividends</option>
+            <option value="https://www.irs.gov/taxtopics/tc420">Bartering Income</option>
+          </optgroup>
+          <optgroup label="Deductions">
+            <option value="https://www.irs.gov/taxtopics/tc501">Standard Deduction</option>
+            <option value="https://www.irs.gov/taxtopics/tc503">Itemized Deductions</option>
+            <option value="https://www.irs.gov/taxtopics/tc505">Interest Expense</option>
+            <option value="https://www.irs.gov/taxtopics/tc502">Medical Expenses</option>
+          </optgroup>
+          <optgroup label="Credits">
+            <option value="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit-eitc">Earned Income Credit (EIC)</option>
+            <option value="https://www.irs.gov/credits-deductions/individuals/child-tax-credit">Child Tax Credit</option>
+            <option value="https://www.irs.gov/credits-deductions/individuals/education-credits">Education Credits</option>
+            <option value="https://www.irs.gov/credits-deductions/child-and-dependent-care-credit">Child & Dependent Care Credit</option>
+          </optgroup>
+          <optgroup label="Self-Employment">
+            <option value="https://www.irs.gov/businesses/small-businesses-self-employed/self-employed-individuals-tax-center">Self-Employment Tax Center</option>
+            <option value="https://www.irs.gov/taxtopics/tc554">Self-Employment Tax</option>
+            <option value="https://www.irs.gov/businesses/small-businesses-self-employed/deducting-business-expenses">Business Expenses</option>
+          </optgroup>
+          <optgroup label="Retirement">
+            <option value="https://www.irs.gov/retirement-plans/ira-deduction-limits">IRA Deduction Limits</option>
+            <option value="https://www.irs.gov/taxtopics/tc558">401(k) Plans</option>
+            <option value="https://www.irs.gov/taxtopics/tc410">Pensions & Annuities</option>
+          </optgroup>
+          <optgroup label="Special Situations">
+            <option value="https://www.irs.gov/taxtopics/tc308">Amended Returns</option>
+            <option value="https://www.irs.gov/taxtopics/tc653">IRS Notices</option>
+            <option value="https://www.irs.gov/taxtopics/tc201">Payment Options</option>
+            <option value="https://www.irs.gov/taxtopics/tc202">Installment Agreements</option>
+          </optgroup>
+        </select>
+      </div>
     </div>
-    <div class="edu-section">
-      <h3>Continuing Education & Certification</h3>
-      <ul>
-        <li><a href="/training.html">ROSS TAX PREP Staff Training Portal</a></li>
-        <li><a href="https://www.irs.gov/tax-professionals/continuing-education-provider-information" target="_blank">IRS CE Provider Info</a></li>
-        <li><a href="https://www.irs.gov/tax-professionals/enrolled-agent-information" target="_blank">Enrolled Agent (EA) Program</a></li>
-        <li><a href="https://www.irs.gov/tax-professionals/annual-filing-season-program" target="_blank">Annual Filing Season Program (AFSP)</a></li>
+
+    <!-- Quick Links -->
+    <div class="section-card">
+      <h2>⚡ Quick Access</h2>
+      <div class="quick-links">
+        <a href="https://www.irs.gov/forms-instructions" target="_blank" class="quick-link">
+          <span class="icon">📄</span>
+          IRS Forms & Instructions
+        </a>
+        <a href="https://www.irs.gov/refunds" target="_blank" class="quick-link">
+          <span class="icon">💰</span>
+          Where's My Refund?
+        </a>
+        <a href="https://www.irs.gov/taxtopics" target="_blank" class="quick-link">
+          <span class="icon">📋</span>
+          Tax Topics Index
+        </a>
+        <a href="https://www.law.cornell.edu/uscode/text/26" target="_blank" class="quick-link">
+          <span class="icon">⚖️</span>
+          IRC Title 26
+        </a>
+      </div>
+    </div>
+
+    <!-- IRS Publications -->
+    <div class="section-card">
+      <h2>📖 IRS Publications</h2>
+      
+      <details open>
+        <summary>📘 Essential Publications (Most Used)</summary>
+        <div class="content">
+          <ul class="law-list" id="lawList">
+            <li><span class="badge badge-pub">Pub 17</span><a href="https://www.irs.gov/pub/irs-pdf/p17.pdf" target="_blank">Your Federal Income Tax (Comprehensive Guide)</a></li>
+            <li><span class="badge badge-pub">Pub 501</span><a href="https://www.irs.gov/pub/irs-pdf/p501.pdf" target="_blank">Dependents, Standard Deduction, and Filing Information</a></li>
+            <li><span class="badge badge-pub">Pub 505</span><a href="https://www.irs.gov/pub/irs-pdf/p505.pdf" target="_blank">Tax Withholding and Estimated Tax</a></li>
+            <li><span class="badge badge-pub">Pub 502</span><a href="https://www.irs.gov/pub/irs-pdf/p502.pdf" target="_blank">Medical and Dental Expenses</a></li>
+            <li><span class="badge badge-pub">Pub 503</span><a href="https://www.irs.gov/pub/irs-pdf/p503.pdf" target="_blank">Child and Dependent Care Expenses</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>💼 Business & Self-Employment</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-pub">Pub 334</span><a href="https://www.irs.gov/pub/irs-pdf/p334.pdf" target="_blank">Tax Guide for Small Business</a></li>
+            <li><span class="badge badge-pub">Pub 535</span><a href="https://www.irs.gov/pub/irs-pdf/p535.pdf" target="_blank">Business Expenses</a></li>
+            <li><span class="badge badge-pub">Pub 463</span><a href="https://www.irs.gov/pub/irs-pdf/p463.pdf" target="_blank">Travel, Gift, and Car Expenses</a></li>
+            <li><span class="badge badge-pub">Pub 587</span><a href="https://www.irs.gov/pub/irs-pdf/p587.pdf" target="_blank">Business Use of Your Home</a></li>
+            <li><span class="badge badge-pub">Pub 946</span><a href="https://www.irs.gov/pub/irs-pdf/p946.pdf" target="_blank">How to Depreciate Property</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>🏠 Home & Property</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-pub">Pub 530</span><a href="https://www.irs.gov/pub/irs-pdf/p530.pdf" target="_blank">Tax Information for Homeowners</a></li>
+            <li><span class="badge badge-pub">Pub 936</span><a href="https://www.irs.gov/pub/irs-pdf/p936.pdf" target="_blank">Home Mortgage Interest Deduction</a></li>
+            <li><span class="badge badge-pub">Pub 523</span><a href="https://www.irs.gov/pub/irs-pdf/p523.pdf" target="_blank">Selling Your Home</a></li>
+            <li><span class="badge badge-pub">Pub 527</span><a href="https://www.irs.gov/pub/irs-pdf/p527.pdf" target="_blank">Residential Rental Property</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>🎓 Education & Credits</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-pub">Pub 970</span><a href="https://www.irs.gov/pub/irs-pdf/p970.pdf" target="_blank">Tax Benefits for Education</a></li>
+            <li><span class="badge badge-pub">Pub 596</span><a href="https://www.irs.gov/pub/irs-pdf/p596.pdf" target="_blank">Earned Income Credit (EIC)</a></li>
+            <li><span class="badge badge-pub">Pub 972</span><a href="https://www.irs.gov/pub/irs-pdf/p972.pdf" target="_blank">Child Tax Credit</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>🏦 Retirement & IRAs</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-pub">Pub 590-A</span><a href="https://www.irs.gov/pub/irs-pdf/p590a.pdf" target="_blank">Contributions to IRAs</a></li>
+            <li><span class="badge badge-pub">Pub 590-B</span><a href="https://www.irs.gov/pub/irs-pdf/p590b.pdf" target="_blank">Distributions from IRAs</a></li>
+            <li><span class="badge badge-pub">Pub 575</span><a href="https://www.irs.gov/pub/irs-pdf/p575.pdf" target="_blank">Pension and Annuity Income</a></li>
+            <li><span class="badge badge-pub">Pub 560</span><a href="https://www.irs.gov/pub/irs-pdf/p560.pdf" target="_blank">Retirement Plans for Small Business</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>⚖️ Special Situations</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-pub">Pub 971</span><a href="https://www.irs.gov/pub/irs-pdf/p971.pdf" target="_blank">Innocent Spouse Relief</a></li>
+            <li><span class="badge badge-pub">Pub 594</span><a href="https://www.irs.gov/pub/irs-pdf/p594.pdf" target="_blank">The IRS Collection Process</a></li>
+            <li><span class="badge badge-pub">Pub 555</span><a href="https://www.irs.gov/pub/irs-pdf/p555.pdf" target="_blank">Community Property</a></li>
+            <li><span class="badge badge-pub">Pub 504</span><a href="https://www.irs.gov/pub/irs-pdf/p504.pdf" target="_blank">Divorced or Separated Individuals</a></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <!-- Tax Professional Resources -->
+    <div class="section-card">
+      <h2>👔 Tax Professional Resources</h2>
+      <details open>
+        <summary>📚 Training & Certification</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-topic">Training</span><a href="training.html">Ross Tax Prep Staff Training Portal</a></li>
+            <li><span class="badge badge-topic">EA</span><a href="https://www.irs.gov/tax-professionals/enrolled-agent-information" target="_blank">Enrolled Agent (EA) Information</a></li>
+            <li><span class="badge badge-topic">AFSP</span><a href="https://www.irs.gov/tax-professionals/annual-filing-season-program" target="_blank">Annual Filing Season Program</a></li>
+            <li><span class="badge badge-topic">CE</span><a href="https://www.irs.gov/tax-professionals/continuing-education-provider-information" target="_blank">Continuing Education Provider Info</a></li>
+            <li><span class="badge badge-pub">Pub 4012</span><a href="https://www.irs.gov/pub/irs-pdf/p4012.pdf" target="_blank">Volunteer Resource Guide</a></li>
+            <li><span class="badge badge-pub">Pub 4491</span><a href="https://www.irs.gov/pub/irs-pdf/p4491.pdf" target="_blank">VITA/TCE Training Guide</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔧 E-File & Practice Resources</summary>
+        <div class="content">
+          <ul class="law-list">
+            <li><span class="badge badge-form">All Forms</span><a href="https://www.irs.gov/forms-instructions" target="_blank">All IRS Forms & Instructions</a></li>
+            <li><span class="badge badge-topic">E-File</span><a href="https://www.irs.gov/e-file-providers" target="_blank">E-File Provider Information</a></li>
+            <li><span class="badge badge-topic">PTIN</span><a href="https://www.irs.gov/tax-professionals/ptin-requirements-for-tax-return-preparers" target="_blank">PTIN Requirements</a></li>
+            <li><span class="badge badge-topic">Due Diligence</span><a href="https://www.irs.gov/tax-professionals/due-diligence" target="_blank">Due Diligence Requirements</a></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <!-- Legal Resources -->
+    <div class="section-card">
+      <h2>⚖️ Legal & Code References</h2>
+      <ul class="law-list">
+        <li><span class="badge badge-topic">IRC</span><a href="https://www.law.cornell.edu/uscode/text/26" target="_blank">U.S. Internal Revenue Code (Title 26)</a></li>
+        <li><span class="badge badge-topic">Regs</span><a href="https://www.ecfr.gov/current/title-26" target="_blank">Treasury Regulations (26 CFR)</a></li>
+        <li><span class="badge badge-topic">News</span><a href="https://www.irs.gov/newsroom" target="_blank">IRS Newsroom & Updates</a></li>
+        <li><span class="badge badge-topic">Instructions</span><a href="https://www.irs.gov/instructions" target="_blank">IRS Instructions Library</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer">
-    &copy; 2026 ROSS TAX PREP & BOOKKEEPING | IRS Authorized E-File Provider | <a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a>
-  </div>
+
+  <footer class="footer">
+    &copy; 2026 Ross Tax Prep & Bookkeeping LLC | IRS Authorized E-File Provider (EFIN: 748335)<br>
+    <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a> | <a href="help.html">Help</a>
+  </footer>
+
   <script>
     function searchLaw() {
       const input = document.getElementById('searchInput').value.toLowerCase();
-      const list = document.getElementById('lawList').getElementsByTagName('li');
-      for (let i = 0; i < list.length; i++) {
-        const text = list[i].innerText.toLowerCase();
-        list[i].style.display = text.includes(input) ? '' : 'none';
+      const allLists = document.querySelectorAll('.law-list');
+      allLists.forEach(list => {
+        const items = list.getElementsByTagName('li');
+        for (let i = 0; i < items.length; i++) {
+          const text = items[i].innerText.toLowerCase();
+          items[i].style.display = text.includes(input) ? '' : 'none';
+        }
+      });
+      // Open all details when searching
+      if (input) {
+        document.querySelectorAll('details').forEach(d => d.open = true);
       }
     }
+
+    function jumpToTopic() {
+      const select = document.getElementById('topicSelect');
+      const url = select.value;
+      if (url) {
+        window.open(url, '_blank');
+        select.value = ''; // Reset selection
+      }
+    }
+
+    // Search on Enter key
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchLaw();
+      }
+    });
   </script>
-</body>
-</html>
 </body>
 </html>
