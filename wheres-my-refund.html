@@ -166,9 +166,9 @@
     <h3>Enter Your Information</h3>
     
     <label>Social Security Number or ITIN</label>
-    <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11" />
+    <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11" pattern="\d{3}-\d{2}-\d{4}" title="Format: XXX-XX-XXXX" />
 
-    <label>Filing Status</label>
+    <label for="filingStatus">Filing Status</label>
     <select id="filingStatus" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;">
       <option value="">Select filing status</option>
       <option value="single">Single</option>
@@ -260,7 +260,7 @@
     statusDetails.innerHTML = randomStatus.details;
 
     // In a real implementation, this would query an API
-    console.log('Checking refund status:', { ssn: '***-**-' + ssn.slice(-4), filingStatus, refundAmount });
+    console.log('Checking refund status for user');
   }
 </script>
 
