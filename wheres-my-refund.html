@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where's My Refund - Ross Tax & Bookkeeping</title>
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --off-white: #F4F6F8;
+      --text-dark: #1B1B1B;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      padding: 24px;
+      text-align: center;
+      color: white;
+    }
+
+    header img {
+      max-width: 200px;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      margin: 8px 0;
+      font-size: 2em;
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 10px 5px;
+    }
+
+    .cta-btn:hover {
+      background: #b8913f;
+    }
+
+    .form-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
+
+    .form-section label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--navy);
+    }
+
+    .form-section input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .status-display {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    .status-received {
+      background: #e6f0ff;
+      border-left: 4px solid #2a4fb3;
+    }
+
+    .status-approved {
+      background: #e6ffed;
+      border-left: 4px solid #1a7f37;
+    }
+
+    .status-sent {
+      background: #fffbe6;
+      border-left: 4px solid #b59f3b;
+    }
+
+    .irs-link-section {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border: 2px solid var(--gold);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .info-box {
+      background: #fffbe6;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid var(--gold);
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping Logo" />
+  <h1>Where's My Refund?</h1>
+  <p>Track your tax refund status</p>
+</header>
+
+<div class="container">
+  <h2>Check Your Refund Status</h2>
+  
+  <div class="info-box">
+    <strong>ℹ️ What you'll need:</strong>
+    <ul>
+      <li>Social Security Number (SSN) or Individual Taxpayer Identification Number (ITIN)</li>
+      <li>Filing Status (Single, Married Filing Jointly, etc.)</li>
+      <li>Exact refund amount shown on your return</li>
+    </ul>
+  </div>
+
+  <div class="form-section">
+    <h3>Enter Your Information</h3>
+    
+    <label>Social Security Number or ITIN</label>
+    <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11" />
+
+    <label>Filing Status</label>
+    <select id="filingStatus" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;">
+      <option value="">Select filing status</option>
+      <option value="single">Single</option>
+      <option value="married-joint">Married Filing Jointly</option>
+      <option value="married-separate">Married Filing Separately</option>
+      <option value="head">Head of Household</option>
+      <option value="widow">Qualifying Widow(er)</option>
+    </select>
+
+    <label>Expected Refund Amount</label>
+    <input type="number" id="refundAmount" placeholder="0.00" step="0.01" />
+
+    <button class="cta-btn" onclick="checkRefundStatus()">Check Refund Status</button>
+  </div>
+
+  <div id="statusDisplay" class="status-display">
+    <h3 id="statusTitle">Refund Status</h3>
+    <p id="statusMessage"></p>
+    <div id="statusDetails" style="margin-top: 15px;"></div>
+  </div>
+
+  <div class="irs-link-section">
+    <h3>🔗 IRS Official Tool</h3>
+    <p>You can also check your refund status directly with the IRS:</p>
+    <a href="https://www.irs.gov/refunds" class="cta-btn" target="_blank" rel="noopener noreferrer">IRS "Where's My Refund?" Tool</a>
+    <p style="margin-top: 10px; font-size: 0.9em;">The IRS typically updates refund status information once per day, usually overnight.</p>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <h3>Other Tools</h3>
+    <a href="wheres-my-amended-return.html" class="cta-btn">Where's My Amended Return?</a>
+    <a href="diy-tax-prep.html" class="cta-btn">DIY Tax Prep</a>
+    <a href="client-refund-status.html" class="cta-btn">Client Portal</a>
+    <a href="index.html" class="cta-btn" style="background: white; color: var(--navy); border: 2px solid var(--navy);">Back to Home</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider. All Rights Reserved.<br>
+  <a href="privacy.html" style="color:#ffe9a0; text-decoration:underline;">Privacy Policy</a> |
+  <a href="terms.html" style="color:#ffe9a0; text-decoration:underline;">Terms of Service</a>
+</footer>
+
+<script>
+  function checkRefundStatus() {
+    const ssn = document.getElementById('ssn').value;
+    const filingStatus = document.getElementById('filingStatus').value;
+    const refundAmount = document.getElementById('refundAmount').value;
+
+    if (!ssn || !filingStatus || !refundAmount) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Simulate refund status check
+    const statusDisplay = document.getElementById('statusDisplay');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusMessage = document.getElementById('statusMessage');
+    const statusDetails = document.getElementById('statusDetails');
+
+    // Demo: Random status for demonstration
+    const statuses = [
+      {
+        type: 'received',
+        title: '✅ Return Received',
+        message: 'Your tax return has been received and is being processed.',
+        details: 'Expected processing time: 21 days for e-filed returns. We will update this status as your return progresses.'
+      },
+      {
+        type: 'approved',
+        title: '💰 Refund Approved',
+        message: 'Your refund has been approved!',
+        details: `Refund Amount: $${refundAmount}<br>Expected Direct Deposit Date: Within 5 business days<br>For check by mail: 4-6 weeks`
+      },
+      {
+        type: 'sent',
+        title: '📤 Refund Sent',
+        message: 'Your refund has been sent!',
+        details: `Refund Amount: $${refundAmount}<br>Payment Method: Direct Deposit<br>Check your bank account in 1-2 business days.`
+      }
+    ];
+
+    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+    statusDisplay.className = `status-display status-${randomStatus.type}`;
+    statusDisplay.style.display = 'block';
+    statusTitle.textContent = randomStatus.title;
+    statusMessage.textContent = randomStatus.message;
+    statusDetails.innerHTML = randomStatus.details;
+
+    // In a real implementation, this would query an API
+    console.log('Checking refund status:', { ssn: '***-**-' + ssn.slice(-4), filingStatus, refundAmount });
+  }
+</script>
+
+</body>
+</html>

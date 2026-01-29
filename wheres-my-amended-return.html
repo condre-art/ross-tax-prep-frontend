@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where's My Amended Return - Ross Tax & Bookkeeping</title>
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --off-white: #F4F6F8;
+      --text-dark: #1B1B1B;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      padding: 24px;
+      text-align: center;
+      color: white;
+    }
+
+    header img {
+      max-width: 200px;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      margin: 8px 0;
+      font-size: 2em;
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 10px 5px;
+    }
+
+    .cta-btn:hover {
+      background: #b8913f;
+    }
+
+    .form-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
+
+    .form-section label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--navy);
+    }
+
+    .form-section input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .status-display {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    .status-received {
+      background: #e6f0ff;
+      border-left: 4px solid #2a4fb3;
+    }
+
+    .status-processing {
+      background: #fffbe6;
+      border-left: 4px solid #b59f3b;
+    }
+
+    .status-completed {
+      background: #e6ffed;
+      border-left: 4px solid #1a7f37;
+    }
+
+    .status-adjusted {
+      background: #fff0e6;
+      border-left: 4px solid #d97706;
+    }
+
+    .irs-link-section {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 6px;
+      margin: 20px 0;
+      border: 2px solid var(--gold);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .info-box {
+      background: #fffbe6;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid var(--gold);
+      margin: 20px 0;
+    }
+
+    .warning-box {
+      background: #fff0e6;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #d97706;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping Logo" />
+  <h1>Where's My Amended Return?</h1>
+  <p>Track your Form 1040-X amended return status</p>
+</header>
+
+<div class="container">
+  <h2>Check Your Amended Return Status</h2>
+  
+  <div class="info-box">
+    <strong>ℹ️ About Amended Returns (Form 1040-X):</strong>
+    <p>Use this tool to check the status of an amended tax return filed using Form 1040-X. Processing time for amended returns is typically <strong>up to 16 weeks</strong> (up to 20 weeks if filed during peak season).</p>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ Important:</strong>
+    <ul style="margin: 10px 0 0 0;">
+      <li>You can check the status of your amended return approximately <strong>3 weeks</strong> after you file it</li>
+      <li>Only amended returns for the current year and up to 3 prior years can be tracked</li>
+      <li>It may take up to 16 weeks to process your amended return</li>
+    </ul>
+  </div>
+
+  <div class="form-section">
+    <h3>Enter Your Information</h3>
+    
+    <label>Social Security Number or ITIN</label>
+    <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11" />
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob" />
+
+    <label>ZIP Code (from amended return)</label>
+    <input type="text" id="zipCode" placeholder="12345" maxlength="5" />
+
+    <button class="cta-btn" onclick="checkAmendedStatus()">Check Amended Return Status</button>
+  </div>
+
+  <div id="statusDisplay" class="status-display">
+    <h3 id="statusTitle">Amended Return Status</h3>
+    <p id="statusMessage"></p>
+    <div id="statusDetails" style="margin-top: 15px;"></div>
+    <div id="timeline" style="margin-top: 20px;"></div>
+  </div>
+
+  <div class="irs-link-section">
+    <h3>🔗 IRS Official Tool</h3>
+    <p>You can also check your amended return status directly with the IRS:</p>
+    <a href="https://www.irs.gov/filing/wheres-my-amended-return" class="cta-btn" target="_blank" rel="noopener noreferrer">IRS "Where's My Amended Return?" Tool</a>
+    <p style="margin-top: 10px; font-size: 0.9em;">The IRS updates amended return information once per day, usually overnight.</p>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <h3>Need More Help?</h3>
+    <p><strong>Phone Support:</strong> Call the IRS at 1-866-464-2050 (toll-free) for questions about your amended return.</p>
+    <p style="font-size: 0.9em; color: #666;">Hours: Monday - Friday, 7:00 AM - 7:00 PM (local time)</p>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <h3>Other Tools</h3>
+    <a href="wheres-my-refund.html" class="cta-btn">Where's My Refund?</a>
+    <a href="diy-tax-prep.html" class="cta-btn">DIY Tax Prep</a>
+    <a href="client-refund-status.html" class="cta-btn">Client Portal</a>
+    <a href="index.html" class="cta-btn" style="background: white; color: var(--navy); border: 2px solid var(--navy);">Back to Home</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider. All Rights Reserved.<br>
+  <a href="privacy.html" style="color:#ffe9a0; text-decoration:underline;">Privacy Policy</a> |
+  <a href="terms.html" style="color:#ffe9a0; text-decoration:underline;">Terms of Service</a>
+</footer>
+
+<script>
+  function checkAmendedStatus() {
+    const ssn = document.getElementById('ssn').value;
+    const dob = document.getElementById('dob').value;
+    const zipCode = document.getElementById('zipCode').value;
+
+    if (!ssn || !dob || !zipCode) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Validate ZIP code
+    if (!/^\d{5}$/.test(zipCode)) {
+      alert('Please enter a valid 5-digit ZIP code');
+      return;
+    }
+
+    // Simulate amended return status check
+    const statusDisplay = document.getElementById('statusDisplay');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusMessage = document.getElementById('statusMessage');
+    const statusDetails = document.getElementById('statusDetails');
+    const timeline = document.getElementById('timeline');
+
+    // Demo: Random status for demonstration
+    const statuses = [
+      {
+        type: 'received',
+        title: '✅ Amended Return Received',
+        message: 'Your amended return has been received and is in the processing queue.',
+        details: 'Date Received: ' + new Date().toLocaleDateString() + '<br>Estimated Completion: 16 weeks from receipt date',
+        timeline: `
+          <div style="border-left: 3px solid var(--gold); padding-left: 15px; margin-left: 10px;">
+            <p><strong>✓ Received</strong><br><small>Your Form 1040-X has been received</small></p>
+            <p><strong>→ Processing</strong><br><small>Your return is being reviewed</small></p>
+            <p><strong>○ Adjusted</strong><br><small>Pending completion</small></p>
+          </div>
+        `
+      },
+      {
+        type: 'processing',
+        title: '⏳ Amended Return Being Processed',
+        message: 'Your amended return is currently being processed by the IRS.',
+        details: 'Date Received: ' + new Date(Date.now() - 30*24*60*60*1000).toLocaleDateString() + '<br>Status: Under Review',
+        timeline: `
+          <div style="border-left: 3px solid var(--gold); padding-left: 15px; margin-left: 10px;">
+            <p><strong>✓ Received</strong><br><small>Your Form 1040-X has been received</small></p>
+            <p><strong>✓ Processing</strong><br><small>Your return is being reviewed</small></p>
+            <p><strong>○ Adjusted</strong><br><small>Pending completion</small></p>
+          </div>
+        `
+      },
+      {
+        type: 'completed',
+        title: '✅ Amended Return Completed',
+        message: 'Your amended return has been processed and completed.',
+        details: 'Completion Date: ' + new Date().toLocaleDateString() + '<br>Result: Accepted as filed',
+        timeline: `
+          <div style="border-left: 3px solid #1a7f37; padding-left: 15px; margin-left: 10px;">
+            <p><strong>✓ Received</strong><br><small>Your Form 1040-X has been received</small></p>
+            <p><strong>✓ Processing</strong><br><small>Your return is being reviewed</small></p>
+            <p><strong>✓ Adjusted</strong><br><small>Processing complete</small></p>
+          </div>
+        `
+      },
+      {
+        type: 'adjusted',
+        title: '📋 Amended Return Adjusted',
+        message: 'Your amended return has been processed with adjustments.',
+        details: 'Completion Date: ' + new Date().toLocaleDateString() + '<br>Result: Adjusted - See notice for details<br>A notice explaining the changes will be mailed to you.',
+        timeline: `
+          <div style="border-left: 3px solid #d97706; padding-left: 15px; margin-left: 10px;">
+            <p><strong>✓ Received</strong><br><small>Your Form 1040-X has been received</small></p>
+            <p><strong>✓ Processing</strong><br><small>Your return was reviewed</small></p>
+            <p><strong>✓ Adjusted</strong><br><small>Processing complete with adjustments</small></p>
+          </div>
+        `
+      }
+    ];
+
+    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+    statusDisplay.className = `status-display status-${randomStatus.type}`;
+    statusDisplay.style.display = 'block';
+    statusTitle.textContent = randomStatus.title;
+    statusMessage.textContent = randomStatus.message;
+    statusDetails.innerHTML = randomStatus.details;
+    timeline.innerHTML = randomStatus.timeline;
+
+    // In a real implementation, this would query an API
+    console.log('Checking amended return status:', { ssn: '***-**-' + ssn.slice(-4), dob, zipCode });
+  }
+</script>
+
+</body>
+</html>

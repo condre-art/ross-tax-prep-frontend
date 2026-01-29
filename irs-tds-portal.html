@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRS TDS Tax Pro Portal - Ross Tax & Bookkeeping</title>
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --off-white: #F4F6F8;
+      --text-dark: #1B1B1B;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--navy);
+      padding: 24px;
+      text-align: center;
+      color: white;
+    }
+
+    header img {
+      max-width: 200px;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      margin: 8px 0;
+      font-size: 2em;
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 10px 5px;
+    }
+
+    .cta-btn:hover {
+      background: #b8913f;
+    }
+
+    .cta-btn-secondary {
+      background: white;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+    }
+
+    .pricing-card {
+      background: linear-gradient(135deg, #fffbe6 0%, #ffe9a0 100%);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 30px 0;
+      border: 3px solid var(--gold);
+    }
+
+    .price {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--navy);
+      margin: 15px 0;
+    }
+
+    .price-label {
+      font-size: 1.2em;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .features-list {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .features-list ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .features-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .features-list li:last-child {
+      border-bottom: none;
+    }
+
+    .features-list li:before {
+      content: "✓ ";
+      color: #1a7f37;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .info-box {
+      background: #e6f0ff;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #2a4fb3;
+      margin: 20px 0;
+    }
+
+    .form-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
+
+    .form-section label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--navy);
+    }
+
+    .form-section input,
+    .form-section select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .payment-section {
+      display: none;
+      background: #fffbe6;
+      padding: 20px;
+      border-radius: 6px;
+      margin-top: 20px;
+      border: 2px solid var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping Logo" />
+  <h1>IRS TDS Tax Pro Portal</h1>
+  <p>Professional Document Retrieval Service</p>
+</header>
+
+<div class="container">
+  <h2>Tax Professional Document Retrieval Service</h2>
+  
+  <div class="info-box">
+    <strong>🏛️ IRS Transcript Delivery System (TDS):</strong>
+    <p>Access IRS transcripts and tax documents through our authorized Tax Pro Account portal. Retrieve client documents securely and efficiently for tax preparation, verification, and compliance purposes.</p>
+  </div>
+
+  <div class="pricing-card">
+    <div class="price-label">Self-Service Document Retrieval</div>
+    <div class="price">$85.99</div>
+    <p style="color: var(--navy); margin: 10px 0;">One-time setup and access fee</p>
+    <button class="cta-btn" onclick="showAccessForm()">Get Started Now</button>
+  </div>
+
+  <div class="features-list">
+    <h3>What's Included:</h3>
+    <ul>
+      <li>Secure IRS TDS Tax Pro Account access</li>
+      <li>Retrieve Tax Return Transcripts (Form 1040 series)</li>
+      <li>Wage and Income Transcripts (W-2, 1099, etc.)</li>
+      <li>Account Transcripts (payment history, adjustments)</li>
+      <li>Record of Account (comprehensive tax history)</li>
+      <li>Verification of Non-Filing Letter</li>
+      <li>24/7 self-service document access</li>
+      <li>Secure encrypted document delivery</li>
+      <li>Professional support and guidance</li>
+      <li>EFIN/PTIN verification included</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <strong>📋 Requirements:</strong>
+    <ul style="margin: 10px 0 0 0;">
+      <li>Valid PTIN (Preparer Tax Identification Number)</li>
+      <li>Active EFIN (Electronic Filing Identification Number) - if applicable</li>
+      <li>IRS e-Services account credentials</li>
+      <li>Client authorization (Form 2848 or Form 8821)</li>
+    </ul>
+  </div>
+
+  <div id="accessForm" class="form-section" style="display: none;">
+    <h3>Request Access</h3>
+    
+    <label>Full Name</label>
+    <input type="text" id="fullName" placeholder="Enter your full name" />
+
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="your.email@example.com" />
+
+    <label>PTIN (Preparer Tax Identification Number)</label>
+    <input type="text" id="ptin" placeholder="P00000000" maxlength="9" />
+
+    <label>EFIN (Electronic Filing Identification Number) - Optional</label>
+    <input type="text" id="efin" placeholder="123456" maxlength="6" />
+
+    <label>Business/Firm Name</label>
+    <input type="text" id="businessName" placeholder="Your business name" />
+
+    <label>Service Type</label>
+    <select id="serviceType">
+      <option value="">Select service type</option>
+      <option value="individual">Individual Tax Professional</option>
+      <option value="firm">Tax Preparation Firm</option>
+      <option value="cpa">CPA Firm</option>
+      <option value="attorney">Tax Attorney</option>
+    </select>
+
+    <button class="cta-btn" onclick="proceedToPayment()">Proceed to Payment ($85.99)</button>
+  </div>
+
+  <div id="paymentSection" class="payment-section">
+    <h3>💳 Payment Information</h3>
+    <p>Complete your payment to activate your IRS TDS Tax Pro Portal access.</p>
+    
+    <label style="display: block; margin: 10px 0 5px; font-weight: bold;">Payment Method</label>
+    <select id="paymentMethod" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;">
+      <option value="stripe">Credit/Debit Card (Stripe)</option>
+      <option value="square">Credit/Debit Card (Square)</option>
+      <option value="bank">Bank Transfer (ACH)</option>
+    </select>
+
+    <button class="cta-btn" onclick="processPayment()">Complete Payment - $85.99</button>
+    <button class="cta-btn cta-btn-secondary" onclick="cancelPayment()">Cancel</button>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <h3>Official IRS Resources</h3>
+    <a href="https://www.irs.gov/tax-professionals/transcript-delivery-system-tds" class="cta-btn" target="_blank" rel="noopener noreferrer">IRS TDS Information</a>
+    <a href="https://www.irs.gov/tax-professionals/e-services-online-tools-for-tax-professionals" class="cta-btn" target="_blank" rel="noopener noreferrer">IRS e-Services</a>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <h3>Other Services</h3>
+    <a href="diy-tax-prep.html" class="cta-btn cta-btn-secondary">DIY Tax Prep</a>
+    <a href="wheres-my-refund.html" class="cta-btn cta-btn-secondary">Where's My Refund?</a>
+    <a href="index.html" class="cta-btn cta-btn-secondary">Back to Home</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider. All Rights Reserved.<br>
+  <a href="privacy.html" style="color:#ffe9a0; text-decoration:underline;">Privacy Policy</a> |
+  <a href="terms.html" style="color:#ffe9a0; text-decoration:underline;">Terms of Service</a>
+</footer>
+
+<script>
+  function showAccessForm() {
+    document.getElementById('accessForm').style.display = 'block';
+    document.getElementById('accessForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function proceedToPayment() {
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const ptin = document.getElementById('ptin').value;
+    const businessName = document.getElementById('businessName').value;
+    const serviceType = document.getElementById('serviceType').value;
+
+    if (!fullName || !email || !ptin || !businessName || !serviceType) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Validate PTIN format (starts with P followed by 8 digits)
+    if (!/^P\d{8}$/i.test(ptin)) {
+      alert('Please enter a valid PTIN (format: P00000000)');
+      return;
+    }
+
+    // Store information
+    sessionStorage.setItem('tds_name', fullName);
+    sessionStorage.setItem('tds_email', email);
+    sessionStorage.setItem('tds_ptin', ptin);
+
+    // Show payment section
+    document.getElementById('paymentSection').style.display = 'block';
+    document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function processPayment() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    
+    // Simulate payment processing
+    alert('Processing payment of $85.99...\n\nYou will receive an email with your IRS TDS Tax Pro Portal credentials within 24-48 hours after payment verification.\n\nThank you for your business!');
+    
+    // In a real implementation, this would integrate with payment processors
+    console.log('Payment processed:', {
+      amount: 85.99,
+      method: paymentMethod,
+      service: 'IRS TDS Tax Pro Portal Access'
+    });
+
+    // Reset form
+    document.getElementById('accessForm').style.display = 'none';
+    document.getElementById('paymentSection').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function cancelPayment() {
+    document.getElementById('paymentSection').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
