@@ -410,17 +410,31 @@ nav a:hover {
 
 label {
   display: block;
-  margin-top: 14px;
-  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
 }
 
 input, select, textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px 16px;
   margin-top: 6px;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
   font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #ffffff;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.15);
+  background: #fffef9;
 }
 
 textarea {
@@ -431,18 +445,31 @@ button,
 .button-primary {
   margin-top: 20px;
   width: 100%;
-  padding: 12px;
-  background: var(--navy);
-  color: #ffffff;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--gold) 0%, #d4ae5e 100%);
+  color: var(--navy);
   border: none;
-  font-size: 1rem;
-  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(201, 162, 77, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 button:hover,
 .button-primary:hover {
-  background: #0b2034;
+  background: linear-gradient(135deg, #d4ae5e 0%, var(--gold) 100%);
+  box-shadow: 0 6px 20px rgba(201, 162, 77, 0.4);
+  transform: translateY(-2px);
+}
+
+button:active,
+.button-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(201, 162, 77, 0.3);
 }
 
 /* Footer */
