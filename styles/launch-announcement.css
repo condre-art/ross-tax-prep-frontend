@@ -177,3 +177,112 @@ select:focus {
   color: #475569;
   margin-top: 14px;
 }
+
+/* Launch Announcement Specific Styles */
+.header {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.header img {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  color: white;
+  font-size: clamp(28px, 5vw, 48px);
+  margin: 20px 0 10px;
+  line-height: 1.2;
+}
+
+.header p {
+  color: var(--gold);
+  font-size: 18px;
+  margin: 10px 0 0;
+}
+
+.container h2 {
+  text-align: center;
+  color: var(--navy-dark);
+  font-size: clamp(24px, 4vw, 36px);
+  margin: 40px 0 30px;
+}
+
+.announcement {
+  background: var(--muted);
+  padding: 30px;
+  border-radius: var(--radius);
+  margin: 30px 0;
+  line-height: 1.7;
+}
+
+.announcement ul {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+.announcement li {
+  margin: 10px 0;
+}
+
+.announcement a {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+.social {
+  text-align: center;
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 30px 0;
+}
+
+.social a {
+  display: inline-block;
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--muted);
+  transition: background 0.2s;
+}
+
+.social a:hover {
+  background: var(--gold);
+  color: #1a1a1a;
+}
+
+.social .btn {
+  margin: 10px;
+  background: var(--navy);
+  color: white;
+  font-size: 16px;
+}
+
+.social .btn:hover {
+  background: var(--gold);
+  color: #1a1a1a;
+}
+
+.footer {
+  background: var(--navy);
+  color: #e8eef7;
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+.footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
