@@ -426,12 +426,13 @@ input, select, textarea {
   border: 2px solid #e5e7eb;
   font-family: inherit;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   background: #ffffff;
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: none;
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(201, 162, 77, 0.15);
   background: #fffef9;
@@ -447,13 +448,13 @@ button,
   width: 100%;
   padding: 16px 24px;
   background: linear-gradient(135deg, var(--gold) 0%, #d4ae5e 100%);
-  color: var(--navy);
+  color: #ffffff;
   border: none;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 12px rgba(201, 162, 77, 0.3);
   letter-spacing: 0.5px;
   text-transform: uppercase;
