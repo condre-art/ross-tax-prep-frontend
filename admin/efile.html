@@ -252,20 +252,20 @@
         <h3>🏦 Bank Product Selection</h3>
         <p>Select a bank product partner for refund disbursement:</p>
         <div class="bank-product-grid">
-          <div class="bank-product-option selected" data-product="tpg" onclick="selectBankProduct('tpg')">
+          <div class="bank-product-option selected" data-product="tpg" role="button" tabindex="0" onclick="selectBankProduct('tpg')" onkeypress="if(event.key==='Enter')selectBankProduct('tpg')">
             <h4>🏛️ Santa Barbara TPG</h4>
             <p>Refund Transfer, Cash Advance, Green Dot Cards</p>
             <small style="color: #1a7f37;">✓ Recommended</small>
           </div>
-          <div class="bank-product-option" data-product="refund_advantage" onclick="selectBankProduct('refund_advantage')">
+          <div class="bank-product-option" data-product="refund_advantage" role="button" tabindex="0" onclick="selectBankProduct('refund_advantage')" onkeypress="if(event.key==='Enter')selectBankProduct('refund_advantage')">
             <h4>💵 Refund Advantage</h4>
             <p>Fast advances up to $7,000, Same-day funding</p>
           </div>
-          <div class="bank-product-option" data-product="eps" onclick="selectBankProduct('eps')">
+          <div class="bank-product-option" data-product="eps" role="button" tabindex="0" onclick="selectBankProduct('eps')" onkeypress="if(event.key==='Enter')selectBankProduct('eps')">
             <h4>⚡ EPS Financial</h4>
             <p>Refund Transfer, Netspend Prepaid Visa</p>
           </div>
-          <div class="bank-product-option" data-product="none" onclick="selectBankProduct('none')">
+          <div class="bank-product-option" data-product="none" role="button" tabindex="0" onclick="selectBankProduct('none')" onkeypress="if(event.key==='Enter')selectBankProduct('none')">
             <h4>❌ No Bank Product</h4>
             <p>Direct deposit to client's bank account</p>
           </div>

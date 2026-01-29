@@ -471,7 +471,15 @@
       const select = document.getElementById('topicSelect');
       const url = select.value;
       if (url) {
-        window.open(url, '_blank');
+        try {
+          const newWindow = window.open(url, '_blank');
+          if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            // Popup blocked - fall back to redirect
+            alert('Please allow popups for this site, or click the link below:\n\n' + url);
+          }
+        } catch (e) {
+          alert('Unable to open link. Please try again or visit: ' + url);
+        }
         select.value = ''; // Reset selection
       }
     }

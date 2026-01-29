@@ -140,6 +140,7 @@ Super Admin
 - Make payments
 - E-sign documents
 - Download tax documents
+- Select bank products for own refund disbursement
 
 **Access Level:** Client Only
 
@@ -158,12 +159,15 @@ Super Admin
 | View Own Returns | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | E-File Returns | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | Access Analytics | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Bank Products | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| Configure Bank Products | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Select Bank Products (own) | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 | Issue Certificates | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Upload Documents | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Messages | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Payments | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
 | Tax Law Library | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+**Note:** "Configure Bank Products" refers to setting up bank product partnerships. "Select Bank Products (own)" refers to choosing a bank product for refund disbursement.
 
 ---
 

@@ -64,23 +64,45 @@ The following sensitive data fields are encrypted before storage:
 
 ## Encryption Implementation
 
-### Client-Side Encryption
+### Hybrid Encryption Approach
 
-Before transmission, sensitive fields are encrypted using the public key:
+We use a hybrid encryption approach:
+- **RSA-OAEP** for encrypting/exchanging AES keys (asymmetric)
+- **AES-256-GCM** for encrypting actual data (symmetric)
+
+This provides the security benefits of asymmetric encryption for key exchange while maintaining the performance of symmetric encryption for data.
+
+### Client-Side Encryption (Key Exchange)
+
+Before transmission, the AES key is encrypted using RSA-OAEP:
 
 ```javascript
-// Example: Encrypting SSN before sending to API
-async function encryptSensitiveData(data, publicKey) {
+// Example: Encrypting AES key for secure key exchange
+async function encryptAESKey(aesKey, rsaPublicKey) {
+  const encryptedKey = await window.crypto.subtle.encrypt(
+    { name: "RSA-OAEP" },
+    rsaPublicKey,
+    aesKey
+  );
+  return btoa(String.fromCharCode(...new Uint8Array(encryptedKey)));
+}
+
+// Example: Encrypting sensitive data with AES-256-GCM
+async function encryptSensitiveData(data, aesKey) {
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(data);
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
   
   const encryptedData = await window.crypto.subtle.encrypt(
-    { name: "RSA-OAEP" },
-    publicKey,
+    { name: "AES-GCM", iv: iv },
+    aesKey,
     encodedData
   );
   
-  return btoa(String.fromCharCode(...new Uint8Array(encryptedData)));
+  return {
+    encrypted: btoa(String.fromCharCode(...new Uint8Array(encryptedData))),
+    iv: btoa(String.fromCharCode(...iv))
+  };
 }
 ```
 
@@ -218,12 +240,16 @@ All access to sensitive data is logged:
 
 ### Data Retention
 
+Per IRS requirements (IRC Section 6107), tax return records must be retained for a minimum of 3 years from the due date of the return or the date the return was filed, whichever is later. We exceed this requirement for client protection.
+
 | Data Type | Retention Period | After Retention |
 |-----------|------------------|-----------------|
-| Tax Returns | 7 years | Securely deleted |
-| Client PII | 7 years after last activity | Anonymized |
-| Audit Logs | 7 years | Archived |
+| Tax Returns | 7 years from filing date or due date (whichever is later) | Securely deleted |
+| Client PII | 7 years from last tax return filed | Anonymized |
+| Audit Logs | 7 years | Archived (encrypted) |
 | Payment Info | Per PCI-DSS requirements | Securely deleted |
+
+**Note:** Retention periods align with IRS Publication 1075 and state record retention requirements.
 
 ### Secure Deletion
 

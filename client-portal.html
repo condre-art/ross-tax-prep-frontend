@@ -190,18 +190,18 @@
 
         <!-- Portal Tab Navigation -->
         <div class="portal-tabs">
-          <button class="portal-tab active" onclick="showTab('demographics')">📋 Demographics</button>
-          <button class="portal-tab" onclick="showTab('income')">💼 Income & W-2s/1099s</button>
-          <button class="portal-tab" onclick="showTab('address')">🏠 Address & Proof</button>
-          <button class="portal-tab" onclick="showTab('identification')">🪪 ID Verification</button>
-          <button class="portal-tab" onclick="showTab('refund-status')">💰 Refund Status</button>
-          <button class="portal-tab" onclick="showTab('efile-1040')">📝 1040 E-File</button>
-          <button class="portal-tab" onclick="showTab('amended')">✏️ Amended Returns</button>
-          <button class="portal-tab" onclick="showTab('forms')">📑 All Forms</button>
-          <button class="portal-tab" onclick="showTab('bank-products')">🏦 Bank Products</button>
-          <button class="portal-tab" onclick="showTab('disclosures')">📜 Disclosures</button>
-          <button class="portal-tab" onclick="showTab('documents')">📁 Documents</button>
-          <button class="portal-tab" onclick="showTab('messages')">💬 Messages</button>
+          <button class="portal-tab active" onclick="showTab('demographics', event)">📋 Demographics</button>
+          <button class="portal-tab" onclick="showTab('income', event)">💼 Income & W-2s/1099s</button>
+          <button class="portal-tab" onclick="showTab('address', event)">🏠 Address & Proof</button>
+          <button class="portal-tab" onclick="showTab('identification', event)">🪪 ID Verification</button>
+          <button class="portal-tab" onclick="showTab('refund-status', event)">💰 Refund Status</button>
+          <button class="portal-tab" onclick="showTab('efile-1040', event)">📝 1040 E-File</button>
+          <button class="portal-tab" onclick="showTab('amended', event)">✏️ Amended Returns</button>
+          <button class="portal-tab" onclick="showTab('forms', event)">📑 All Forms</button>
+          <button class="portal-tab" onclick="showTab('bank-products', event)">🏦 Bank Products</button>
+          <button class="portal-tab" onclick="showTab('disclosures', event)">📜 Disclosures</button>
+          <button class="portal-tab" onclick="showTab('documents', event)">📁 Documents</button>
+          <button class="portal-tab" onclick="showTab('messages', event)">💬 Messages</button>
         </div>
 
         <!-- Demographics Tab -->
@@ -931,11 +931,13 @@
   <script src="scripts/signature.js"></script>
   <script>
     // Tab Navigation
-    function showTab(tabId) {
+    function showTab(tabId, evt) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.portal-tab').forEach(btn => btn.classList.remove('active'));
       document.getElementById('tab-' + tabId).classList.add('active');
-      event.target.classList.add('active');
+      if (evt && evt.target) {
+        evt.target.classList.add('active');
+      }
     }
 
     // Populate state dropdowns
@@ -1018,10 +1020,10 @@
 
     // Tax return actions
     function startReturn(year) {
-      window.location.href = `/admin/efile.html?year=${year}&type=1040`;
+      window.location.href = 'admin/efile.html?year=' + year + '&type=1040';
     }
     function startAmended(year) {
-      window.location.href = `/admin/efile.html?year=${year}&type=1040x`;
+      window.location.href = 'admin/efile.html?year=' + year + '&type=1040x';
     }
 
     // Bank product selection
@@ -1055,7 +1057,8 @@
           document.getElementById('user-welcome').innerHTML = `Welcome, <strong>${data.user.name}</strong>! Your portal is ready.`;
         }
       } catch (e) {
-        // User not logged in
+        // User not logged in - show login prompt
+        console.log('User not authenticated');
       }
     }
     loadUserInfo();
@@ -1084,6 +1087,47 @@
       }
     }
     loadRefundStatus();
+
+    // Generic form submission handler
+    function setupFormHandler(formId, endpoint, successMessage) {
+      const form = document.getElementById(formId);
+      if (form) {
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const resultEl = form.querySelector('[id$="-result"]') || form.querySelector('.form-result');
+          
+          try {
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              body: formData
+            });
+            if (res.ok) {
+              if (resultEl) resultEl.textContent = successMessage || 'Saved successfully!';
+              else alert(successMessage || 'Saved successfully!');
+            } else {
+              const err = await res.text();
+              if (resultEl) resultEl.textContent = 'Error: ' + (err || 'Please try again.');
+              else alert('Error saving. Please try again.');
+            }
+          } catch (err) {
+            if (resultEl) resultEl.textContent = 'Network error. Please try again.';
+            else alert('Network error. Please try again.');
+          }
+        });
+      }
+    }
+
+    // Setup form handlers
+    setupFormHandler('demographics-form', '/api/client/demographics', 'Demographics saved successfully!');
+    setupFormHandler('w2-upload-form', '/api/client/w2', 'W-2 uploaded successfully!');
+    setupFormHandler('form-1099-upload', '/api/client/1099', '1099 uploaded successfully!');
+    setupFormHandler('paystub-upload-form', '/api/upload', 'Pay stubs uploaded successfully!');
+    setupFormHandler('address-form', '/api/client/address', 'Address saved successfully!');
+    setupFormHandler('proof-address-form', '/api/client/address/proof', 'Proof of address uploaded successfully!');
+    setupFormHandler('id-upload-form', '/api/client/identification', 'ID documents uploaded successfully!');
+    setupFormHandler('general-upload-form', '/api/upload', 'Documents uploaded successfully!');
+    setupFormHandler('message-form', '/api/client/messages', 'Message sent successfully!');
   </script>
 </body>
 </html>
