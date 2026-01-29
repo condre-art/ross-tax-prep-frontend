@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Settings | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Admin Dashboard</h1>
+        <p class="header-subtitle">Settings</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Settings</h2>
+      <p id="settingsInfo">Loading...</p>
+      <div style="margin-top:2em;">
+        <a href="index.html" class="btn">Back to Dashboard</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+
+<script>
+async function loadSettings() {
+  const res = await fetch("/api/me");
+  const el = document.getElementById("settingsInfo");
+  if (!res.ok) {
+    el.textContent = "Not signed in.";
+    return;
+  }
+  const data = await res.json();
+  el.innerHTML = `
+    <strong>User:</strong> ${data.user.name} (${data.user.email})<br>
+    <strong>Role:</strong> ${data.user.role}<br>
+    <strong>EFIN:</strong> 748335<br>
+    <strong>ETINs:</strong> 95409 (Production), 95410 (Test)
+  `;
+}
+loadSettings();
+</script>
+</body>
+</html>

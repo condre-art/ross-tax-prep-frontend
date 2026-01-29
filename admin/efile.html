@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-File Transmission Portal</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">E-File Transmission</h1>
+        <p class="header-subtitle">Transmit Returns</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+  <div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">E-File Transmission</h1>
+    <form id="efile-form" class="space-y-4">
+      <div>
+        <label>Return ID <input type="number" name="return_id" required /></label>
+      </div>
+      <div>
+        <label>Client ID <input type="number" name="client_id" required /></label>
+      </div>
+      <div>
+        <label>Preparer ID (optional) <input type="number" name="preparer_id" /></label>
+      </div>
+      <div>
+        <label>Method
+          <select name="method" required>
+            <option value="DIY">DIY (Self-Prepared)</option>
+            <option value="ERO">ERO/PTIN Preparer</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>Bank Product
+          <select name="bank_product_id" id="bank-product-select"></select>
+        </label>
+      </div>
+      <div>
+        <label>Payment Method
+          <select name="payment_method" id="payment-method-select"></select>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Transmit Return</button>
+    </form>
+    <div id="efile-status" class="mt-6"></div>
+      <div style="margin-top:2em;">
+        <a href="returns.html" class="btn">View Returns</a>
+        <a href="clients.html" class="btn">View Clients</a>
+        <a href="index.html" class="btn">Back to Dashboard</a>
+      </div>
+  </div>
+  <script>
+    async function fetchOptions() {
+      const [bankProducts, paymentMethods] = await Promise.all([
+        fetch('/api/efile/bank-products').then(r => r.json()),
+        fetch('/api/efile/payment-methods').then(r => r.json())
+      ]);
+      const bankSelect = document.getElementById('bank-product-select');
+      bankProducts.forEach(bp => {
+        const opt = document.createElement('option');
+        opt.value = bp.id;
+        opt.textContent = bp.name;
+        bankSelect.appendChild(opt);
+      });
+      const paySelect = document.getElementById('payment-method-select');
+      paymentMethods.forEach(pm => {
+        const opt = document.createElement('option');
+        opt.value = pm;
+        opt.textContent = pm.charAt(0).toUpperCase() + pm.slice(1);
+        paySelect.appendChild(opt);
+      });
+    }
+    fetchOptions();
+
+    document.getElementById('efile-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+      // Client-side validation
+      if (!data.return_id || !data.client_id || !data.method) {
+        alert('Return ID, Client ID, and Method are required.');
+        return;
+      }
+      if (!data.bank_product_id) {
+        alert('Please select a bank product.');
+        return;
+      }
+      if (!data.payment_method) {
+        alert('Please select a payment method.');
+        return;
+      }
+      try {
+        // Step 1: Create transmission
+        const txRes = await fetch('/api/efile/transmit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            return_id: Number(data.return_id),
+            client_id: Number(data.client_id),
+            preparer_id: data.preparer_id ? Number(data.preparer_id) : undefined,
+            method: data.method
+          })
+        });
+        if (!txRes.ok) throw new Error('Failed to create transmission');
+        const tx = await txRes.json();
+        // Step 2: Patch with bank product/payment
+        const patchRes = await fetch(`/api/efile/transmit/${tx.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bank_product_id: data.bank_product_id,
+            payment_method: data.payment_method
+          })
+        });
+        if (!patchRes.ok) throw new Error('Failed to update transmission');
+        // Step 3: Show status
+        const statusRes = await fetch(`/api/efile/status/${tx.id}`);
+        if (!statusRes.ok) throw new Error('Failed to fetch status');
+        const status = await statusRes.json();
+        document.getElementById('efile-status').innerHTML = `
+          <div class="p-4 bg-gray-100 rounded">
+            <h2 class="font-bold">IRS Status: ${status.status}</h2>
+            <div>IRS Submission ID: ${status.irs_submission_id || '-'}</div>
+            <div>Ack Code: ${status.ack_code || '-'}</div>
+            <div>Ack Message: ${status.ack_message || '-'}</div>
+          </div>
+        `;
+      } catch (err) {
+        document.getElementById('efile-status').innerHTML = `<div class="p-4 bg-red-100 text-red-700 rounded">${err.message}</div>`;
+      }
+    };
+  </script>
+</body>
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+</body>
+</html>

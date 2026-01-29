@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Return Status | Client Portal</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Return Status</p>
+      </div>
+       <img src="../assets/logo.png" class="header-logo" alt="Logo" />
+       <div>
+          <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Your Return Status</h2>
+      <div id="status">Loading...</div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+
+<script>
+async function loadStatus() {
+  const res = await fetch("/api/returns?scope=client");
+  const el = document.getElementById("status");
+  if (!res.ok) {
+    el.textContent = "Please sign in to view your status.";
+    return;
+  }
+  const data = await res.json();
+  if (!data.length) {
+    el.textContent = "No returns found yet.";
+    return;
+  }
+  el.innerHTML = data.map(r => 
+    `<div class="service-card">
+      <strong>Tax Year ${r.tax_year}</strong><br>
+      Status: ${r.status}<br>
+      Last Updated: ${r.updated_at || "-"}
+    </div>`
+  ).join("");
+}
+loadStatus();
+</script>
+</body>
+</html>
