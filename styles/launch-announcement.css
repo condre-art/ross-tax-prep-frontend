@@ -188,6 +188,8 @@ select:focus {
 
 .header img {
   margin-bottom: 20px;
+  max-width: 120px;
+  height: auto;
 }
 
 .header h1 {
@@ -247,6 +249,7 @@ select:focus {
   font-size: 18px;
   font-weight: 600;
   padding: 10px 20px;
+  margin: 0 10px;
   border-radius: 8px;
   background: var(--muted);
   transition: background 0.2s;
@@ -265,6 +268,37 @@ select:focus {
 }
 
 .social .btn:hover {
+  background: var(--gold);
+  color: #1a1a1a;
+}
+
+.social-buttons {
+  margin-top: 2em;
+}
+
+.credentials-section {
+  margin-top: 2em;
+  padding: 1.5em;
+  background: #e8eaf6;
+  border-radius: 10px;
+}
+
+.credentials-section h3 {
+  color: var(--navy-dark);
+  margin-top: 0;
+}
+
+.credentials-section ul {
+  line-height: 1.8;
+}
+
+.credentials-section .btn {
+  background: var(--navy);
+  color: white;
+  margin-top: 15px;
+}
+
+.credentials-section .btn:hover {
   background: var(--gold);
   color: #1a1a1a;
 }
