@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Return Status | Client Portal</title>
   <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <style>
+    .status-badge { padding:2px 8px; border-radius:4px; font-size:0.95em; margin-right:8px; }
+    .status-pending { background:#fffbe6; color:#b59f3b; }
+    .status-inprogress { background:#e6f0ff; color:#2a4fb3; }
+    .status-completed { background:#e6ffed; color:#1a7f37; }
+    .status-rejected { background:#ffe6e6; color:#b53b3b; }
+    .progress-bar { height:8px; border-radius:4px; background:#eee; margin:6px 0 12px 0; overflow:hidden; }
+    .progress-inner { height:8px; border-radius:4px; }
+  </style>
 </head>
 <body>
 <div class="site-wrapper">
@@ -44,13 +53,32 @@ async function loadStatus() {
     el.textContent = "No returns found yet.";
     return;
   }
-  el.innerHTML = data.map(r => 
-    `<div class="service-card">
+  function getStatusClass(status) {
+    const s = (status||'').toLowerCase();
+    if (s.includes('pending')) return 'status-pending';
+    if (s.includes('in progress')) return 'status-inprogress';
+    if (s.includes('completed')||s.includes('filed')) return 'status-completed';
+    if (s.includes('rejected')||s.includes('error')) return 'status-rejected';
+    return 'status-pending';
+  }
+  function getProgress(status) {
+    const s = (status||'').toLowerCase();
+    if (s.includes('pending')) return 20;
+    if (s.includes('in progress')) return 50;
+    if (s.includes('completed')||s.includes('filed')) return 100;
+    if (s.includes('rejected')||s.includes('error')) return 100;
+    return 10;
+  }
+  el.innerHTML = data.map(r => {
+    const statusClass = getStatusClass(r.status);
+    const progress = getProgress(r.status);
+    return `<div class="service-card">
       <strong>Tax Year ${r.tax_year}</strong><br>
-      Status: ${r.status}<br>
+      <span class="status-badge ${statusClass}">${r.status}</span><br>
+      <div class="progress-bar"><div class="progress-inner" style="width:${progress}%;background:#C9A227;"></div></div>
       Last Updated: ${r.updated_at || "-"}
-    </div>`
-  ).join("");
+    </div>`;
+  }).join("");
 }
 loadStatus();
 </script>
