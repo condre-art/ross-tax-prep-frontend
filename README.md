@@ -2,8 +2,11 @@
 
 **Frontend web app for Ross Tax Prep**, built to support:
 
-- ✅ Client Portal — where clients can register, upload documents, and track progress.
-- ✅ Staff Dashboard — where staff can manage clients, files, and workflow.
+- ✅ Client Portal — where clients can register for an account to efile randmission services full demographics needed drivers license /identification card full,current address,email,ssn,date of both,mothers maiden name ,prior year AGI,phone number, employment classification,scan/upload documents,password and track password long token - assigned 
+- ✅ Staff Dashboard — where staff can manage clients, files,start efile ERO state and federal income tax returns,schedule client appointmens, communication chat w/clients and coworkers, client status section,support section for clients needing assistance, and workflow.
+commit
+
+
 
 ---
 
