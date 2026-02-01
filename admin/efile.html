@@ -242,9 +242,10 @@
       const data = Object.fromEntries(new FormData(form));
       
       // Create mock return data for validation
+      // NOTE: In production, replace with actual return data from backend
       const returnData = {
         taxYear: new Date().getFullYear() - 1,
-        taxpayerSSN: '123456789', // In production, get from return data
+        taxpayerSSN: '123456789', // PLACEHOLDER - Replace with actual SSN from return data
         taxpayerName: 'Sample Taxpayer',
         filingStatus: 'Single',
         preparerInfo: { name: 'Ross Tax Prep' },
@@ -351,9 +352,10 @@
 
         // Step 2: Generate XML Envelope
         updateWorkflowStep(2, 'active');
+        // NOTE: In production, fetch actual return data from backend API
         const returnData = {
           taxYear: new Date().getFullYear() - 1,
-          taxpayerSSN: '123456789',
+          taxpayerSSN: '123456789', // PLACEHOLDER - Replace with actual SSN from return data
           filingStatus: 'Single',
           preparerInfo: { name: 'Ross Tax Prep' },
           softwareId: 'ROSS-TAX-PREP-V1'
