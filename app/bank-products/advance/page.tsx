@@ -1,3 +1,5 @@
+"use client";
+
 type DecisionState = "approved" | "pending" | "denied";
 
 const decisionCopy: Record<DecisionState, { title: string; text: string; cta: string }> = {

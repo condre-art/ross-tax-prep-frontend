@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 
 type Split = { id: number; routing: string; account: string; type: "checking" | "savings"; amount: number };

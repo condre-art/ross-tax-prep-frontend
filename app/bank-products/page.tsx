@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 
 type Provider = {
@@ -75,9 +77,19 @@ export default function BankProductsPage() {
       version: "1.0",
       acceptedAt: new Date().toISOString(),
       clientId: "demo-client",
+      ipAddress: "collected-server-side",
       userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
     };
     formatLog("disclosure_accepted", payload);
+  };
+
+  const handleSubmit = () => {
+    formatLog("application_submitted", {
+      providerId,
+      productId,
+      payoutMethod,
+      acceptedDisclosures: disclosures.filter((item) => checked[item]),
+    });
   };
 
   return (
@@ -237,7 +249,12 @@ export default function BankProductsPage() {
       </section>
 
       <div className="flex gap-3">
-        <button className="bg-gold text-navy px-6 py-3 font-semibold rounded shadow">Continue</button>
+        <button
+          onClick={handleSubmit}
+          className="bg-gold text-navy px-6 py-3 font-semibold rounded shadow"
+        >
+          Continue
+        </button>
         <a
           href="/"
           className="px-6 py-3 font-semibold rounded border border-navy/20 text-navy hover:bg-navy/5"
