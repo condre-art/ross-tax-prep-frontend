@@ -1,3 +1,0 @@
-# Netlify or Cloudflare Pages _redirects file
-# Redirect all requests to index.html for SPA routing, except for static assets
-/*    /index.html   200
