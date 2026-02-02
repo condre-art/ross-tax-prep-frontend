@@ -5,3 +5,7 @@
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+:root {
+  color-scheme: light;
+}
