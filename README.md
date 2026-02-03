@@ -52,4 +52,5 @@ See [Network Requirements Documentation](./docs/NETWORK-REQUIREMENTS.md) for det
 ## Documentation
 
 - [Network Requirements & Port Configuration](./docs/NETWORK-REQUIREMENTS.md) - Network setup, firewall configuration, and connectivity troubleshooting
+- [Network Quick Reference](./docs/NETWORK-QUICK-REFERENCE.md) - Quick port configuration guide for IT administrators
 - [IRS MEF Integration](./docs/IRS-MEF-INTEGRATION.md) - IRS e-file integration and MEF schema documentation
