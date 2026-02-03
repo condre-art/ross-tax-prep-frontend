@@ -1,19 +1,51 @@
 # Ross Tax Prep — Frontend
 
-Client-facing flows for bank products, refund advance, payout methods, and refund allocation.
+**IRS e-file approved ERO tax software** with integrated backend, secure authentication, encrypted data storage, and IRS MEF integration.
 
-## Setup
+## Features
+
+- ✅ **Cloudflare R2** Object Storage for documents
+- ✅ **Cloudflare D1** SQL database with complete schema
+- ✅ **JWT Authentication** with 2FA (TOTP) support
+- ✅ **Role-Based Access Control** (Admin, ERO, Client, Demo)
+- ✅ **End-to-End Encryption** for sensitive data (SSN, tax returns)
+- ✅ **IRS MEF Integration** for e-file transmission
+- ✅ **Comprehensive Audit Logging** for compliance
+- ✅ **Session Management** with KV storage
+- ✅ Client-facing flows for bank products and refund allocation
+
+## Quick Start
+
+### Development
 
 ```bash
+# Install dependencies
 npm install
+
+# Start Next.js dev server (frontend only)
 npm run dev
+
+# Start Cloudflare Pages dev server (with API)
+npm run pages:dev
 ```
 
-### Env vars
+### Full Setup
 
-None required for local static preview. For MCP logging, set `MCP_SERVER_URL` if backend is present.
+For complete setup including database, R2 buckets, and IRS integration, see **[SETUP.md](./SETUP.md)** for detailed instructions.
+
+Quick setup overview:
+1. Install Wrangler CLI: `npm install -g wrangler`
+2. Login to Cloudflare: `wrangler login`
+3. Create D1 database and run migrations
+4. Create KV namespaces and R2 buckets
+5. Set secrets (JWT, encryption keys, IRS credentials)
+6. Update `wrangler.toml` with resource IDs
+
+See [.env.example](./.env.example) for required environment variables.
 
 ## Routes
+
+### Frontend Routes
 
 | Route | Purpose |
 | --- | --- |
@@ -21,22 +53,107 @@ None required for local static preview. For MCP logging, set `MCP_SERVER_URL` if
 | `/app/bank-products` | Provider/product selection, payout method, disclosures |
 | `/app/bank-products/advance` | Refund advance decision screen |
 | `/app/refund-allocation` | Savings bonds + split deposits |
+| `/portal/login.html` | Client portal login |
+| `/admin-console.html` | Admin console |
 
-## API Contract (frontend expectations)
+### API Endpoints
 
-| Event | Payload |
+| Endpoint | Method | Auth | Purpose |
+| --- | --- | --- | --- |
+| `/api/auth/register` | POST | Public | Register new user |
+| `/api/auth/login` | POST | Public | User login (with 2FA support) |
+| `/api/auth/logout` | POST | Required | User logout |
+| `/api/auth/mfa/setup` | POST | Required | Setup 2FA/TOTP |
+| `/api/auth/mfa/verify` | POST | Required | Verify and enable 2FA |
+| `/api/auth/mfa/disable` | POST | Required | Disable 2FA |
+| `/api/users/me` | GET | Required | Get current user info |
+| `/api/documents/upload` | POST | Required | Upload document to R2 |
+| `/api/documents` | GET | Required | List user documents |
+| `/api/irs/transmit` | POST | ERO/Admin | Submit return to IRS |
+| `/api/irs/status` | GET | ERO/Admin | Check IRS submission status |
+| `/api/health` | GET | Public | Health check |
+
+## User Roles & Permissions
+
+| Role | Permissions |
 | --- | --- |
-| compliance acceptance | `disclosureId`, `version`, `acceptedAt (ISO)`, `clientId`, `ipAddress (backend)`, `userAgent` |
-| audit actions | `provider selected`, `product selected`, `payout method selected`, `application submitted` |
+| **Admin** | Full system access - all operations |
+| **ERO** | Create/submit returns, manage clients, upload documents, IRS transmission |
+| **Client** | View own returns, upload documents, view notifications |
+| **Demo** | Read-only access to limited data |
 
-## Feature Flags
+## Security Features
 
-None; flows are static for demo.
+- **Password Hashing**: PBKDF2 with 100,000 iterations
+- **2FA Support**: TOTP-based (compatible with Google Authenticator, Authy, etc.)
+- **Data Encryption**: AES-256-GCM for sensitive fields (SSN, bank accounts, return data)
+- **Session Management**: JWT tokens with configurable expiration
+- **Audit Logging**: All actions logged with user, IP, timestamp
+- **Role-Based Access Control**: Fine-grained permissions per role
 
-## Lint/Test Commands
+## Database Schema
 
-None configured. Run `npm run dev` for local preview.
+Complete D1 schema includes:
+- `users` - User accounts with encrypted PII
+- `roles` - Role definitions and permissions
+- `sessions` - Active user sessions
+- `tax_returns` - Tax return data with encryption
+- `documents` - Document metadata with R2 references
+- `irs_transmissions` - IRS e-file transmission logs
+- `audit_logs` - Comprehensive audit trail
+- `notifications` - User notifications
+- `compliance_records` - Disclosure acceptance tracking
+- `refund_allocations` - Refund distribution preferences
+- `bank_products` - Bank product selections
 
-## Deployment Notes
+See [database/migrations/001_initial_schema.sql](./database/migrations/001_initial_schema.sql) for complete schema.
 
-Designed for static export via Next.js (`next export`). Cloudflare Pages can deploy with `npm run build` output in `out/`.
+## IRS MEF Integration
+
+- MEF Schema Version: **2024v5.0**
+- Test Mode: Testbed endpoint for development
+- Production Mode: Live IRS submission with certificate authentication
+- Transmission tracking and acknowledgment processing
+- Full compliance with IRS Publication 1345 and 4164
+
+## Deployment
+
+### Build
+
+```bash
+npm run build
+```
+
+### Deploy to Cloudflare Pages
+
+```bash
+npm run pages:deploy
+
+# Or use wrangler directly
+wrangler pages deploy ./out --project-name=ross-tax-prep
+```
+
+### Production Checklist
+
+- [ ] Update `wrangler.toml` with production database/KV/R2 IDs
+- [ ] Set all production secrets via `wrangler secret put`
+- [ ] Change `IRS_TEST_MODE` to `false` for live submissions
+- [ ] Update IRS MEF endpoint to production URL
+- [ ] Update default admin password
+- [ ] Enable 2FA for all admin accounts
+- [ ] Configure CORS for your domain
+- [ ] Set up database backups
+- [ ] Enable monitoring and alerts
+
+## Documentation
+
+- **[SETUP.md](./SETUP.md)** - Complete setup and deployment guide
+- **[database/README.md](./database/README.md)** - Database setup instructions
+- **[.env.example](./.env.example)** - Environment variables reference
+
+## Support
+
+- **IRS MEF Documentation**: https://www.irs.gov/e-file-providers
+- **Cloudflare Workers**: https://developers.cloudflare.com/workers/
+- **Cloudflare D1**: https://developers.cloudflare.com/d1/
+- **Cloudflare R2**: https://developers.cloudflare.com/r2/
