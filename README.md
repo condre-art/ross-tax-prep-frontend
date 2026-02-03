@@ -40,3 +40,16 @@ None configured. Run `npm run dev` for local preview.
 ## Deployment Notes
 
 Designed for static export via Next.js (`next export`). Cloudflare Pages can deploy with `npm run build` output in `out/`.
+
+## Network Requirements
+
+For production deployment, ensure your network is configured to allow:
+- **TCP 443 (HTTPS)** - Required for all core functionality
+- **TCP 80 (HTTP)** - Optional, for legacy redirects to HTTPS
+
+See [Network Requirements Documentation](./docs/NETWORK-REQUIREMENTS.md) for detailed port configuration, firewall rules, and troubleshooting.
+
+## Documentation
+
+- [Network Requirements & Port Configuration](./docs/NETWORK-REQUIREMENTS.md) - Network setup, firewall configuration, and connectivity troubleshooting
+- [IRS MEF Integration](./docs/IRS-MEF-INTEGRATION.md) - IRS e-file integration and MEF schema documentation
