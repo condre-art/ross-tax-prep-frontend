@@ -29,7 +29,7 @@ window.MFAUI = {
     }
     msg.textContent = "Login successful. Redirecting...";
     setTimeout(() => {
-      window.location.href = "/portal/status.html";
+      window.location.href = "/portal/dashboard.html?auto=true";
     }, 800);
   },
   async enrollMFA(email) {
