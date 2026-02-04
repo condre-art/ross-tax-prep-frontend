@@ -76,7 +76,7 @@ export default function Home() {
           />
           <SectionCard
             title="Refund Allocation"
-            description="Allocate refunds to savings bonds or split across deposits."
+            description="Advanced: Configure savings bonds purchases and multi-account splits."
             href="/app/refund-allocation"
           />
           <SectionCard
