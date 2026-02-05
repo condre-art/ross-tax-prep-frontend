@@ -89,6 +89,23 @@ Preview deployments are automatically created for all pull requests targeting `m
 
 ## Troubleshooting
 
+### How to Rerun a Failed Workflow
+
+If a workflow fails, you have several options to rerun it:
+
+**Option 1: Rerun from the Failed Run (Easiest)**
+1. Go to the **Actions** tab
+2. Click on the failed workflow run
+3. Click **"Re-run failed jobs"** (only failed jobs) or **"Re-run all jobs"** (entire workflow)
+
+**Option 2: Trigger a New Run Manually**
+1. Go to the **Actions** tab
+2. Select the workflow from the left sidebar
+3. Click **"Run workflow"**
+4. Select the branch and click **"Run workflow"**
+
+See [WORKFLOW-RERUN-GUIDE.md](../../WORKFLOW-RERUN-GUIDE.md) for detailed rerun instructions.
+
 ### Deployment Fails with Authentication Error
 
 - Verify `CLOUDFLARE_API_TOKEN` has correct permissions
