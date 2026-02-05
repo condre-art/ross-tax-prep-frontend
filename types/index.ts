@@ -356,7 +356,16 @@ export type Permission =
   | 'irs.transmit'
   | 'admin.settings'
   | 'notifications.read'
-  | 'notifications.send';
+  | 'notifications.send'
+  | 'workflows.create'
+  | 'workflows.read'
+  | 'workflows.update'
+  | 'workflows.delete'
+  | 'workflows.assign'
+  | 'tasks.create'
+  | 'tasks.read'
+  | 'tasks.update'
+  | 'tasks.complete';
 
 export interface Role {
   id: string;
@@ -368,3 +377,210 @@ export interface Role {
 }
 
 export type RolePermissions = Record<UserRole, Permission[]>;
+
+// ============================
+// Workflow System
+// ============================
+
+export type WorkflowType = 'return_filing' | 'efile' | 'amendment' | 'audit' | 'custom';
+export type WorkflowStatus = 'pending' | 'in_progress' | 'completed' | 'cancelled' | 'on_hold' | 'failed';
+export type WorkflowPriority = 'low' | 'normal' | 'high' | 'urgent';
+
+export interface WorkflowStep {
+  id: string;
+  name: string;
+  description: string;
+  order: number;
+  required: boolean;
+}
+
+export interface WorkflowTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  type: WorkflowType;
+  version: number;
+  steps: string; // JSON array of WorkflowStep[]
+  is_active: number; // 0 or 1
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WorkflowInstance {
+  id: string;
+  template_id: string;
+  return_id?: string;
+  name: string;
+  current_step: string;
+  status: WorkflowStatus;
+  priority: WorkflowPriority;
+  assigned_to?: string;
+  started_at?: string;
+  completed_at?: string;
+  cancelled_at?: string;
+  due_date?: string;
+  metadata?: string; // JSON metadata
+  created_at: string;
+  updated_at: string;
+}
+
+export type TaskType = 
+  | 'data_entry'
+  | 'review'
+  | 'approval'
+  | 'signature'
+  | 'document_upload'
+  | 'efile'
+  | 'notification'
+  | 'custom';
+
+export type TaskStatus = 
+  | 'pending'
+  | 'in_progress'
+  | 'completed'
+  | 'skipped'
+  | 'failed'
+  | 'blocked';
+
+export interface WorkflowTask {
+  id: string;
+  workflow_id: string;
+  title: string;
+  description?: string;
+  task_type: TaskType;
+  step_order: number;
+  status: TaskStatus;
+  assigned_to?: string;
+  depends_on?: string; // JSON array of task IDs
+  required_role?: string;
+  required_permissions?: string; // JSON array of permissions
+  due_date?: string;
+  started_at?: string;
+  completed_at?: string;
+  completed_by?: string;
+  result?: string; // JSON result data
+  metadata?: string; // JSON metadata
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WorkflowTransition {
+  id: string;
+  workflow_id: string;
+  from_step?: string;
+  to_step: string;
+  action: string;
+  triggered_by?: string;
+  reason?: string;
+  metadata?: string; // JSON metadata
+  created_at: string;
+}
+
+// ============================
+// E-File Provider System
+// ============================
+
+export type EFileProviderType = 
+  | 'irs_mef'
+  | 'taxslayer'
+  | 'drake'
+  | 'thomson_reuters'
+  | 'intuit'
+  | 'other';
+
+export interface EFileProvider {
+  id: string;
+  name: string;
+  type: EFileProviderType;
+  endpoint_url?: string;
+  api_key_encrypted?: string;
+  credentials_encrypted?: string; // JSON encrypted credentials
+  is_active: number; // 0 or 1
+  test_mode: number; // 0 or 1
+  configuration?: string; // JSON configuration
+  created_at: string;
+  updated_at: string;
+}
+
+export type SubmissionType = 'original' | 'amended' | 'extension' | 'correction';
+export type SubmissionStatus = 
+  | 'pending'
+  | 'validating'
+  | 'submitted'
+  | 'accepted'
+  | 'rejected'
+  | 'error'
+  | 'cancelled';
+
+export interface EFileSubmission {
+  id: string;
+  workflow_id?: string;
+  return_id: string;
+  provider_id: string;
+  submission_type: SubmissionType;
+  submission_id?: string; // Provider's submission ID
+  transmission_id?: string;
+  status: SubmissionStatus;
+  xml_data?: string;
+  validation_errors?: string; // JSON array
+  submission_response?: string; // JSON response
+  ack_code?: string;
+  ack_message?: string;
+  ack_received_at?: string;
+  submitted_by: string;
+  submitted_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// ============================
+// Workflow API Types
+// ============================
+
+export interface CreateWorkflowRequest {
+  template_id: string;
+  return_id?: string;
+  name: string;
+  assigned_to?: string;
+  due_date?: string;
+  priority?: WorkflowPriority;
+  metadata?: Record<string, any>;
+}
+
+export interface CreateWorkflowResponse {
+  success: boolean;
+  workflow_id: string;
+  message: string;
+}
+
+export interface TransitionWorkflowRequest {
+  to_step: string;
+  action: string;
+  reason?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface CompleteTaskRequest {
+  result?: Record<string, any>;
+  notes?: string;
+}
+
+export interface CreateTaskRequest {
+  workflow_id: string;
+  title: string;
+  description?: string;
+  task_type: TaskType;
+  step_order?: number;
+  assigned_to?: string;
+  depends_on?: string[];
+  required_role?: string;
+  due_date?: string;
+}
+
+export interface SubmitEFileRequest {
+  return_id: string;
+  provider_id: string;
+  submission_type: SubmissionType;
+  workflow_id?: string;
+}

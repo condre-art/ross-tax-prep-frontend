@@ -52,6 +52,18 @@ export default function Dashboard() {
                 Returns
               </Link>
               <Link 
+                href="/app/workflows" 
+                className="px-4 py-2 text-sm font-medium text-white hover:bg-navy/80 rounded"
+              >
+                Workflows
+              </Link>
+              <Link 
+                href="/app/efile" 
+                className="px-4 py-2 text-sm font-medium text-white hover:bg-navy/80 rounded"
+              >
+                E-File
+              </Link>
+              <Link 
                 href="/dashboard/settings" 
                 className="px-4 py-2 text-sm font-medium text-white hover:bg-navy/80 rounded"
               >
@@ -107,7 +119,7 @@ export default function Dashboard() {
             <div className="text-3xl font-bold text-navy">247</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
-            <div className="text-sm font-medium text-gray-600 mb-1">Returns In Progress</div>
+            <div className="text-sm font-medium text-gray-600 mb-1">Active Workflows</div>
             <div className="text-3xl font-bold text-navy">42</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
@@ -115,7 +127,7 @@ export default function Dashboard() {
             <div className="text-3xl font-bold text-navy">18</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
-            <div className="text-sm font-medium text-gray-600 mb-1">Pending Review</div>
+            <div className="text-sm font-medium text-gray-600 mb-1">Pending Tasks</div>
             <div className="text-3xl font-bold text-gold">7</div>
           </div>
         </div>
