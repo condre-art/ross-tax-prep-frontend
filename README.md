@@ -118,25 +118,44 @@ See [database/migrations/001_initial_schema.sql](./database/migrations/001_initi
 
 ## Deployment
 
-### Build
+The application is deployed to Cloudflare Pages using GitHub Actions for continuous deployment.
+
+### Automatic Deployment
+
+Push to `main` branch triggers automatic production deployment:
 
 ```bash
-npm run build
+git push origin main
 ```
 
-### Deploy to Cloudflare Pages
+### Manual Deployment
 
-```bash
-npm run pages:deploy
+Trigger deployment via GitHub Actions:
+1. Go to **Actions** tab in your repository
+2. Select **Deploy to Production** workflow
+3. Click **Run workflow**
 
-# Or use wrangler directly
-wrangler pages deploy ./out --project-name=ross-tax-prep
-```
+### Preview Deployments
+
+Pull requests automatically create preview deployments with unique URLs.
+
+### Complete Deployment Guide
+
+For detailed deployment instructions, including:
+- Setting up GitHub Actions secrets
+- Configuring Cloudflare Pages
+- Managing environment variables
+- Post-deployment configuration
+- Rollback procedures
+- Troubleshooting
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete guide.
 
 ### Production Checklist
 
+- [ ] Configure GitHub secrets (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)
 - [ ] Update `wrangler.toml` with production database/KV/R2 IDs
-- [ ] Set all production secrets via `wrangler secret put`
+- [ ] Set all production secrets via Cloudflare Pages dashboard
 - [ ] Change `IRS_TEST_MODE` to `false` for live submissions
 - [ ] Update IRS MEF endpoint to production URL
 - [ ] Update default admin password
@@ -144,10 +163,12 @@ wrangler pages deploy ./out --project-name=ross-tax-prep
 - [ ] Configure CORS for your domain
 - [ ] Set up database backups
 - [ ] Enable monitoring and alerts
+- [ ] Configure custom domain (optional)
 
 ## Documentation
 
-- **[SETUP.md](./SETUP.md)** - Complete setup and deployment guide
+- **[SETUP.md](./SETUP.md)** - Complete infrastructure setup guide
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub Actions deployment guide
 - **[database/README.md](./database/README.md)** - Database setup instructions
 - **[.env.example](./.env.example)** - Environment variables reference
 
