@@ -27,11 +27,28 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        
+      - name: Verify installation
+        run: |
+          echo "Node version: $(node --version)"
+          echo "NPM version: $(npm --version)"
+          echo "Installed packages:"
+          npm list --depth=0
 
       - name: Build Next.js site
         run: npm run build
         env:
           NODE_ENV: production
+          
+      - name: Verify build output
+        run: |
+          if [ ! -d "out" ]; then
+            echo "❌ Build output directory 'out' not found!"
+            exit 1
+          fi
+          echo "✅ Build output directory exists"
+          echo "Build output size: $(du -sh out)"
+          echo "Files generated: $(find out -type f | wc -l)"
 
       - name: Deploy to Cloudflare Pages (Preview)
         uses: cloudflare/pages-action@v1
@@ -57,7 +74,19 @@ jobs:
             });
 
       - name: Deployment Summary
+        if: always()
         run: |
-          echo "✅ Preview deployment successful!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 Preview URL: ${{ steps.deployment.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Preview deployment successful!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 Preview URL: ${{ steps.deployment.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Preview deployment failed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "💡 **To rerun this workflow:**" >> $GITHUB_STEP_SUMMARY
+            echo "1. Go to Actions tab" >> $GITHUB_STEP_SUMMARY
+            echo "2. Click on this failed run" >> $GITHUB_STEP_SUMMARY
+            echo "3. Click 'Re-run failed jobs' or 'Re-run all jobs'" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "📚 For more help, see WORKFLOW-RERUN-GUIDE.md" >> $GITHUB_STEP_SUMMARY
+          fi
