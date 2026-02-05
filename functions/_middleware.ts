@@ -13,6 +13,22 @@ import {
   handleMFAVerify,
   handleMFADisable,
 } from './api/auth';
+import {
+  createWorkflow,
+  getWorkflow,
+  listWorkflows,
+  transitionWorkflow,
+  getWorkflowTasks,
+  completeTask,
+  createTask,
+  listTasks,
+} from './api/workflows';
+import {
+  listProviders,
+  submitEFile,
+  listSubmissions,
+  getSubmission,
+} from './api/efile';
 
 interface Env {
   DB: D1Database;
@@ -153,6 +169,62 @@ async function handleApiRequest(
   // Admin endpoints
   if (path.startsWith('/api/admin/')) {
     return withAuth(request, env, handleAdminRequest, ['*']);
+  }
+
+  // Workflow endpoints
+  if (path === '/api/workflows' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => createWorkflow(req, env, user), ['workflows.create']);
+  }
+
+  if (path === '/api/workflows' && request.method === 'GET') {
+    return withAuth(request, env, (req, env, user) => listWorkflows(req, env, user), ['workflows.read']);
+  }
+
+  if (path.match(/^\/api\/workflows\/[^/]+$/) && request.method === 'GET') {
+    const workflowId = path.split('/').pop()!;
+    return withAuth(request, env, (req, env, user) => getWorkflow(workflowId, env, user), ['workflows.read']);
+  }
+
+  if (path.match(/^\/api\/workflows\/[^/]+\/transition$/) && request.method === 'POST') {
+    const workflowId = path.split('/')[3];
+    return withAuth(request, env, (req, env, user) => transitionWorkflow(workflowId, req, env, user), ['workflows.update']);
+  }
+
+  if (path.match(/^\/api\/workflows\/[^/]+\/tasks$/) && request.method === 'GET') {
+    const workflowId = path.split('/')[3];
+    return withAuth(request, env, (req, env, user) => getWorkflowTasks(workflowId, env, user), ['workflows.read', 'tasks.read']);
+  }
+
+  // Task endpoints
+  if (path === '/api/tasks' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => createTask(req, env, user), ['tasks.create']);
+  }
+
+  if (path === '/api/tasks' && request.method === 'GET') {
+    return withAuth(request, env, (req, env, user) => listTasks(req, env, user), ['tasks.read']);
+  }
+
+  if (path.match(/^\/api\/tasks\/[^/]+\/complete$/) && request.method === 'POST') {
+    const taskId = path.split('/')[3];
+    return withAuth(request, env, (req, env, user) => completeTask(taskId, req, env, user), ['tasks.complete']);
+  }
+
+  // E-File endpoints
+  if (path === '/api/efile/providers' && request.method === 'GET') {
+    return withAuth(request, env, (req, env, user) => listProviders(env), ['returns.read']);
+  }
+
+  if (path === '/api/efile/submit' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => submitEFile(req, env, user), ['irs.transmit']);
+  }
+
+  if (path === '/api/efile/submissions' && request.method === 'GET') {
+    return withAuth(request, env, (req, env, user) => listSubmissions(req, env, user), ['returns.read']);
+  }
+
+  if (path.match(/^\/api\/efile\/submissions\/[^/]+$/) && request.method === 'GET') {
+    const submissionId = path.split('/').pop()!;
+    return withAuth(request, env, (req, env, user) => getSubmission(submissionId, env, user), ['returns.read']);
   }
 
   // Health check
