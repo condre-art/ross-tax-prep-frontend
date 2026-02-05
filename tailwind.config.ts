@@ -8,8 +8,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: "#0B1E3B",
-        gold: "#C9A24D",
+        navy: "#1E3A5F", // Lighter town navy blue
+        "navy-dark": "#0B1E3B", // Original darker navy
+        gold: "#D4AF37", // Chromic gold
+        "gold-light": "#E8C878", // Lighter gold
         cream: "#F5F1E8",
       },
     },

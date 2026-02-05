@@ -12,11 +12,8 @@ interface Account {
   name: string;
   type: AccountType;
   accountNumber: string;
-  balance: number;
-  availableBalance: number;
   status: AccountStatus;
   lastTransaction?: string;
-  interestRate?: number;
 }
 
 interface Transaction {
@@ -60,34 +57,26 @@ export default function MoneyManagementPage() {
       const mockAccounts: Account[] = [
         {
           id: 'acc_1',
-          name: 'Navy Federal Checking',
+          name: 'Tax Refund Account',
           type: 'checking',
           accountNumber: '****1234',
-          balance: 5240.50,
-          availableBalance: 5240.50,
           status: 'active',
           lastTransaction: '2026-02-04',
         },
         {
           id: 'acc_2',
-          name: 'Navy Federal Savings',
+          name: 'Savings Allocation',
           type: 'savings',
           accountNumber: '****5678',
-          balance: 12450.75,
-          availableBalance: 12450.75,
           status: 'active',
           lastTransaction: '2026-02-03',
-          interestRate: 0.45,
         },
         {
           id: 'acc_3',
-          name: 'Money Market Account',
+          name: 'Money Market Allocation',
           type: 'money_market',
           accountNumber: '****9012',
-          balance: 25000.00,
-          availableBalance: 25000.00,
           status: 'active',
-          interestRate: 1.25,
         },
       ];
 
@@ -195,7 +184,7 @@ export default function MoneyManagementPage() {
     return colors[priority as keyof typeof colors] || 'text-gray-600';
   };
 
-  const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
+  const totalAccounts = accounts.length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -227,9 +216,9 @@ export default function MoneyManagementPage() {
         {/* Quick Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6 border-l-4 border-navy">
-            <p className="text-sm text-gray-600 mb-1">Total Balance</p>
-            <p className="text-3xl font-bold text-navy">${totalBalance.toFixed(2)}</p>
-            <p className="text-xs text-gray-500 mt-2">Across {accounts.length} accounts</p>
+            <p className="text-sm text-gray-600 mb-1">Active Accounts</p>
+            <p className="text-3xl font-bold text-navy">{totalAccounts}</p>
+            <p className="text-xs text-gray-500 mt-2">Refund allocation accounts</p>
           </div>
           <div className="bg-white rounded-lg shadow p-6 border-l-4 border-gold">
             <p className="text-sm text-gray-600 mb-1">Recent Transactions</p>
@@ -300,11 +289,8 @@ export default function MoneyManagementPage() {
                               </span>
                             </div>
                             <div className="mt-4">
-                              <p className="text-2xl font-bold text-navy">${account.balance.toFixed(2)}</p>
-                              <p className="text-xs text-gray-500 mt-1">Available: ${account.availableBalance.toFixed(2)}</p>
-                              {account.interestRate && (
-                                <p className="text-xs text-green-600 mt-1">APY: {account.interestRate}%</p>
-                              )}
+                              <p className="text-sm text-gray-600">Account Status: <span className="font-semibold text-navy">Active</span></p>
+                              <p className="text-xs text-gray-500 mt-1">Last Activity: {account.lastTransaction || 'N/A'}</p>
                             </div>
                           </div>
                         ))}
@@ -354,21 +340,15 @@ export default function MoneyManagementPage() {
                               {account.status}
                             </span>
                           </div>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                             <div>
-                              <p className="text-xs text-gray-500">Current Balance</p>
-                              <p className="text-lg font-bold text-navy">${account.balance.toFixed(2)}</p>
+                              <p className="text-xs text-gray-500">Account Type</p>
+                              <p className="text-lg font-bold text-navy">{getAccountTypeLabel(account.type)}</p>
                             </div>
                             <div>
-                              <p className="text-xs text-gray-500">Available</p>
-                              <p className="text-lg font-bold text-gray-700">${account.availableBalance.toFixed(2)}</p>
+                              <p className="text-xs text-gray-500">Status</p>
+                              <p className="text-lg font-bold text-gray-700 capitalize">{account.status}</p>
                             </div>
-                            {account.interestRate && (
-                              <div>
-                                <p className="text-xs text-gray-500">Interest Rate</p>
-                                <p className="text-lg font-bold text-green-600">{account.interestRate}%</p>
-                              </div>
-                            )}
                             <div>
                               <p className="text-xs text-gray-500">Last Activity</p>
                               <p className="text-sm font-medium text-gray-700">{account.lastTransaction || 'N/A'}</p>
@@ -504,7 +484,7 @@ export default function MoneyManagementPage() {
                             <option>Select account...</option>
                             {accounts.map(acc => (
                               <option key={acc.id} value={acc.id}>
-                                {acc.name} - ${acc.availableBalance.toFixed(2)}
+                                {acc.name} - {acc.accountNumber}
                               </option>
                             ))}
                           </select>
@@ -531,6 +511,7 @@ export default function MoneyManagementPage() {
                               placeholder="0.00"
                             />
                           </div>
+                          <p className="text-xs text-gray-500 mt-1">Enter refund allocation amount</p>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Memo (Optional)</label>
