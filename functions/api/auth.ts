@@ -127,9 +127,9 @@ export async function handleLogin(request: Request, env: Env): Promise<Response>
       });
     }
 
-    // Get user
+    // Get user (including temp password fields)
     const user = await env.DB.prepare(
-      'SELECT id, email, password_hash, role, first_name, last_name, status, mfa_enabled, mfa_secret FROM users WHERE email = ?'
+      'SELECT id, email, password_hash, role, first_name, last_name, status, mfa_enabled, mfa_secret, temp_password, must_change_password, employee_id FROM users WHERE email = ?'
     )
       .bind(email)
       .first() as any;
@@ -260,6 +260,25 @@ export async function handleLogin(request: Request, env: Env): Promise<Response>
       'info'
     );
 
+    // Log employee activity if employee
+    if (user.employee_id) {
+      await env.DB.prepare(`
+        INSERT INTO employee_activity_log (id, user_id, employee_id, activity_type, description, ip_address, user_agent)
+        VALUES (?, ?, ?, 'login_success', 'Employee logged in successfully', ?, ?)
+      `).bind(
+        generateId('log'),
+        user.id,
+        user.employee_id,
+        getClientIP(request),
+        getUserAgent(request)
+      ).run();
+
+      // Update login attempts counter
+      await env.DB.prepare('UPDATE employee_credentials SET login_attempts = 0, last_login_attempt = datetime("now") WHERE user_id = ?')
+        .bind(user.id)
+        .run();
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -270,7 +289,11 @@ export async function handleLogin(request: Request, env: Env): Promise<Response>
           firstName: user.first_name,
           lastName: user.last_name,
           role: user.role,
+          employeeId: user.employee_id,
         },
+        tempPassword: user.temp_password === 1,
+        mustChangePassword: user.must_change_password === 1,
+        requiresPasswordChange: user.temp_password === 1 || user.must_change_password === 1
       }),
       {
         status: 200,
@@ -577,6 +600,137 @@ export async function handleMFADisable(request: Request, env: Env): Promise<Resp
       JSON.stringify({
         success: true,
         message: '2FA disabled successfully',
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+/**
+ * POST /api/auth/change-password
+ * Change user password (required for temp passwords)
+ */
+export async function handleChangePassword(request: Request, env: Env): Promise<Response> {
+  try {
+    const authHeader = request.headers.get('Authorization');
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const token = authHeader.substring(7);
+    const payload = await JWTService.verifyToken(token, env.JWT_SECRET);
+
+    if (!payload) {
+      return new Response(JSON.stringify({ error: 'Invalid token' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const body = await request.json() as any;
+    const { currentPassword, newPassword } = body;
+
+    if (!currentPassword || !newPassword) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate new password strength
+    if (newPassword.length < 8) {
+      return new Response(
+        JSON.stringify({ error: 'New password must be at least 8 characters long' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    // Get user with current password
+    const user = await env.DB.prepare(
+      'SELECT id, email, password_hash, employee_id FROM users WHERE id = ?'
+    )
+      .bind(payload.userId)
+      .first() as any;
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'User not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Verify current password
+    const isValidPassword = await PasswordService.verify(currentPassword, user.password_hash);
+
+    if (!isValidPassword) {
+      return new Response(JSON.stringify({ error: 'Current password is incorrect' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Hash new password
+    const newPasswordHash = await PasswordService.hash(newPassword);
+
+    // Update password and clear temp password flags
+    await env.DB.prepare(
+      `UPDATE users 
+       SET password_hash = ?, 
+           temp_password = 0, 
+           must_change_password = 0,
+           password_changed_at = datetime('now'),
+           updated_at = datetime('now')
+       WHERE id = ?`
+    )
+      .bind(newPasswordHash, user.id)
+      .run();
+
+    // Log password change
+    await AuditService.log(
+      env.DB,
+      user.id,
+      'user.password_changed',
+      'user',
+      user.id,
+      { email: user.email },
+      getClientIP(request),
+      getUserAgent(request),
+      'info'
+    );
+
+    // Log employee activity if employee
+    if (user.employee_id) {
+      await env.DB.prepare(`
+        INSERT INTO employee_activity_log (id, user_id, employee_id, activity_type, description, ip_address, user_agent)
+        VALUES (?, ?, ?, 'password_changed', 'Employee changed password', ?, ?)
+      `).bind(
+        generateId('log'),
+        user.id,
+        user.employee_id,
+        getClientIP(request),
+        getUserAgent(request)
+      ).run();
+    }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Password changed successfully',
       }),
       {
         status: 200,
