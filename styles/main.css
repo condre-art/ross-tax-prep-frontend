@@ -1,11 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500&display=swap');
 
+@import url('./dc-taxation-theme.css');
+
 body {
   font-family: 'Roboto', Arial, sans-serif;
   background: linear-gradient(135deg, #e9f0ff 0%, #f7f7fa 100%);
   color: #1a2233;
   margin: 0;
   min-height: 100vh;
+}
+
+/* Kimbe Dark Theme */
+:root {
+  --kimbe-dark-bg: #181818;
+  --kimbe-dark-header: #232323;
+  --kimbe-dark-accent: #d35400;
+  --kimbe-dark-text: #f5e6ca;
+}
+
+body {
+  background: var(--kimbe-dark-bg) !important;
+  color: var(--kimbe-dark-text) !important;
+}
+
+header, .site-header {
+  background: var(--kimbe-dark-header) !important;
+  color: var(--kimbe-dark-text) !important;
+  text-align: center;
+  padding: 32px 0 16px 0;
+}
+
+.header-logo, .site-logo {
+  display: block;
+  margin: 0 auto 12px auto;
+  max-width: 220px;
+}
+
+/* Watermark */
+.dc-watermark {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  opacity: 0.12;
+  font-size: 3em;
+  color: var(--kimbe-dark-accent);
+  pointer-events: none;
+  z-index: 9999;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  text-shadow: 2px 2px 8px #000;
 }
 
 .admin-layout {

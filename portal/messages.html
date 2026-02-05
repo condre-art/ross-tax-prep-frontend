@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Messages | Client Portal</title>
   <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <script src="../scripts/portal-auth.js"></script>
 </head>
 <body>
+<script>requireRole(['client','staff','admin']);</script>
 <div class="site-wrapper">
   <header>
     <div class="header-inner">

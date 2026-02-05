@@ -7,10 +7,11 @@
   <link rel="stylesheet" href="../styles/main.css?v=1" />
 </head>
 <body>
+  <div class="dc-watermark">D&amp;C TAXATION LLC</div>
 <div class="site-wrapper">
   <header>
     <div class="header-inner">
-      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+        <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
       <div>
         <h1 class="header-title">Client Portal</h1>
         <p class="header-subtitle">Upload Documents</p>
@@ -22,11 +23,11 @@
     <div class="section-inner">
       <div class="form-card">
         <h1>Upload Tax Documents</h1>
-        <form id="uploadForm" enctype="multipart/form-data">
-          <label>Select File</label>
-          <input type="file" name="file" required>
-          <button type="submit">Upload</button>
-        </form>
+          <form id="uploadForm" enctype="multipart/form-data">
+            <label>Select File</label>
+            <input type="file" name="document" required>
+            <button type="submit">Upload</button>
+          </form>
         <p id="uploadMessage" style="margin-top:10px; font-size:0.9rem;"></p>
       </div>
     </div>

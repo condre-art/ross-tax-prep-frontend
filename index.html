@@ -135,13 +135,11 @@ body {
   </a>
 </div>
 
-<header class="site-header">
-  <img src="assets/ross-logo.webp"
-       alt="Ross Tax & Bookkeeping logo with gold shield and laurel wreath"
-       class="site-logo"/>
-  <h1>Ross Tax Prep</h1>
-  <p>Client Portal & Staff Dashboard</p>
-</header>
+  <header class="site-header">
+    <img src="/public/dc-taxation-logo.png" alt="D&C Taxation LLC Logo" class="site-logo" />
+    <h1>D&C Taxation LLC</h1>
+    <p>Client Portal & Staff Dashboard</p>
+  </header>
 
 <section class="hero">
  <h1>Trusted Tax & Bookkeeping Services</h1>
@@ -158,6 +156,104 @@ body {
   <a href="https://www.irs.gov/filing/wheres-my-amended-return" target="_blank" style="color:#C9A227;font-weight:bold;">Where's My Amended Return?</a>
 </div>
 
+
+
+</section>
+
+<!-- AI Persona Widget -->
+<section class="card" style="max-width:700px;margin:48px auto 0 auto;box-shadow:0 4px 32px #d3540022;background:var(--tan);border:2px solid var(--primary-burnt-orange);border-radius:18px;">
+  <h2 style="text-align:center;font-family:'Montserrat',sans-serif;">AI Tax Attorney & Brand Ambassador</h2>
+  <form id="aiPersonaForm" style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+    <select name="persona" style="font-size:1.1em;padding:6px 12px;">
+      <option value="tax-attorney">AI Tax Attorney</option>
+      <option value="marketer">AI Brand Ambassador/Recruiter</option>
+    </select>
+    <input type="text" name="question" placeholder="Ask a tax or marketing question..." style="width:80%;padding:8px 12px;font-size:1.1em;" required />
+    <button type="submit" class="button-primary">Ask AI</button>
+  </form>
+  <div id="aiPersonaResponse" style="margin-top:18px;font-size:1.1em;"></div>
+  <div id="aiPersonaDisclaimer" style="margin-top:8px;font-size:0.95em;color:#d35400;"></div>
+</section>
+<script src="scripts/ai-persona-widget.js"></script>
+
+<!-- D&C Taxation LLC Modern Dashboard Section -->
+<section class="card" style="max-width:1100px;margin:48px auto 0 auto;box-shadow:0 4px 32px #d3540022;background:var(--tan);border:2px solid var(--primary-burnt-orange);border-radius:18px;">
+  <div class="header" style="background:var(--primary-burnt-orange-shiny);color:var(--white);padding:24px 0 12px 0;border-radius:16px 16px 0 0;text-align:center;">
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:2em;font-weight:900;letter-spacing:0.04em;margin:0;">D&C Taxation Dashboard</h2>
+    <div style="font-size:1.1em;opacity:0.92;">Hi-tech features for your tax software</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;padding:32px;">
+        <!-- Task Assignment Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Assigned Tasks</h3>
+          <ul id="task-list" style="list-style:none;padding:0;margin:0;font-size:1em;">
+            <li><input type="checkbox" id="task1"> <label for="task1">Collect taxpayer info</label></li>
+            <li><input type="checkbox" id="task2"> <label for="task2">Submit Refund Advantage app</label></li>
+            <li><input type="checkbox" id="task3"> <label for="task3">Transmit efile</label></li>
+            <li><input type="checkbox" id="task4"> <label for="task4">Notify client</label></li>
+          </ul>
+        </div>
+        <!-- Workflow Progress Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Workflow Progress</h3>
+          <div style="margin-bottom:8px;">Refund Advantage Integration</div>
+          <progress id="workflow-progress" value="2" max="5" style="width:100%;height:18px;"></progress>
+          <div style="font-size:0.98em;color:var(--grey-trim);margin-top:6px;">Step 2 of 5: Application Submitted</div>
+        </div>
+        <!-- Refund Status Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Refund Status</h3>
+          <div style="font-size:1.2em;font-weight:700;">Pending Bank Approval</div>
+          <div style="color:var(--grey-trim);font-size:0.98em;">Expected: 2-5 business days</div>
+        </div>
+    <!-- E-File Status Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">E-File Status</h3>
+      <div style="font-size:1.2em;font-weight:700;">Accepted</div>
+      <div style="color:var(--grey-trim);font-size:0.98em;">Last updated: <span id="efile-status-time">Just now</span></div>
+    </div>
+    <!-- Notifications Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Notifications</h3>
+      <ul style="list-style:none;padding:0;margin:0;font-size:1em;">
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> IRS Acknowledgement received</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> New client message</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> Compliance check passed</li>
+      </ul>
+    </div>
+    <!-- AI Assistant Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">AI Assistant</h3>
+      <div style="font-size:1em;">How can I help you today?</div>
+      <button class="button-primary" style="margin-top:12px;">Ask a Tax Question</button>
+    </div>
+    <!-- ERO E-File Transmission Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">E-File Transmission</h3>
+      <button class="button-primary" onclick="alert('Transmit efile to IRS initiated!')">Transmit E-File</button>
+      <div style="font-size:0.98em;color:var(--grey-trim);margin-top:8px;">Status: Ready</div>
+    </div>
+    <!-- Compliance Alerts Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Compliance Alerts</h3>
+      <ul style="list-style:none;padding:0;margin:0;font-size:1em;">
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> IRS business rules validated</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> No compliance issues</li>
+      </ul>
+    </div>
+    <!-- Refund Tracking Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Refund Tracking</h3>
+      <div style="font-size:1.2em;font-weight:700;">Refund: $2,350.00</div>
+      <div style="color:var(--grey-trim);font-size:0.98em;">Disbursement: Pending</div>
+    </div>
+    <!-- Bank Product Management Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Bank Product Management</h3>
+      <button class="button-primary" onclick="alert('Refund Advantage application submitted!')">Submit Bank Product App</button>
+      <div style="font-size:0.98em;color:var(--grey-trim);margin-top:8px;">Status: Awaiting approval</div>
+    </div>
+  </div>
 </section>
 
 <section class="services">
@@ -234,7 +330,7 @@ body {
       <b>Why Ross Tax & Bookkeeping?</b> Trusted by individuals and professionals nationwide. IRS-authorized, bank product partner, and committed to privacy, security, and compliance. Cloud-based, mobile-ready, and always up to date with the latest tax law.
     </div>
   </section>
-  <footer style="background:#3A6EA5;color:#fff;text-align:center;padding:24px 0;font-size:1.1em;">
+  <footer style="background:#0F2A44;color:#fff;text-align:center;padding:24px 0;font-size:1.1em;">
     © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider. All Rights Reserved.<br>
     <span style="font-size:0.95em;color:#ffe9a0;">Apple Inc. is not affiliated with, does not endorse, sponsor, or certify this software. All tax law compliance and privacy standards strictly enforced.</span>
     <br>
@@ -242,7 +338,17 @@ body {
     <a href="terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
     <a href="breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
   </footer>
-</body>
+
+  <div style="text-align:center;margin:32px 0;">
+    <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+    <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+    <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+  </div>
+
+  <script src="scripts/dashboard-widgets.js"></script>
+  <script src="scripts/ai-marketing-widget.js"></script>
+  <script src="scripts/ai-marketing-analytics.js"></script>
+  <div class="dc-watermark">D&amp;C TAXATION LLC</div>
       padding: 14px;
       background: #3a6ea5;
       color: #ffffff;

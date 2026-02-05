@@ -1,3 +1,10 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,6 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Return Status | Client Portal</title>
   <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <script src="../scripts/portal-auth.js"></script>
   <style>
     .status-badge { padding:2px 8px; border-radius:4px; font-size:0.95em; margin-right:8px; }
     .status-pending { background:#fffbe6; color:#b59f3b; }
@@ -16,18 +24,20 @@
   </style>
 </head>
 <body>
+<script type="module">
+import { requireRole } from "./roles.js";
+requireRole(['client', 'admin', 'staff']); // Only allow logged-in users
+</script>
+<script>requireRole(['client','staff','admin']);</script>
 <div class="site-wrapper">
   <header>
     <div class="header-inner">
-      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
       <div>
         <h1 class="header-title">Client Portal</h1>
         <p class="header-subtitle">Return Status</p>
       </div>
-       <img src="../assets/logo.png" class="header-logo" alt="Logo" />
-       <div>
-          <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
-    </div>
+      <div class="dc-watermark">D&amp;C TAXATION LLC</div>
   </header>
 
   <main class="section">

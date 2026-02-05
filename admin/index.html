@@ -6,12 +6,22 @@
   <title>Admin | Ross Tax & Bookkeeping</title>
   <link rel="stylesheet" href="../styles/main.css?v=1" />
 </head>
+     <style>
+       .dc-watermark {
+         position: fixed;
+         bottom: 10px;
+         right: 10px;
+         opacity: 0.1;
+         font-size: 48px;
+         color: #000;
+       }
+     </style>
 <body>
 
 <div class="admin-layout">
   <aside class="sidebar">
     <img src="../assets/ross-logo.webp" class="header-logo" alt="Ross Tax & Bookkeeping Logo" />
-    <nav>
+      <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
       <a href="index.html">Dashboard</a>
       <a href="staff.html">Staff</a>
       <a href="clients.html">Clients</a>
@@ -42,6 +52,11 @@
           <span class="compliance-badge"><span class="badge-icon">🏦</span> Bank Product Partner</span>
           <span class="compliance-badge"><span class="badge-icon">🔒</span> SOC 2 / HIPAA / GLBA</span>
           <span class="compliance-badge"><span class="badge-icon">📄</span> EFIN: <b>11200000</b></span>
+        </div>
+        <div style="text-align:center;margin:32px 0;">
+          <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+          <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+          <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
         </div>
         <div class="dashboard-cards">
           <div class="dashboard-card">
@@ -91,6 +106,7 @@
 </div>
 
 <script>
+  <div class="dc-watermark">D&amp;C TAXATION LLC</div>
 async function loadMe() {
   const res = await fetch("/api/me");
   const el = document.getElementById("userInfo");
@@ -141,6 +157,8 @@ async function logEngagement() {
     else alert('Failed to log engagement.');
   } catch { alert('Error logging engagement.'); }
 }
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
 </script>
 <script src="../scripts/live-traffic.js"></script>
 <script>
