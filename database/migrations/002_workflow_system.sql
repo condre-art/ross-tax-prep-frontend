@@ -173,6 +173,7 @@ INSERT OR IGNORE INTO efile_providers (id, name, type, endpoint_url, is_active, 
     ('provider_taxslayer', 'TaxSlayer Pro', 'taxslayer', 'https://api.taxslayerpro.com/efile/v1', 1, 1, '{"supports_state": true, "supports_amendments": true}');
 
 -- Add workflow permissions to existing roles
+-- Note: This assumes the roles table from migration 001_initial_schema.sql exists
 UPDATE roles SET permissions = json_insert(
     permissions, 
     '$[#]', 'workflows.create',
@@ -184,11 +185,11 @@ UPDATE roles SET permissions = json_insert(
     '$[#]', 'tasks.read',
     '$[#]', 'tasks.update',
     '$[#]', 'tasks.complete'
-) WHERE name = 'ero' OR name = 'admin';
+) WHERE (name = 'ero' OR name = 'admin') AND id IN (SELECT id FROM roles);
 
 -- Add basic workflow read permissions to client role
 UPDATE roles SET permissions = json_insert(
     permissions,
     '$[#]', 'workflows.read',
     '$[#]', 'tasks.read'
-) WHERE name = 'client';
+) WHERE name = 'client' AND id IN (SELECT id FROM roles);

@@ -111,7 +111,7 @@ export async function submitEFile(
 
     // Generate submission ID
     const submissionId = generateId();
-    const transmissionId = `TX${Date.now()}${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    const transmissionId = `TX${Date.now()}${generateId().substring(0, 8).toUpperCase()}`;
 
     // Create submission record
     await env.DB.prepare(
