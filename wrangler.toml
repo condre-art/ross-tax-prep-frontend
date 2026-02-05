@@ -37,9 +37,9 @@ preview_id = "" # Will be populated after creating preview KV
 
 # Environment variables
 [vars]
-ENVIRONMENT = "development"
-IRS_MEF_ENDPOINT = "https://testbed.irs.gov/mef"
-IRS_TEST_MODE = "true"
+ENVIRONMENT = "production"
+IRS_MEF_ENDPOINT = "https://prod.irs.gov/mef"
+IRS_TEST_MODE = "false"
 
 # Durable Objects for real-time features
 [[durable_objects.bindings]]
