@@ -365,7 +365,18 @@ export type Permission =
   | 'tasks.create'
   | 'tasks.read'
   | 'tasks.update'
-  | 'tasks.complete';
+  | 'tasks.complete'
+  | 'money_management.accounts.create'
+  | 'money_management.accounts.read'
+  | 'money_management.accounts.update'
+  | 'money_management.accounts.delete'
+  | 'money_management.transactions.read'
+  | 'money_management.transactions.create'
+  | 'money_management.transfers.create'
+  | 'money_management.transfers.approve'
+  | 'money_management.bills.pay'
+  | 'money_management.statements.read'
+  | 'money_management.statements.export';
 
 export interface Role {
   id: string;
