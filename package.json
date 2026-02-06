@@ -10,7 +10,9 @@
     "pages:deploy": "npx wrangler pages deploy ."
   },
   "dependencies": {
-    "next": "^14.2.5",
+    "@sentry/node": "^10.38.0",
+    "@sentry/tracing": "^7.120.4",
+    "next": "^16.1.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -14,7 +14,19 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 
+
+const Sentry = require('@sentry/node');
+const Tracing = require('@sentry/tracing');
+
+Sentry.init({
+	dsn: process.env.SENTRY_DSN || 'YOUR_SENTRY_DSN',
+	tracesSampleRate: 1.0,
+	environment: process.env.NODE_ENV || 'development',
+});
+
 const app = express();
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
@@ -55,6 +67,10 @@ app.use('/api/returns', returnRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/workflow-ai', workflowAIRoutes);
 app.use('/api/compliance-logs', complianceLogRoutes);
+
+
+// Sentry error handler (must be after all routes)
+app.use(Sentry.Handlers.errorHandler());
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend API running on port ${PORT}`));

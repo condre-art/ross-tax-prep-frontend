@@ -6,6 +6,10 @@
   <title>Messages | Client Portal</title>
   <link rel="stylesheet" href="../styles/main.css?v=1" />
   <script src="../scripts/portal-auth.js"></script>
+  <script src="https://browser.sentry-cdn.com/7.92.0/bundle.tracing.replay.min.js" crossorigin="anonymous"></script>
+  <script src="../scripts/sentry-init.js"></script>
+  <script src="https://cdn.logrocket.io/LogRocket.min.js" crossorigin="anonymous"></script>
+  <script src="../scripts/logrocket-init.js"></script>
 </head>
 <body>
 <script>requireRole(['client','staff','admin']);</script>
@@ -40,6 +44,16 @@
   </main>
 
   <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+    <div style="margin:32px auto;max-width:400px;background:#fffbe6;padding:18px 24px;border-radius:12px;box-shadow:0 2px 8px #c9a24d22;">
+      <h3 style="color:#0F2A44;font-family:'Montserrat',sans-serif;">Feedback</h3>
+      <form action="https://formsubmit.co/condre@rosstaxprepandbookkeeping.com" method="POST">
+        <input type="hidden" name="_subject" value="Website Feedback">
+        <input type="hidden" name="_captcha" value="false">
+        <textarea name="message" required placeholder="Your feedback..." style="width:100%;min-height:80px;margin-bottom:12px;"></textarea>
+        <input type="email" name="email" placeholder="Your email (optional)" style="width:100%;margin-bottom:12px;">
+        <button type="submit" class="btn">Send Feedback</button>
+      </form>
+    </div>
 </div>
 
 <script>

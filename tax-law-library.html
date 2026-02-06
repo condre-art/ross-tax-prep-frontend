@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" href="/favicon.ico" />
   <meta name="description" content="Comprehensive IRS Tax Law Library, Education, and Research Portal for Ross Tax Prep & Bookkeeping." />
+  <script src="https://browser.sentry-cdn.com/7.92.0/bundle.tracing.replay.min.js" crossorigin="anonymous"></script>
+  <script src="scripts/sentry-init.js"></script>
+  <script src="https://cdn.logrocket.io/LogRocket.min.js" crossorigin="anonymous"></script>
+  <script src="scripts/logrocket-init.js"></script>
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fa; margin: 0; }
     .header { background: #1a237e; color: #fff; padding: 2rem 1rem 1rem 1rem; text-align: center; }
@@ -95,6 +99,16 @@
   </div>
   <div class="footer">
     &copy; 2026 ROSS TAX PREP & BOOKKEEPING | IRS Authorized E-File Provider | <a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a>
+    <div style="margin:32px auto;max-width:400px;background:#fffbe6;padding:18px 24px;border-radius:12px;box-shadow:0 2px 8px #c9a24d22;">
+      <h3 style="color:#0F2A44;font-family:'Montserrat',sans-serif;">Feedback</h3>
+      <form action="https://formsubmit.co/condre@rosstaxprepandbookkeeping.com" method="POST">
+        <input type="hidden" name="_subject" value="Website Feedback">
+        <input type="hidden" name="_captcha" value="false">
+        <textarea name="message" required placeholder="Your feedback..." style="width:100%;min-height:80px;margin-bottom:12px;"></textarea>
+        <input type="email" name="email" placeholder="Your email (optional)" style="width:100%;margin-bottom:12px;">
+        <button type="submit" class="btn">Send Feedback</button>
+      </form>
+    </div>
   </div>
   <script>
     function searchLaw() {
