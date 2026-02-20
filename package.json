@@ -21,7 +21,7 @@
     "@types/react": "^19.2.10",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.63.0"
   },
